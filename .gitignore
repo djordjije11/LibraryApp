@@ -35,3 +35,8 @@ hs_err_pid*
 /LibraryApp.BusinessLayer/build/
 /LibraryApp.BusinessLayer/nbproject/private/
 /LibaryApp.AppControllers/build/
+/LibraryApp.SqlDataAccess/dist/
+/LibraryApp.BusinessLayer/dist/
+/LibaryApp.AppControllers/dist/
+/LibraryApp.Server/nbproject/private/
+/LibraryApp.Server/build/
