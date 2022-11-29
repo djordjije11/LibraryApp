@@ -15,4 +15,8 @@ public class Employee implements IEntity {
     private String password;
     private Building building;
     
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

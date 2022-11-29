@@ -17,4 +17,8 @@ public class Member implements IEntity {
     private LocalDate birthday;
     private String email;
     
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

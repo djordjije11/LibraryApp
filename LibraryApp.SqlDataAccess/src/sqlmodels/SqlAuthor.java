@@ -25,53 +25,61 @@ public class SqlAuthor extends SqlEntity {
     public SqlAuthor(){}
     
     @Override
+    public IEntity getEntity(){
+        return author;
+    }
+    
+    @Override
     String getTableName() {
         return "author";
     }
 
     @Override
-    String getPreparedStatementInsertQuery() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String getPreparedStatementInsertQuery() {
+        return "INSERT INTO " + getTableName() + "(firstname, lastname) VALUES (?,?)";
     }
 
     @Override
-    void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setString(1, author.getFirstname());
+        preparedStatement.setString(2, author.getLastname());
     }
 
     @Override
-    String getPreparedStatementUpdateQuery() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String getPreparedStatementUpdateQuery() {
+        return "UPDATE " + getTableName() + " SET firstname = ?, lastname = ? WHERE ID = ?";
     }
 
     @Override
-    void setUpPreparedStatementUpdate(PreparedStatement preparedStatement) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setUpPreparedStatementUpdate(PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setString(1, author.getFirstname());
+        preparedStatement.setString(2, author.getLastname());
+        preparedStatement.setLong(3, author.getId());
     }
 
     @Override
-    String getPreparedStatementDeleteQuery() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String getPreparedStatementDeleteQuery() {
+        return "DELETE FROM " + getTableName() + " WHERE ID = ?";
     }
 
     @Override
-    void setUpPreparedStatementDelete(PreparedStatement preparedStatement) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setUpPreparedStatementDelete(PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setLong(1, author.getId());
     }
 
     @Override
-    String getStatementSelectQuery() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String getStatementSelectQuery() {
+        return "SELECT * FROM author WHERE ID = " + author.getId();
     }
 
     @Override
-    String getStatementSelectAllQuery() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String getStatementSelectAllQuery() {
+        return "SELECT * FROM author";
     }
 
     @Override
-    IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException {
+        return new Author(resultSet.getLong("ID"), resultSet.getString("firstname"), resultSet.getString("lastname"));
     }
     
 }

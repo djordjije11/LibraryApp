@@ -13,4 +13,8 @@ public class CopyOfBook implements IEntity {
     private Book book;
     private Building building;
     
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

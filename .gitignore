@@ -22,3 +22,16 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /LibraryApp.SqlDataAccess/nbproject/private/
+/LibraryApp.DataAccessLayer.Interfaces/nbproject/private/
+/LibraryApp.DataAccessLayer.Interfaces/dist/
+/LibraryApp.DataAccessLayer.Interfaces/build/
+/LibraryApp.SqlDataAccess/build/
+/LibraryApp.Models/dist/
+/LibraryApp.Models/build/
+/LibraryApp.BusinessLayer.Interfaces/nbproject/private/
+/LibraryApp.BusinessLogic/nbproject/private/
+/LibraryApp.BusinessLogic/build/
+/LibaryApp.AppControllers/nbproject/private/
+/LibraryApp.BusinessLayer/build/
+/LibraryApp.BusinessLayer/nbproject/private/
+/LibaryApp.AppControllers/build/

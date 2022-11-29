@@ -19,14 +19,17 @@ public abstract class SqlEntity {
         this.entity = entity;
     }
     protected SqlEntity() {}
+    public IEntity getEntity(){
+        return entity;
+    }
     abstract String getTableName();
-    abstract String getPreparedStatementInsertQuery();
-    abstract void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException;
-    abstract String getPreparedStatementUpdateQuery();
-    abstract void setUpPreparedStatementUpdate(PreparedStatement preparedStatement) throws SQLException;
-    abstract String getPreparedStatementDeleteQuery();
-    abstract void setUpPreparedStatementDelete(PreparedStatement preparedStatement) throws SQLException;
-    abstract String getStatementSelectQuery();
-    abstract String getStatementSelectAllQuery();
-    abstract IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException;
+    public abstract String getPreparedStatementInsertQuery();
+    public abstract void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException;
+    public abstract String getPreparedStatementUpdateQuery();
+    public abstract void setUpPreparedStatementUpdate(PreparedStatement preparedStatement) throws SQLException;
+    public abstract String getPreparedStatementDeleteQuery();
+    public abstract void setUpPreparedStatementDelete(PreparedStatement preparedStatement) throws SQLException;
+    public abstract String getStatementSelectQuery();
+    public abstract String getStatementSelectAllQuery();
+    public abstract IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException;
 }

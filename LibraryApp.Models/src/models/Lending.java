@@ -18,4 +18,8 @@ public class Lending implements IEntity {
     private LocalDate lendingDate;
     private LocalDate returnDate;
     
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

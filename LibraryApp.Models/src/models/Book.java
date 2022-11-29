@@ -13,5 +13,10 @@ public class Book implements IEntity {
     private String title;
     private String description;
     private Author author;
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
     
 }
