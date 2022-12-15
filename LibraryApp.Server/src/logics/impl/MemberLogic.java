@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logics.impl;
 
 import database.sql.brokers.interfaces.IMemberBroker;
-import java.time.LocalDate;
 import java.util.List;
 import logics.interfaces.IMemberLogic;
 import models.Member;
@@ -19,15 +14,14 @@ public class MemberLogic implements IMemberLogic {
     public MemberLogic(IMemberBroker memberBroker){
         this.memberBroker = memberBroker;
     }
-    
     @Override
-    public Member createMember(String firstname, String lastname, LocalDate birthday, String email) throws Exception {
+    public Member createMember(Member member) throws Exception {
         try{
             memberBroker.openConnection();
             memberBroker.openTransaction();
-            Member member = memberBroker.createMember(new Member(firstname, lastname, birthday, email));
+            Member createdMember = memberBroker.createMember(member);
             memberBroker.commitTransaction();
-            return member;
+            return createdMember;
         } catch(Exception ex){
             memberBroker.rollbackTransaction();
             throw ex;
@@ -35,17 +29,15 @@ public class MemberLogic implements IMemberLogic {
             memberBroker.closeConnection();
         }
     }
-
     @Override
-    public Member readMember(Long id) throws Exception {
+    public Member readMember(Member member) throws Exception {
         try{
             memberBroker.openConnection();
-            return memberBroker.readMember(new Member(id));
+            return memberBroker.readMember(member);
         } finally{
             memberBroker.closeConnection();
         }
     }
-
     @Override
     public List<Member> readAllMembers() throws Exception {
         try{
@@ -55,15 +47,14 @@ public class MemberLogic implements IMemberLogic {
             memberBroker.closeConnection();
         }
     }
-
     @Override
-    public Member updateMember(Long id, String firstname, String lastname, LocalDate birthday, String email) throws Exception {
+    public Member updateMember(Member member) throws Exception {
         try{
             memberBroker.openConnection();
             memberBroker.openTransaction();
-            Member member = memberBroker.updateMember(new Member(id, firstname, lastname, birthday, email));
+            Member updatedMember = memberBroker.updateMember(member);
             memberBroker.commitTransaction();
-            return member;
+            return updatedMember;
         } catch(Exception ex){
             memberBroker.rollbackTransaction();
             throw ex;
@@ -71,16 +62,15 @@ public class MemberLogic implements IMemberLogic {
             memberBroker.closeConnection();
         }
     }
-
     @Override
-    public Member deleteMember(Long id) throws Exception {
+    public Member deleteMember(Member member) throws Exception {
         //ovu logiku treba obnoviti kasnije
         try{
             memberBroker.openConnection();
             memberBroker.openTransaction();
-            Member member = memberBroker.deleteMember(new Member(id));
+            Member deletedMember = memberBroker.deleteMember(member);
             memberBroker.commitTransaction();
-            return member;
+            return deletedMember;
         } catch(Exception ex){
             memberBroker.rollbackTransaction();
             throw ex;

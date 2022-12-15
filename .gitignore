@@ -40,3 +40,5 @@ hs_err_pid*
 /LibaryApp.AppControllers/dist/
 /LibraryApp.Server/nbproject/private/
 /LibraryApp.Server/build/
+/LibraryApp.Client/nbproject/private/
+/PaterniCollections/nbproject/private/

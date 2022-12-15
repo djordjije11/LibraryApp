@@ -7,7 +7,6 @@ package controllers.impl;
 import database.configurations.ConfigFilePaths;
 import database.configurations.IConfigurationManager;
 import database.configurations.JsonFileConfigurationManager;
-import database.sql.brokers.impl.SqlAuthorBroker;
 import database.sql.brokers.impl.SqlMemberBroker;
 import database.sql.connectors.SqlConnector;
 import java.sql.SQLException;
@@ -16,7 +15,6 @@ import java.time.Month;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import logics.impl.AuthorLogic;
 import logics.impl.MemberLogic;
 import models.Member;
 

@@ -18,9 +18,7 @@ public class Author implements IEntity {
         this.firstname = firstname;
         this.lastname = lastname;
     }
-    public Author(String firstname, String lastname){
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public Author() {
     }
     
     public Long getId() {

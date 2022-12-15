@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package logics.impl;
 
 import database.sql.brokers.interfaces.IAuthorBroker;
+import java.util.List;
 import logics.interfaces.IAuthorLogic;
 import models.Author;
 
@@ -17,12 +14,20 @@ public class AuthorLogic implements IAuthorLogic {
     public AuthorLogic(IAuthorBroker authorBroker){
         this.authorBroker = authorBroker;
     }
-    
     @Override
-    public Author createAuthor(String firstname, String lastname) throws Exception {
+    public Author readAuthor(Author author) throws Exception {
         try{
-            Author author = authorBroker.createAuthor(new Author(firstname, lastname));
-            return author;
+            authorBroker.openConnection();
+            return authorBroker.readAuthor(author);
+        } finally{
+            authorBroker.closeConnection();
+        }
+    }
+    @Override
+    public List<Author> readAllAuthors() throws Exception {
+        try{
+            authorBroker.openConnection();
+            return authorBroker.readAllAuthors(new Author());
         } finally{
             authorBroker.closeConnection();
         }
