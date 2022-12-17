@@ -19,6 +19,8 @@
 *.tar.gz
 *.rar
 
+Test.java
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /LibraryApp.SqlDataAccess/nbproject/private/
@@ -42,3 +44,7 @@ hs_err_pid*
 /LibraryApp.Server/build/
 /LibraryApp.Client/nbproject/private/
 /PaterniCollections/nbproject/private/
+/LibraryApp.Domain/nbproject/private/
+/LibraryApp.Domain/dist/
+/LibraryApp.Domain/build/
+/LibraryApp.Client/build/

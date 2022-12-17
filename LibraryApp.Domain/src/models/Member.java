@@ -4,13 +4,14 @@
  */
 package models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author Djordjije
  */
-public class Member implements IEntity {
+public class Member implements IEntity, Serializable {
     private Long id;
     private String firstname;
     private String lastname;
