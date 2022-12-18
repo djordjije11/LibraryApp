@@ -34,15 +34,27 @@ public abstract class SqlEntityBroker implements IEntityBroker {
         preparedStatement.close();
         return entity;
     }
-    protected synchronized IEntity read(SqlEntity sqlEntity) throws Exception{
+    protected synchronized IEntity find(SqlEntity sqlEntity) throws Exception{
         Connection connection = SqlConnector.getConnection();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sqlEntity.getStatementSelectQuery());
+        ResultSet resultSet = statement.executeQuery(sqlEntity.getStatementSelectByIdQuery());
         resultSet.next();
         IEntity instance = sqlEntity.getEntityFromResultSet(resultSet);
         resultSet.close();
         statement.close();
         return instance;
+    }
+    protected synchronized List<IEntity> findEntities(SqlEntity sqlEntity) throws Exception{
+        Connection connection = SqlConnector.getConnection();
+        List<IEntity> entities = new LinkedList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sqlEntity.getStatementSelectWithConditionQuery());
+        while(resultSet.next()){
+            entities.add(sqlEntity.getEntityFromResultSet(resultSet));
+        }
+        resultSet.close();
+        statement.close();
+        return entities;
     }
     protected synchronized List<IEntity> readAll(SqlEntity sqlEntity) throws Exception{
         Connection connection = SqlConnector.getConnection();

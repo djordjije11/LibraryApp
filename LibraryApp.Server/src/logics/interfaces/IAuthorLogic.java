@@ -8,6 +8,6 @@ import models.Author;
  * @author Djordjije
  */
 public interface IAuthorLogic {
-    Author readAuthor(Author author) throws Exception;
+    Author findAuthor(Author author) throws Exception;
     List<Author> readAllAuthors() throws Exception;
 }

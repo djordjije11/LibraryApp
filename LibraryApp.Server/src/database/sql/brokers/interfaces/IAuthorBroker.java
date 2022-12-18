@@ -8,6 +8,6 @@ import models.Author;
  * @author Djordjije
  */
 public interface IAuthorBroker extends IEntityBroker {
-    Author readAuthor(Author author) throws Exception;
+    Author findAuthor(Author author) throws Exception;
     List<Author> readAllAuthors(Author author) throws Exception;
 }

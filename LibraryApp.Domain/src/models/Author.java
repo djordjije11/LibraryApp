@@ -40,4 +40,9 @@ public class Author implements IEntity {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
+    @Override
+    public String getClassName() {
+        return "Author";
+    }
 }

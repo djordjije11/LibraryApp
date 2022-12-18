@@ -67,4 +67,9 @@ public class Member implements IEntity, Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String getClassName() {
+        return "Member";
+    }
 }

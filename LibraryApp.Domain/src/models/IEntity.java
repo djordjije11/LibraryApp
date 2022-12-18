@@ -9,6 +9,6 @@ package models;
  * @author Djordjije
  */
 public interface IEntity {
-    //String getClassName();
+    String getClassName();
     void setId(Long id);
 }

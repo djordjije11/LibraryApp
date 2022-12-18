@@ -7,6 +7,7 @@ package database.sql.sqlmodels;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import models.IEntity;
 
 /**
@@ -29,7 +30,26 @@ public abstract class SqlEntity {
     public abstract void setUpPreparedStatementUpdate(PreparedStatement preparedStatement) throws SQLException;
     public abstract String getPreparedStatementDeleteQuery();
     public abstract void setUpPreparedStatementDelete(PreparedStatement preparedStatement) throws SQLException;
-    public abstract String getStatementSelectQuery();
+    public abstract String getStatementSelectByIdQuery();
+    public abstract String getStatementSelectWithConditionQuery();
     public abstract String getStatementSelectAllQuery();
     public abstract IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException;
+    
+    protected String constructSelectWithConditionsQuery(List<String> conditions){
+        String query = getStatementSelectAllQuery();
+        if(conditions == null || conditions.isEmpty()){
+            return query;
+        }
+        query += " WHERE ";
+        int conditionsNumber = conditions.size();
+        for (int i = 0; i < conditionsNumber; i++) {
+            query += conditions.get(i);
+            if(i + 1 == conditionsNumber){
+                break;
+            }
+            query += " AND ";
+        }
+        System.out.println(query);
+        return query;
+    }
 }

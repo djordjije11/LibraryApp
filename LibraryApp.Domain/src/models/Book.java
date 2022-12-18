@@ -18,5 +18,9 @@ public class Book implements IEntity {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
+    @Override
+    public String getClassName() {
+        return "Book";
+    }
 }

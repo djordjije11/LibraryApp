@@ -8,6 +8,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import models.IEntity;
 import models.Member;
 
@@ -72,8 +74,20 @@ public class SqlMember extends SqlEntity {
     }
 
     @Override
-    public String getStatementSelectQuery() {
+    public String getStatementSelectByIdQuery() {
         return "SELECT * FROM " + getTableName() + " WHERE ID = " + member.getId();
+    }
+
+    @Override
+    public String getStatementSelectWithConditionQuery() {
+        List<String> conditions = new ArrayList<>();
+        if(member.getFirstname() != null && member.getFirstname().isBlank() == false){
+            conditions.add("firstname LIKE '" + member.getFirstname() + "%'");
+        }
+        if(member.getLastname() != null && member.getLastname().isBlank() == false){
+            conditions.add("lastname LIKE '" + member.getLastname() + "%'");
+        }
+        return constructSelectWithConditionsQuery(conditions);
     }
 
     @Override

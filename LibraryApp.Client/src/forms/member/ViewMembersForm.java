@@ -2,26 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package forms;
+package forms.member;
 
-import controllers.IController;
-import controllers.MemberController;
+import forms.member.table.MembersTableModel;
 import java.io.IOException;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 import models.Member;
-import tcp.TcpClient;
 
 /**
  *
  * @author Djordjije
  */
-public class ViewMebersForm extends javax.swing.JDialog {
-
-    private IController controller;
-    private Member member;
+public class ViewMembersForm extends javax.swing.JDialog {
     
-    public ViewMebersForm(java.awt.Frame parent, boolean modal) throws IOException {
+    public ViewMembersForm(java.awt.Frame parent, boolean modal) throws IOException {
         super(parent, modal);
-        this.controller = new MemberController(new TcpClient("localhost", 9001));
         initComponents();
     }
 
@@ -45,7 +42,7 @@ public class ViewMebersForm extends javax.swing.JDialog {
         btnCreate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Pretraga ?lana");
+        setTitle("Pretraga clana");
         setResizable(false);
 
         tblMembers.setModel(new javax.swing.table.DefaultTableModel(
@@ -65,18 +62,13 @@ public class ViewMebersForm extends javax.swing.JDialog {
 
         jLabel2.setText("Prezime:");
 
-        btnFind.setText("PRETRA?I");
+        btnFind.setText("PRETRAZI");
         btnFind.setFocusable(false);
-        btnFind.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFindActionPerformed(evt);
-            }
-        });
 
-        btnOpenMemberForm.setText("OTVORI FORMU ZA ODBRANOG ?LANA");
+        btnOpenMemberForm.setText("OTVORI FORMU ZA ODBRANOG CLANA");
         btnOpenMemberForm.setFocusable(false);
 
-        btnCreate.setText("DODAJ ?LANA");
+        btnCreate.setText("DODAJ CLANA");
         btnCreate.setFocusable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -86,32 +78,30 @@ public class ViewMebersForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtFirstName)))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnOpenMemberForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtLastName)
+                            .addComponent(txtFirstName))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnOpenMemberForm, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCreate, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(24, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -131,13 +121,27 @@ public class ViewMebersForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
-        member = new Member();
-        member.setFirstname(txtFirstName.getText());
-        member.setLastname(txtLastName.getText());
-        controller.find(member);
-    }//GEN-LAST:event_btnFindActionPerformed
-
+    public Member getSelectedMember(){
+        return ((MembersTableModel)tblMembers.getModel()).getMember(tblMembers.getSelectedRow());
+    }
+    public void setMembersTableData(List<Member> members) throws Exception{
+        tblMembers.setModel(new MembersTableModel(members));
+    }
+    public JButton getFindButton(){
+        return btnFind;
+    }
+    public JButton getCreateButton(){
+        return btnCreate;
+    }
+    public JButton getOpenMemberFormButton(){
+        return btnOpenMemberForm;
+    }
+    public JTextField getFirstNameTextField(){
+        return txtFirstName;
+    }
+    public JTextField getLastNameTextField(){
+        return txtLastName;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnFind;

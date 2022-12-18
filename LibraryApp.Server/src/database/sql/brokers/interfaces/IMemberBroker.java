@@ -13,7 +13,8 @@ import models.Member;
  */
 public interface IMemberBroker extends IEntityBroker {
     Member createMember(Member member) throws Exception;
-    Member readMember(Member member) throws Exception;
+    Member findMember(Member member) throws Exception;
+    List<Member> findMembers(Member member) throws Exception;
     List<Member> readAllMembers(Member member) throws Exception;
     Member updateMember(Member member) throws Exception;
     Member deleteMember(Member member) throws Exception;

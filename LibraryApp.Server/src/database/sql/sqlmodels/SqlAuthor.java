@@ -3,6 +3,8 @@ package database.sql.sqlmodels;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import models.Author;
 import models.IEntity;
 
@@ -64,8 +66,20 @@ public class SqlAuthor extends SqlEntity {
     }
 
     @Override
-    public String getStatementSelectQuery() {
+    public String getStatementSelectByIdQuery() {
         return "SELECT * FROM " + getTableName() + " WHERE ID = " + author.getId();
+    }
+    
+    @Override
+    public String getStatementSelectWithConditionQuery(){
+        List<String> conditions = new ArrayList<>();
+        if(author.getFirstname() != null && author.getFirstname().isBlank() == false){
+            conditions.add("firstname LIKE '" + author.getFirstname() + "%'");
+        }
+        if(author.getLastname() != null && author.getLastname().isBlank() == false){
+            conditions.add("lastname LIKE '" + author.getLastname() + "%'");
+        }
+        return constructSelectWithConditionsQuery(conditions);
     }
 
     @Override

@@ -30,10 +30,19 @@ public class MemberLogic implements IMemberLogic {
         }
     }
     @Override
-    public Member readMember(Member member) throws Exception {
+    public Member findMember(Member member) throws Exception {
         try{
             memberBroker.openConnection();
-            return memberBroker.readMember(member);
+            return memberBroker.findMember(member);
+        } finally{
+            memberBroker.closeConnection();
+        }
+    }
+    @Override
+    public List<Member> findMembers(Member member) throws Exception {
+        try{
+            memberBroker.openConnection();
+            return memberBroker.findMembers(member);
         } finally{
             memberBroker.closeConnection();
         }

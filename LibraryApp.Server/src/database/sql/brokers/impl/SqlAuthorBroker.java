@@ -17,8 +17,8 @@ public class SqlAuthorBroker extends SqlEntityBroker implements IAuthorBroker  {
         super();
     }
     @Override
-    public synchronized Author readAuthor(Author author) throws Exception {
-        return (Author)read(new SqlAuthor(author));
+    public synchronized Author findAuthor(Author author) throws Exception {
+        return (Author)find(new SqlAuthor(author));
     }
     @Override
     public synchronized List<Author> readAllAuthors(Author author) throws Exception {

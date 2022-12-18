@@ -26,8 +26,12 @@ public class SqlMemberBroker extends SqlEntityBroker implements IMemberBroker {
         return (Member) create(new SqlMember(member));
     }
     @Override
-    public Member readMember(Member member) throws Exception {
-        return (Member)read(new SqlMember(member));
+    public Member findMember(Member member) throws Exception {
+        return (Member)find(new SqlMember(member));
+    }
+    @Override
+    public List<Member> findMembers(Member member) throws Exception {
+        return EntitiesConverter.<Member>convertList(findEntities(new SqlMember(member)));
     }
     @Override
     public List<Member> readAllMembers(Member member) throws Exception {

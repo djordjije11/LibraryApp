@@ -4,15 +4,59 @@
  */
 package controllers;
 
+import java.util.List;
 import models.IEntity;
+import tcp.TcpClient;
 
 /**
  *
  * @author Djordjije
  */
-public interface IController {
-    public void save();
-    public void delete();
-    public void readAll();
-    public void find(IEntity entity);
+public abstract class EntityController<T extends IEntity> {
+    protected TcpClient tcpClient;
+    
+    public EntityController(TcpClient tcpClient){
+        this.tcpClient = tcpClient;
+    }
+    
+    public T save(T entity) throws Exception{
+        return null;
+    }
+    public T delete(T entity) throws Exception{
+        tcpClient.sendMessage("DELETE/" + entity.getClassName());
+        tcpClient.sendEntity(entity);
+        String message = tcpClient.read();
+        if(shouldWaitForEntity(message) == false){
+            throw new Exception(message);
+        }
+        T dbEntity = tcpClient.<T>readEntity();
+        return dbEntity;
+    }
+    public List<T> readAll(T entity) throws Exception{
+        tcpClient.sendMessage("READ ALL/" + entity.getClassName());
+        tcpClient.sendEntity(entity);
+        String message = tcpClient.read();
+        if(shouldWaitForEntity(message) == false){
+            throw new Exception(message);
+        }
+        List<T> dbEntity = tcpClient.<List<T>>readEntity();
+        return dbEntity;
+    }
+    public List<T> find(T entity) throws Exception{
+        tcpClient.sendMessage("FIND/" + entity.getClassName());
+        tcpClient.sendEntity(entity);
+        String message = tcpClient.read();
+        if(shouldWaitForEntity(message) == false){
+            throw new Exception(message);
+        }
+        List<T> dbEntity = tcpClient.<List<T>>readEntity();
+        return dbEntity;
+    }
+    
+    protected boolean shouldWaitForEntity(String message){
+        //provera poruke
+        return true;
+    }
+    
+    
 }

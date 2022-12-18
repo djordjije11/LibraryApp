@@ -15,10 +15,10 @@ public class AuthorLogic implements IAuthorLogic {
         this.authorBroker = authorBroker;
     }
     @Override
-    public Author readAuthor(Author author) throws Exception {
+    public Author findAuthor(Author author) throws Exception {
         try{
             authorBroker.openConnection();
-            return authorBroker.readAuthor(author);
+            return authorBroker.findAuthor(author);
         } finally{
             authorBroker.closeConnection();
         }
