@@ -20,6 +20,7 @@ public class Building implements IEntity {
     public void setId(Long id) {
         this.id = id;
     }
+    @Override
     public Long getId(){
         return id;
     }

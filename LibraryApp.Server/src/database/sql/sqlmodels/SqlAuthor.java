@@ -13,7 +13,6 @@ import models.IEntity;
  * @author Djordjije
  */
 public class SqlAuthor extends SqlEntity {
-
     private Author author;
     
     public SqlAuthor(Author author){
@@ -54,21 +53,6 @@ public class SqlAuthor extends SqlEntity {
         preparedStatement.setString(2, author.getLastname());
         preparedStatement.setLong(3, author.getId());
     }
-
-    @Override
-    public String getPreparedStatementDeleteQuery() {
-        return "DELETE FROM " + getTableName() + " WHERE ID = ?";
-    }
-
-    @Override
-    public void setUpPreparedStatementDelete(PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setLong(1, author.getId());
-    }
-
-    @Override
-    public String getStatementSelectByIdQuery() {
-        return "SELECT * FROM " + getTableName() + " WHERE ID = " + author.getId();
-    }
     
     @Override
     public String getStatementSelectWithConditionQuery(){
@@ -80,11 +64,6 @@ public class SqlAuthor extends SqlEntity {
             conditions.add("lastname LIKE '" + author.getLastname() + "%'");
         }
         return constructSelectWithConditionsQuery(conditions);
-    }
-
-    @Override
-    public String getStatementSelectAllQuery() {
-        return "SELECT * FROM " + getTableName();
     }
 
     @Override

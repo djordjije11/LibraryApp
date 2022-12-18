@@ -24,8 +24,8 @@ public abstract class SqlEntityBroker implements IEntityBroker {
         sqlEntity.setUpPreparedStatementInsert(preparedStatement);
         preparedStatement.executeUpdate();
         ResultSet result = preparedStatement.getGeneratedKeys();
-        if(result.next());
-        entity.setId(result.getLong(1));
+        if(result.next())
+            entity.setId(result.getLong(1));
         result.close();
         preparedStatement.close();
         return entity;
@@ -74,8 +74,8 @@ public abstract class SqlEntityBroker implements IEntityBroker {
     }
     protected synchronized IEntity delete(SqlEntity sqlEntity) throws Exception{
         Connection connection = SqlConnector.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(sqlEntity.getPreparedStatementDeleteQuery());
-        sqlEntity.setUpPreparedStatementDelete(preparedStatement);
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlEntity.getPreparedStatementDeleteByIdQuery());
+        sqlEntity.setUpPreparedStatementDeleteById(preparedStatement);
         preparedStatement.executeUpdate();
         preparedStatement.close();
         return sqlEntity.getEntity();

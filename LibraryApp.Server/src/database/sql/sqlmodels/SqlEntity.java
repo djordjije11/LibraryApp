@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package database.sql.sqlmodels;
 
 import java.sql.PreparedStatement;
@@ -28,13 +24,20 @@ public abstract class SqlEntity {
     public abstract void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException;
     public abstract String getPreparedStatementUpdateQuery();
     public abstract void setUpPreparedStatementUpdate(PreparedStatement preparedStatement) throws SQLException;
-    public abstract String getPreparedStatementDeleteQuery();
-    public abstract void setUpPreparedStatementDelete(PreparedStatement preparedStatement) throws SQLException;
-    public abstract String getStatementSelectByIdQuery();
+    public String getPreparedStatementDeleteByIdQuery(){
+        return "DELETE FROM " + getTableName() + " WHERE ID = ?";
+    }
+    public void setUpPreparedStatementDeleteById(PreparedStatement preparedStatement) throws SQLException{
+        preparedStatement.setLong(1, entity.getId());
+    }
+    public String getStatementSelectByIdQuery() {
+        return "SELECT * FROM " + getTableName() + " WHERE ID = " + entity.getId();
+    }
     public abstract String getStatementSelectWithConditionQuery();
-    public abstract String getStatementSelectAllQuery();
+    public String getStatementSelectAllQuery(){
+        return "SELECT * FROM " + getTableName();
+    }
     public abstract IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException;
-    
     protected String constructSelectWithConditionsQuery(List<String> conditions){
         String query = getStatementSelectAllQuery();
         if(conditions == null || conditions.isEmpty()){

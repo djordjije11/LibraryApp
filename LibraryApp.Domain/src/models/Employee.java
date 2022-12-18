@@ -16,12 +16,15 @@ public class Employee implements IEntity {
     private Building building;
     
     @Override
+    public String getClassName() {
+        return "Employee";
+    }
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
-
     @Override
-    public String getClassName() {
-        return "Employee";
+    public Long getId() {
+        return id;
     }
 }

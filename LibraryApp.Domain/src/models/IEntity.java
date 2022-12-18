@@ -11,4 +11,5 @@ package models;
 public interface IEntity {
     String getClassName();
     void setId(Long id);
+    Long getId();
 }

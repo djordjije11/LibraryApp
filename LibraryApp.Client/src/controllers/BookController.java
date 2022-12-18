@@ -31,14 +31,13 @@ public class BookController extends EntityController<BookDto> {
         setViewBooksFormListeners();
         viewBooksForm.setVisible(true);
     }
-    
+
     public void closeForms(){
         if(viewBooksForm != null)
             viewBooksForm.dispose();
         if(bookForm != null)
             bookForm.dispose();
     }
-    
     private void setViewBooksFormFindListener() {
         viewBooksForm.getFindButton().addActionListener((ActionEvent e) -> {
             BookDto book = new BookDto();
@@ -51,7 +50,6 @@ public class BookController extends EntityController<BookDto> {
             }
         });
     }
-    
     private void setViewBooksFormCreateListener() throws Exception {
         viewBooksForm.getCreateButton().addActionListener((ActionEvent e) -> {
             bookForm = new BookForm(parentForm, true, null);
@@ -67,7 +65,6 @@ public class BookController extends EntityController<BookDto> {
         });
         if(areAuthorsSetUp == false) throw new Exception("Authors are not set up!");
     }
-
     private void setViewBooksFormOpenBookFormListener() throws Exception{
         viewBooksForm.getOpenBookFormButton().addActionListener((ActionEvent e) -> {
             BookDto book = viewBooksForm.getSelectedBook();
@@ -93,7 +90,6 @@ public class BookController extends EntityController<BookDto> {
         if(isBookForBookFormSetUp == false) throw new Exception("The book is not set up!");
         if(areAuthorsSetUp == false) throw new Exception("Authors are not set up!");
     }
-    
     private void setBookFormDeleteListener() {
         bookForm.getDeleteButton().addActionListener((ActionEvent e) -> {
             try {
@@ -112,7 +108,6 @@ public class BookController extends EntityController<BookDto> {
             }
         });
     }
-
     private void setBookFormSaveListener() {
         bookForm.getSaveButton().addActionListener((ActionEvent e) -> {
             BookDto book = bookForm.getBook();
@@ -146,16 +141,16 @@ public class BookController extends EntityController<BookDto> {
             if(hasChanges == false && addingAmount > 0){
                 hasChanges = true;
             }
-                if(hasChanges == false){
+            if(hasChanges == false){
                     JOptionPane.showMessageDialog(bookForm, "Podaci o clanu nisu promenjeni.", "Podaci nisu promenjeni", JOptionPane.INFORMATION_MESSAGE);
                     return;
-                }
-                book.setTitle(title);
-                book.setDescription(description);
-                book.setAuthor(author);
-                book.setAddingAmount(addingAmount);
-                book.setBuildingId(Session.getBuilding().getId());
-                //VALIDIRATI PODATKE
+            }
+            book.setTitle(title);
+            book.setDescription(description);
+            book.setAuthor(author);
+            book.setAddingAmount(addingAmount);
+            book.setBuildingId(Session.getBuilding().getId());
+            //VALIDIRATI PODATKE
             try {
                 BookDto dbBook = isBookNew == true ? createEntity(book) : updateEntity(book);
                 bookForm.setBook(dbBook);
@@ -166,7 +161,6 @@ public class BookController extends EntityController<BookDto> {
             }
         });
     }
-    
     private void setViewBooksFormListeners() throws Exception{
         setViewBooksFormFindListener();
         setViewBooksFormCreateListener();

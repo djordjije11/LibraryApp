@@ -1,7 +1,9 @@
 package models.dto;
 
 import java.io.Serializable;
+import java.util.List;
 import models.Author;
+import models.CopyOfBook;
 import models.IEntity;
 
 /**
@@ -14,6 +16,7 @@ public class BookDto implements IEntity, Serializable {
     private String description;
     private Author author;
     private Long currentAmount;
+    private List<CopyOfBook> copiesOfBook;
     private Long addingAmount;
     private boolean isUpdated = false;
     private Long buildingId;
@@ -70,5 +73,11 @@ public class BookDto implements IEntity, Serializable {
     }
     public void setBuildingId(Long buildingId) {
         this.buildingId = buildingId;
+    }
+    public List<CopyOfBook> getCopiesOfBook() {
+        return copiesOfBook;
+    }
+    public void setCopiesOfBook(List<CopyOfBook> copiesOfBook) {
+        this.copiesOfBook = copiesOfBook;
     }
 }

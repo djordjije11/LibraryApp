@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 /**
@@ -10,16 +6,42 @@ package models;
  */
 public class CopyOfBook implements IEntity {
     private Long id;
-    private Book book;
-    private Building building;
+    private Long bookId;
+    private Long buildingId;
     
+    public CopyOfBook(){}
+    public CopyOfBook(Long id, Long bookId, Long buildingId){
+        this.id = id;
+        this.bookId = bookId;
+        this.buildingId = buildingId;
+    }
+    public CopyOfBook(Long bookId, Long buildingId){
+        this.bookId = bookId;
+        this.buildingId = buildingId;
+    }
+    
+    @Override
+    public String getClassName() {
+        return "CopyOfBook";
+    }
     @Override
     public void setId(Long id) {
         this.id = id;
     }
-
     @Override
-    public String getClassName() {
-        return "CopyOfBook";
+    public Long getId(){
+        return id;
+    }
+    public Long getBookId() {
+        return bookId;
+    }
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
+    }
+    public Long getBuildingId() {
+        return buildingId;
+    }
+    public void setBuildingId(Long buildingId) {
+        this.buildingId = buildingId;
     }
 }

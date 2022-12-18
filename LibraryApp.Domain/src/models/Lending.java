@@ -19,12 +19,15 @@ public class Lending implements IEntity {
     private LocalDate returnDate;
     
     @Override
+    public String getClassName() {
+        return "Lending";
+    }
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
-
     @Override
-    public String getClassName() {
-        return "Lending";
+    public Long getId() {
+        return id;
     }
 }

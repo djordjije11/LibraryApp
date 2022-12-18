@@ -12,6 +12,14 @@ public class Book implements IEntity, Serializable {
     private String description;
     private Author author;
     
+    public Book(){
+    }
+    public Book(Long id, String title, String description, Author author){
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.author = author;
+    }
     @Override
     public String getClassName() {
         return "Book";
@@ -20,6 +28,7 @@ public class Book implements IEntity, Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    @Override
     public Long getId() {
         return id;
     }

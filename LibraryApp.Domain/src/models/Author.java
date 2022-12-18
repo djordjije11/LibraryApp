@@ -27,6 +27,7 @@ public class Author implements IEntity {
     public String getClassName() {
         return "Author";
     }
+    @Override
     public Long getId() {
         return id;
     }

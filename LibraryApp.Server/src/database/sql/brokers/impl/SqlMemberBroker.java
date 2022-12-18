@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package database.sql.brokers.impl;
 
 import database.sql.brokers.interfaces.IMemberBroker;
@@ -16,10 +12,6 @@ import models.Member;
  * @author Djordjije
  */
 public class SqlMemberBroker extends SqlEntityBroker implements IMemberBroker {
-
-    public SqlMemberBroker() throws SQLException{
-        super();
-    }
     
     @Override
     public Member createMember(Member member) throws Exception {

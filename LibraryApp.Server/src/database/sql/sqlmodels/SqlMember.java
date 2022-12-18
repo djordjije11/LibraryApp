@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package database.sql.sqlmodels;
 
 import java.sql.Date;
@@ -18,7 +14,6 @@ import models.Member;
  * @author Djordjije
  */
 public class SqlMember extends SqlEntity {
-
     private Member member;
     
     public SqlMember(Member member){
@@ -64,21 +59,6 @@ public class SqlMember extends SqlEntity {
     }
 
     @Override
-    public String getPreparedStatementDeleteQuery() {
-        return "DELETE FROM " + getTableName() + " WHERE ID = ?";
-    }
-
-    @Override
-    public void setUpPreparedStatementDelete(PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setLong(1, member.getId());
-    }
-
-    @Override
-    public String getStatementSelectByIdQuery() {
-        return "SELECT * FROM " + getTableName() + " WHERE ID = " + member.getId();
-    }
-
-    @Override
     public String getStatementSelectWithConditionQuery() {
         List<String> conditions = new ArrayList<>();
         if(member.getFirstname() != null && member.getFirstname().isBlank() == false){
@@ -88,11 +68,6 @@ public class SqlMember extends SqlEntity {
             conditions.add("lastname LIKE '" + member.getLastname() + "%'");
         }
         return constructSelectWithConditionsQuery(conditions);
-    }
-
-    @Override
-    public String getStatementSelectAllQuery() {
-        return "SELECT * FROM " + getTableName();
     }
 
     @Override
