@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package forms.member;
 
 import java.time.LocalDate;
@@ -25,9 +21,7 @@ public class MemberForm extends javax.swing.JDialog {
         setUpYears();
         setUpMonths();
         setUpDays();
-        this.member = member;
-        setUpAttributeFields();
-        setUpDeleteButton();
+        setMember(member);
     }
 
     /**
@@ -212,6 +206,7 @@ public class MemberForm extends javax.swing.JDialog {
     }
     public void setMember(Member member){
         this.member = member;
+        setUpAttributeFields();
         setUpDeleteButton();
     }
     public JButton getSaveButton(){
@@ -234,7 +229,7 @@ public class MemberForm extends javax.swing.JDialog {
     public LocalDate getBirthday(){
         return LocalDate.of((int)cmbxYear.getSelectedItem(), (Month)cmbxMonth.getSelectedItem(), (int)cmbxDay.getSelectedItem());
     }
-    public JTextField geEmailTextField(){
+    public JTextField getEmailTextField(){
         return txtEmail;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

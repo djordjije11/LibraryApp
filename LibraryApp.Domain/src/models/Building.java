@@ -13,12 +13,20 @@ public class Building implements IEntity {
     private String name;
     
     @Override
+    public String getClassName() {
+        return "Building";
+    }
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
-
-    @Override
-    public String getClassName() {
-        return "Building";
+    public Long getId(){
+        return id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 }

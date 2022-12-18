@@ -4,6 +4,8 @@
  */
 package models;
 
+import java.util.Objects;
+
 /**
  *
  * @author Djordjije
@@ -21,6 +23,10 @@ public class Author implements IEntity {
     public Author() {
     }
     
+    @Override
+    public String getClassName() {
+        return "Author";
+    }
     public Long getId() {
         return id;
     }
@@ -40,9 +46,14 @@ public class Author implements IEntity {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-
     @Override
-    public String getClassName() {
-        return "Author";
+    public String toString() {
+        return firstname + " " + lastname;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if(obj != null && obj instanceof Author author){
+            return this.id == author.id;
+        } else return false;
     }
 }

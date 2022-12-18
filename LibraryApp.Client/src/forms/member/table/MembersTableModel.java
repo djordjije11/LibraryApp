@@ -15,8 +15,8 @@ import models.Member;
  */
 public class MembersTableModel extends AbstractTableModel{
     private List<Member> members;
-    private final String[] columnNames = {"First name", "Last name", "Birthday", "E-mail"};
-    private final Class[] columnTypes = {String.class, String.class, LocalDate.class, String.class};
+    private final String[] columnNames = {"ID","Ime", "Prezime", "Datum rodjenja", "E-mail"};
+    private final Class[] columnTypes = {Long.class, String.class, String.class, LocalDate.class, String.class};
     
     public MembersTableModel(List<Member> members){
         this.members = members;
@@ -43,12 +43,14 @@ public class MembersTableModel extends AbstractTableModel{
         Member member = members.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return member.getFirstname();
+                return member.getId();
             case 1:
-                return member.getLastname();
+                return member.getFirstname();
             case 2:
-                return member.getBirthday();
+                return member.getLastname();
             case 3:
+                return member.getBirthday();
+            case 4:
                 return member.getEmail();
             default:
                 return "n/a";

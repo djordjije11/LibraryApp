@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controllers;
 
 import java.util.List;
@@ -18,11 +14,27 @@ public abstract class EntityController<T extends IEntity> {
     public EntityController(TcpClient tcpClient){
         this.tcpClient = tcpClient;
     }
-    
-    public T save(T entity) throws Exception{
-        return null;
+    public T createEntity(T entity) throws Exception{
+        tcpClient.sendMessage("CREATE/" + entity.getClassName());
+        tcpClient.sendEntity(entity);
+        String message = tcpClient.read();
+        if(shouldWaitForEntity(message) == false){
+            throw new Exception(message);
+        }
+        T dbEntity = tcpClient.<T>readEntity();
+        return dbEntity;
     }
-    public T delete(T entity) throws Exception{
+    public T updateEntity(T entity) throws Exception{
+        tcpClient.sendMessage("UPDATE/" + entity.getClassName());
+        tcpClient.sendEntity(entity);
+        String message = tcpClient.read();
+        if(shouldWaitForEntity(message) == false){
+            throw new Exception(message);
+        }
+        T dbEntity = tcpClient.<T>readEntity();
+        return dbEntity;
+    }
+    public T deleteEntity(T entity) throws Exception{
         tcpClient.sendMessage("DELETE/" + entity.getClassName());
         tcpClient.sendEntity(entity);
         String message = tcpClient.read();
@@ -32,7 +44,7 @@ public abstract class EntityController<T extends IEntity> {
         T dbEntity = tcpClient.<T>readEntity();
         return dbEntity;
     }
-    public List<T> readAll(T entity) throws Exception{
+    public List<T> readAllEntities(T entity) throws Exception{
         tcpClient.sendMessage("READ ALL/" + entity.getClassName());
         tcpClient.sendEntity(entity);
         String message = tcpClient.read();
@@ -42,7 +54,7 @@ public abstract class EntityController<T extends IEntity> {
         List<T> dbEntity = tcpClient.<List<T>>readEntity();
         return dbEntity;
     }
-    public List<T> find(T entity) throws Exception{
+    public List<T> findEntities(T entity) throws Exception{
         tcpClient.sendMessage("FIND/" + entity.getClassName());
         tcpClient.sendEntity(entity);
         String message = tcpClient.read();
@@ -52,11 +64,19 @@ public abstract class EntityController<T extends IEntity> {
         List<T> dbEntity = tcpClient.<List<T>>readEntity();
         return dbEntity;
     }
+    public T getEntity(T entity) throws Exception{
+        tcpClient.sendMessage("GET/" + entity.getClassName());
+        tcpClient.sendEntity(entity);
+        String message = tcpClient.read();
+        if(shouldWaitForEntity(message) == false){
+            throw new Exception(message);
+        }
+        T dbEntity = tcpClient.<T>readEntity();
+        return dbEntity;
+    }
     
     protected boolean shouldWaitForEntity(String message){
         //provera poruke
         return true;
     }
-    
-    
 }

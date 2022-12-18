@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package forms;
 
 import javax.swing.JMenuItem;
@@ -65,6 +61,9 @@ public class MainForm extends javax.swing.JFrame {
 
     public JMenuItem getMembersMenu(){
         return menuItemMembers;
+    }
+    public JMenuItem getBooksMenu(){
+        return menuItemBooks;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

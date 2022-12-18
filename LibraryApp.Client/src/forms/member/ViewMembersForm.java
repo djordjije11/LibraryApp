@@ -5,7 +5,6 @@
 package forms.member;
 
 import forms.member.table.MembersTableModel;
-import java.io.IOException;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -17,7 +16,7 @@ import models.Member;
  */
 public class ViewMembersForm extends javax.swing.JDialog {
     
-    public ViewMembersForm(java.awt.Frame parent, boolean modal) throws IOException {
+    public ViewMembersForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -141,6 +140,12 @@ public class ViewMembersForm extends javax.swing.JDialog {
     }
     public JTextField getLastNameTextField(){
         return txtLastName;
+    }
+    public void emptyFirstNameTextField(){
+        txtFirstName.setText("");
+    }
+    public void emptyLastNameTextField(){
+        txtLastName.setText("");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreate;
