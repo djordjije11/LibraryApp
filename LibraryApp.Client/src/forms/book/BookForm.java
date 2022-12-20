@@ -19,6 +19,7 @@ public class BookForm extends javax.swing.JDialog {
     public BookForm(java.awt.Frame parent, boolean modal, BookDto book) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         setBook(book);
     }
 

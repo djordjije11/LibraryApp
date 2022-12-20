@@ -1,5 +1,7 @@
 package models;
 
+import message.ModelElement;
+
 /**
  *
  * @author Djordjije
@@ -21,8 +23,8 @@ public class CopyOfBook implements IEntity {
     }
     
     @Override
-    public String getClassName() {
-        return "CopyOfBook";
+    public ModelElement getModelElement() {
+        return ModelElement.COPYOFBOOK;
     }
     @Override
     public void setId(Long id) {

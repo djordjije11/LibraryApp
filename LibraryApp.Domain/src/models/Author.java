@@ -5,6 +5,7 @@
 package models;
 
 import java.util.Objects;
+import message.ModelElement;
 
 /**
  *
@@ -22,10 +23,10 @@ public class Author implements IEntity {
     }
     public Author() {
     }
-    
+   
     @Override
-    public String getClassName() {
-        return "Author";
+    public ModelElement getModelElement() {
+        return ModelElement.AUTHOR;
     }
     @Override
     public Long getId() {

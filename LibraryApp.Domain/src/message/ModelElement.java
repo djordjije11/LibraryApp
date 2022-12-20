@@ -11,6 +11,10 @@ package message;
 public enum ModelElement {
     LOGIN,
     EMPLOYEE,
+    BUILDING,
     MEMBER,
-    BOOK
+    BOOK,
+    COPYOFBOOK,
+    AUTHOR,
+    LENDING
 }

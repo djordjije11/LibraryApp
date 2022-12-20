@@ -19,6 +19,7 @@ public class ViewMembersForm extends javax.swing.JDialog {
     public ViewMembersForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

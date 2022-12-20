@@ -54,9 +54,7 @@ public class LoginController {
                         client.notify();
                     }
                 }
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(loginForm, "Neuspesno prijavljivanje u sistem.", "GRESKA", JOptionPane.ERROR_MESSAGE);
-            } catch (ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(loginForm, "Neuspesno prijavljivanje u sistem.", "GRESKA", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -64,10 +62,10 @@ public class LoginController {
     
     private void sendLogin(Employee employee) throws IOException{
         Request request = new Request(employee, ModelElement.EMPLOYEE, Method.LOGIN);
-        tcpClient.sendEntity(request);
+        tcpClient.sendObject(request);
     }
     private boolean isLoggedIn() throws IOException, ClassNotFoundException{
-        Response response = tcpClient.readEntity();
+        Response response = tcpClient.readObject();
         if(response.isConfirmed() == true){
             LoginDto loginInformation = (LoginDto) response.getObject();
             Session.setEmployee(loginInformation.getEmployee());

@@ -10,6 +10,8 @@ import models.Author;
 import models.dto.BookDto;
 import session.Session;
 import tcp.TcpClient;
+import validations.BookDtoValidator;
+import validations.exceptions.ValidationException;
 
 /**
  *
@@ -19,6 +21,7 @@ public class BookController extends EntityController<BookDto> {
     private ViewBooksForm viewBooksForm;
     private BookForm bookForm;
     private MainForm parentForm;
+    private BookDtoValidator validator;
     private AuthorController authorController;
     private boolean areAuthorsSetUp = false;
     private boolean isBookForBookFormSetUp = false;
@@ -26,6 +29,7 @@ public class BookController extends EntityController<BookDto> {
     public BookController(TcpClient tcpClient, MainForm parentForm) throws Exception {
         super(tcpClient);
         this.parentForm = parentForm;
+        validator = new BookDtoValidator();
         viewBooksForm = new ViewBooksForm(parentForm, true);
         refreshViewBooksForm();
         setViewBooksFormListeners();
@@ -150,7 +154,12 @@ public class BookController extends EntityController<BookDto> {
             book.setAuthor(author);
             book.setAddingAmount(addingAmount);
             book.setBuildingId(Session.getBuilding().getId());
-            //VALIDIRATI PODATKE
+            try {
+                validator.isValid(book);
+            } catch (ValidationException ex) {
+                JOptionPane.showMessageDialog(bookForm, ex.getMessage(), "Knjiga nije sacuvana", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             try {
                 BookDto dbBook = isBookNew == true ? createEntity(book) : updateEntity(book);
                 bookForm.setBook(dbBook);

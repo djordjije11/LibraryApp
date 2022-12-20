@@ -21,8 +21,6 @@ public class Client {
             synchronized(client){
                 client.wait();
             }
-            
-            
             new MainController(tcpClient);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Uspostavljanje konekcije je neuspesno.", "GRESKA", JOptionPane.ERROR_MESSAGE);

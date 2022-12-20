@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tcp;
 
 import java.io.BufferedReader;
@@ -35,7 +31,7 @@ public class TcpCommunicator {
             output.println(message);
     }
     
-    public String read() throws IOException{
+    public String readMessage() throws IOException{
         return input.readLine();
     }
     
@@ -44,20 +40,20 @@ public class TcpCommunicator {
             socketCommunication.close();
     }
     
-    public <T> void sendEntity(T entity) throws IOException{
+    public <T> void sendObject(T object) throws IOException{
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         ObjectOutputStream objectOutput = null;
         try{
             objectOutput = new ObjectOutputStream(bytes) ;
-            objectOutput.writeObject(entity);
+            objectOutput.writeObject(object);
         } finally{
             if(objectOutput != null) objectOutput.close();
         }
         String message = Base64.getEncoder().encodeToString(bytes.toByteArray());
         sendMessage(message);
     }
-    public <T> T readEntity() throws IOException, ClassNotFoundException{
-        String message = read();
+    public <T> T readObject() throws IOException, ClassNotFoundException{
+        String message = readMessage();
         byte [] data = Base64.getDecoder().decode(message);
         ByteArrayInputStream bytes = new ByteArrayInputStream(data);
         ObjectInputStream objectInput = null;

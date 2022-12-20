@@ -4,6 +4,8 @@
  */
 package models;
 
+import message.ModelElement;
+
 /**
  *
  * @author Djordjije
@@ -13,8 +15,8 @@ public class Building implements IEntity {
     private String name;
     
     @Override
-    public String getClassName() {
-        return "Building";
+    public ModelElement getModelElement() {
+        return ModelElement.BUILDING;
     }
     @Override
     public void setId(Long id) {

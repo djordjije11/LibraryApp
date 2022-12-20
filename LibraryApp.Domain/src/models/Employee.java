@@ -4,6 +4,8 @@
  */
 package models;
 
+import message.ModelElement;
+
 /**
  *
  * @author Djordjije 
@@ -22,8 +24,8 @@ public class Employee implements IEntity {
     }
     
     @Override
-    public String getClassName() {
-        return "Employee";
+    public ModelElement getModelElement() {
+        return ModelElement.EMPLOYEE;
     }
     @Override
     public void setId(Long id) {

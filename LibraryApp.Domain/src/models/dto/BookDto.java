@@ -2,6 +2,7 @@ package models.dto;
 
 import java.io.Serializable;
 import java.util.List;
+import message.ModelElement;
 import models.Author;
 import models.CopyOfBook;
 import models.IEntity;
@@ -22,13 +23,14 @@ public class BookDto implements IEntity, Serializable {
     private Long buildingId;
     
     @Override
-    public String getClassName() {
-        return "Book";
+    public ModelElement getModelElement() {
+        return ModelElement.BOOK;
     }
     @Override
     public void setId(Long id) {
         this.id = id;
     }
+    @Override
     public Long getId() {
         return id;
     }

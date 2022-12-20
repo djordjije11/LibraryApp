@@ -5,6 +5,7 @@
 package models;
 
 import java.time.LocalDate;
+import message.ModelElement;
 
 /**
  *
@@ -19,8 +20,8 @@ public class Lending implements IEntity {
     private LocalDate returnDate;
     
     @Override
-    public String getClassName() {
-        return "Lending";
+    public ModelElement getModelElement() {
+        return ModelElement.LENDING;
     }
     @Override
     public void setId(Long id) {

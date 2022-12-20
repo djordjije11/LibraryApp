@@ -18,6 +18,7 @@ public class MemberForm extends javax.swing.JDialog {
     public MemberForm(java.awt.Frame parent, boolean modal, Member member) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         setUpYears();
         setUpMonths();
         setUpDays();

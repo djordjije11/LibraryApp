@@ -9,6 +9,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import models.Member;
 import tcp.TcpClient;
+import validations.MemberValidator;
+import validations.exceptions.ValidationException;
 
 /**
  *
@@ -19,10 +21,12 @@ public class MemberController extends EntityController<Member> {
     private ViewMembersForm viewMembersForm;
     private MemberForm memberForm;
     private MainForm parentForm;
+    private MemberValidator validator;
     
     public MemberController(TcpClient tcpClient, MainForm parentForm) throws Exception{
         super(tcpClient);
         this.parentForm = parentForm;
+        validator = new MemberValidator();
         viewMembersForm = new ViewMembersForm(parentForm, true);
         refreshViewMembersForm();
         setViewMembersFormListeners();
@@ -100,7 +104,12 @@ public class MemberController extends EntityController<Member> {
                 member.setLastname(lastname);
                 member.setBirthday(birthday);
                 member.setEmail(email);
-                //VALIDIRATI PODATKE
+                try{
+                    validator.isValid(member);
+                } catch(ValidationException ex){
+                    JOptionPane.showMessageDialog(memberForm, ex.getMessage(), "Clan nije sacuvan", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
             try {
                 Member dbMember = isMemberNew == true ? createEntity(member) : updateEntity(member);
                 memberForm.setMember(dbMember);

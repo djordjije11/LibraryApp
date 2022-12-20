@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import message.ModelElement;
 
 /**
  *
@@ -21,8 +22,8 @@ public class Book implements IEntity, Serializable {
         this.author = author;
     }
     @Override
-    public String getClassName() {
-        return "Book";
+    public ModelElement getModelElement() {
+        return ModelElement.BOOK;
     }
     @Override
     public void setId(Long id) {

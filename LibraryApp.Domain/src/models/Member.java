@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import message.ModelElement;
 
 /**
  *
@@ -37,6 +34,10 @@ public class Member implements IEntity, Serializable {
     public Member(){}
     
     @Override
+    public ModelElement getModelElement() {
+        return ModelElement.MEMBER;
+    }
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -66,10 +67,5 @@ public class Member implements IEntity, Serializable {
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Override
-    public String getClassName() {
-        return "Member";
     }
 }
