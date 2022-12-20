@@ -6,7 +6,7 @@ package models;
 
 /**
  *
- * @author Djordjije
+ * @author Djordjije 
  */
 public class Employee implements IEntity {
     private Long id;
@@ -14,6 +14,12 @@ public class Employee implements IEntity {
     private String lastname;
     private String password;
     private Building building;
+    
+    public Employee(){}
+    public Employee(Long id, String password){
+        this.id = id;
+        this.password = password;
+    }
     
     @Override
     public String getClassName() {
@@ -26,5 +32,8 @@ public class Employee implements IEntity {
     @Override
     public Long getId() {
         return id;
+    }
+    public String getPassword(){
+        return password;
     }
 }

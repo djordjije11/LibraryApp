@@ -14,7 +14,6 @@ import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Base64;
-import models.IEntity;
 
 /**
  *

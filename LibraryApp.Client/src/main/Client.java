@@ -1,7 +1,10 @@
 package main;
 
+import controllers.LoginController;
 import controllers.MainController;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import tcp.TcpClient;
 
@@ -12,14 +15,19 @@ import tcp.TcpClient;
 public class Client {
     public static void main(String[] args) {
         try {
+            Client client = new Client();
             TcpClient tcpClient = new TcpClient("localhost", 9001);
-            //login
-            //poslati podatke serveru, znaci poruku LOGIN i OBJEKAT EMPLOYEE
-            //ako je sve okej, dobija se LoginDto objekat ciji se podaci cuvaju u Session.setEmployee(...) i Session.setBuilding(...)
+            new LoginController(tcpClient, client);
+            synchronized(client){
+                client.wait();
+            }
+            
             
             new MainController(tcpClient);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Uspostavljanje konekcije je neuspesno.", "GRESKA", JOptionPane.ERROR_MESSAGE);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
