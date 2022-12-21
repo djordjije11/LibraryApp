@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import models.Member;
 import java.time.Month;
 import java.time.YearMonth;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -172,13 +173,29 @@ public class MemberForm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbxMonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxMonthActionPerformed
-        setUpDays();
+        updateDays();
     }//GEN-LAST:event_cmbxMonthActionPerformed
 
     private void cmbxYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxYearActionPerformed
-        setUpDays();
+        updateDays();
     }//GEN-LAST:event_cmbxYearActionPerformed
 
+    private void updateDays(){
+        int monthLength = YearMonth.of((Integer)cmbxYear.getSelectedItem(), (Month)cmbxMonth.getSelectedItem()).lengthOfMonth();
+        ComboBoxModel<Integer> cmbxModel = cmbxDay.getModel();
+        int cmbxSize = cmbxModel.getSize();
+        int difference = monthLength - cmbxSize;
+        if(difference > 0){
+            for (int i = 1; i <= difference; i++) {
+                System.out.println(cmbxSize + i);
+                cmbxDay.addItem(cmbxSize + i);
+            }
+        } else if(difference < 0){
+            for (int i = 0; i > difference; i--) {
+                cmbxDay.removeItem(cmbxSize + i);
+            }
+        }
+    }
     private void setUpDays(){
         int monthLength = YearMonth.of((Integer)cmbxYear.getSelectedItem(), (Month)cmbxMonth.getSelectedItem()).lengthOfMonth();
         Integer[] days = new Integer[monthLength];

@@ -23,26 +23,29 @@ public class MainForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar2 = new javax.swing.JMenuBar();
-        menuMembers = new javax.swing.JMenu();
+        menuModels = new javax.swing.JMenu();
         menuItemMembers = new javax.swing.JMenuItem();
-        menuBooks = new javax.swing.JMenu();
         menuItemBooks = new javax.swing.JMenuItem();
+        menuItemLending = new javax.swing.JMenuItem();
+        menuLogout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        menuMembers.setText("Clanovi");
+        menuModels.setText("Forme");
 
         menuItemMembers.setText("Otvori formu za clanove");
-        menuMembers.add(menuItemMembers);
-
-        jMenuBar2.add(menuMembers);
-
-        menuBooks.setText("Knjige");
+        menuModels.add(menuItemMembers);
 
         menuItemBooks.setText("Otvori formu za knjige");
-        menuBooks.add(menuItemBooks);
+        menuModels.add(menuItemBooks);
 
-        jMenuBar2.add(menuBooks);
+        menuItemLending.setText("jMenuItem1");
+        menuModels.add(menuItemLending);
+
+        jMenuBar2.add(menuModels);
+
+        menuLogout.setText("Log out");
+        jMenuBar2.add(menuLogout);
 
         setJMenuBar(jMenuBar2);
 
@@ -69,9 +72,10 @@ public class MainForm extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenu menuBooks;
     private javax.swing.JMenuItem menuItemBooks;
+    private javax.swing.JMenuItem menuItemLending;
     private javax.swing.JMenuItem menuItemMembers;
-    private javax.swing.JMenu menuMembers;
+    private javax.swing.JMenu menuLogout;
+    private javax.swing.JMenu menuModels;
     // End of variables declaration//GEN-END:variables
 }

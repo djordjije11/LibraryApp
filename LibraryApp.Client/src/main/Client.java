@@ -16,10 +16,12 @@ public class Client {
     public static void main(String[] args) {
         try {
             TcpClient tcpClient = new TcpClient("localhost", 9001);
+            /*
             new LoginController(tcpClient);
             synchronized(tcpClient){
                 tcpClient.wait();
             }
+            */
              new MainController(tcpClient);
              synchronized(tcpClient){
                  tcpClient.wait();
