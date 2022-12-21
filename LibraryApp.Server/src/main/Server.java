@@ -25,8 +25,7 @@ public class Server {
                 new ClientHandler(new TcpServer(socketCommunication), RandomID.getRandomID()).start();
             }
         } catch (Exception ex) {
-            //bacio exception configManager jer ne moze da nadje fajl
-            //bacio exception ServerSocket jer nije mogao da se pokrene
+            ex.printStackTrace();
         }
     }
 }

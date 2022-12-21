@@ -35,7 +35,11 @@ public class SqlBook extends SqlEntity {
     public void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setString(1, book.getTitle());
         preparedStatement.setString(2, book.getDescription());
-        preparedStatement.setLong(3, book.getAuthor().getId());
+        if(book.getAuthor() == null){
+            preparedStatement.setObject(3, null);
+        } else{
+            preparedStatement.setLong(3, book.getAuthor().getId());
+        }
     }
 
     @Override
@@ -47,18 +51,22 @@ public class SqlBook extends SqlEntity {
     public void setUpPreparedStatementUpdate(PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setString(1, book.getTitle());
         preparedStatement.setString(2, book.getDescription());
-        preparedStatement.setLong(3, book.getAuthor().getId());
+        if(book.getAuthor() == null){
+            preparedStatement.setObject(3, null);
+        } else{
+            preparedStatement.setLong(3, book.getAuthor().getId());
+        }
         preparedStatement.setLong(4, book.getId());
     }
 
     @Override
     public String getStatementSelectAllQuery() {
-        return "SELECT b.*, a.firstname, a.lastname FROM " + getTableName() + " as b INNER JOIN " + new SqlAuthor().getTableName() + " as a ON (b.authorID = a.ID)";
+        return "SELECT b.*, a.firstname, a.lastname FROM " + getTableName() + " as b LEFT OUTER JOIN " + new SqlAuthor().getTableName() + " as a ON (b.authorID = a.ID)";
     }
     
     @Override
     public String getStatementSelectByIdQuery() {
-        return "SELECT b.*, a.firstname, a.lastname FROM " + getTableName() + " as b INNER JOIN " + new SqlAuthor().getTableName() + " as a ON (b.authorID = a.ID) WHERE b.ID = " + book.getId();
+        return "SELECT b.*, a.firstname, a.lastname FROM " + getTableName() + " as b LEFT OUTER JOIN " + new SqlAuthor().getTableName() + " as a ON (b.authorID = a.ID) WHERE b.ID = " + book.getId();
     }
 
     @Override

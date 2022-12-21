@@ -47,6 +47,8 @@ public class Author implements IEntity, Serializable {
     }
     @Override
     public String toString() {
+        String firstname = this.firstname != null ? this.firstname : "";
+        String lastname = this.lastname != null ? this.lastname : "";
         return firstname + " " + lastname;
     }
     @Override

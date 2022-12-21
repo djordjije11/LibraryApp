@@ -63,7 +63,7 @@ public class BookController implements IController {
                     Long newCurrentAmount = (long)copiesOfBook.size() + currentAmount;
                     dbObject = new BookDto(book, buildingID, newCurrentAmount);
                 } else if(bookDto.getIsUpdated() == true && addingAmount == 0){
-                    dbObject = bookLogic.updateBook(book);
+                    dbObject = new BookDto(bookLogic.updateBook(book), buildingID, currentAmount);
                 } else if(bookDto.getIsUpdated() == true && addingAmount > 0) {
                     Book dbBook = bookLogic.updateBook(book, addingAmount, buildingID);
                     Long newCurrentAmount = bookLogic.getNumberOfCopiesOfBookInBuilding(new CopyOfBook(dbBook.getId(), buildingID));
