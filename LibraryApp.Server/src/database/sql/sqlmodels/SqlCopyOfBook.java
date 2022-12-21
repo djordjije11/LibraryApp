@@ -32,7 +32,7 @@ public class SqlCopyOfBook extends SqlEntity {
     
     @Override
     public String getPreparedStatementInsertQuery() {
-        return "INSERT INTO " + getTableName() + "(bookID, buildingID,) VALUES (?,?)";
+        return "INSERT INTO " + getTableName() + "(bookID, buildingID) VALUES (?, ?)";
     }
 
     @Override

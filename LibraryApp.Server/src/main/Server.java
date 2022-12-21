@@ -3,10 +3,10 @@ package main;
 import database.configurations.ConfigFilePaths;
 import database.configurations.IConfigurationManager;
 import database.configurations.JsonFileConfigurationManager;
-import database.sql.connectors.SqlConnector;
+import database.sql.connection.SqlConnectionFactory;
+import helper.RandomID;
 import java.net.ServerSocket;
 import java.net.Socket;
-import tcp.TcpCommunicator;
 import tcp.TcpServer;
 
 /**
@@ -18,11 +18,11 @@ public class Server {
         try {
             IConfigurationManager configManager = new JsonFileConfigurationManager();
             configManager.initialize(ConfigFilePaths.SQL_JSON);
-            SqlConnector.setConfigurationManager(configManager);
+            SqlConnectionFactory.initialize(configManager);
             ServerSocket socket = new ServerSocket(9001);
             while(true){
                 Socket socketCommunication = socket.accept();
-                new ClientHandler(new TcpServer(socketCommunication)).start();
+                new ClientHandler(new TcpServer(socketCommunication), RandomID.getRandomID()).start();
             }
         } catch (Exception ex) {
             //bacio exception configManager jer ne moze da nadje fajl

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import message.ModelElement;
 import models.Author;
+import models.Book;
 import models.CopyOfBook;
 import models.IEntity;
 
@@ -21,6 +22,27 @@ public class BookDto implements IEntity, Serializable {
     private Long addingAmount;
     private boolean isUpdated = false;
     private Long buildingId;
+
+    public BookDto() {
+    }
+    public BookDto(Book book){
+        this.id = book.getId();
+        this.title = book.getTitle();
+        this.description = book.getDescription();
+        this.author = book.getAuthor();
+    }
+    public BookDto(Book book, Long buildingID){
+        this(book);
+        this.buildingId = buildingID;
+    }
+    public BookDto(Book book, Long buildingID, Long currentAmount){
+        this(book, buildingID);
+        this.currentAmount = currentAmount;
+    }
+    
+    public Book getBookFromBookDto(){
+        return new Book(id, title, description, author);
+    }
     
     @Override
     public ModelElement getModelElement() {

@@ -1,17 +1,21 @@
 package models;
 
+import java.io.Serializable;
 import message.ModelElement;
 
 /**
  *
  * @author Djordjije
  */
-public class CopyOfBook implements IEntity {
+public class CopyOfBook implements IEntity, Serializable {
     private Long id;
     private Long bookId;
     private Long buildingId;
     
     public CopyOfBook(){}
+    public CopyOfBook(Long id) {
+        this.id = id;
+    }
     public CopyOfBook(Long id, Long bookId, Long buildingId){
         this.id = id;
         this.bookId = bookId;

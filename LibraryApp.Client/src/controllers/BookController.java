@@ -23,8 +23,6 @@ public class BookController extends EntityController<BookDto> {
     private MainForm parentForm;
     private BookDtoValidator validator;
     private AuthorController authorController;
-    private boolean areAuthorsSetUp = false;
-    private boolean isBookForBookFormSetUp = false;
     
     public BookController(TcpClient tcpClient, MainForm parentForm) throws Exception {
         super(tcpClient);
@@ -44,11 +42,11 @@ public class BookController extends EntityController<BookDto> {
     }
     private void setViewBooksFormFindListener() {
         viewBooksForm.getFindButton().addActionListener((ActionEvent e) -> {
-            BookDto book = new BookDto();
-            book.setTitle(viewBooksForm.getTitleTextField().getText().trim());
+            BookDto bookDto = new BookDto();
+            bookDto.setTitle(viewBooksForm.getTitleTextField().getText().trim());
             try {
-                List<BookDto> books = findEntities(book);
-                viewBooksForm.setBooksTableData(books); //need to implement,,,
+                List<BookDto> books = findEntities(bookDto);
+                viewBooksForm.setBooksTableData(books);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(viewBooksForm, "Pretraga knjiga nije uspesno izvrsena.", "GRESKA", JOptionPane.ERROR_MESSAGE);
             }
@@ -59,52 +57,51 @@ public class BookController extends EntityController<BookDto> {
             bookForm = new BookForm(parentForm, true, null);
             try {
                 setUpAuthorsData();
-                areAuthorsSetUp = true;
             } catch (Exception ex) {
-                areAuthorsSetUp = false;
+                JOptionPane.showMessageDialog(bookForm, "Autori nisu uspesno ucitani!.", "GRESKA", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             setBookFormListeners();
             bookForm.setVisible(true);
         });
-        if(areAuthorsSetUp == false) throw new Exception("Authors are not set up!");
     }
     private void setViewBooksFormOpenBookFormListener() throws Exception{
         viewBooksForm.getOpenBookFormButton().addActionListener((ActionEvent e) -> {
-            BookDto book = viewBooksForm.getSelectedBook();
-            BookDto dbBook;
-            try {
-                dbBook = getEntity(book);
-            } catch (Exception ex) {
-                isBookForBookFormSetUp = false;
+            BookDto bookDto = viewBooksForm.getSelectedBook();
+            if(bookDto == null){
+                JOptionPane.showMessageDialog(bookForm, "Nije odabrana nijedna knjiga..", "Odaberite knjigu", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-            bookForm = new BookForm(parentForm, true, dbBook);
-            isBookForBookFormSetUp = true;
+            bookDto.setBuildingId(Session.getBuilding().getId());
+            BookDto dbBookDto;
+            try {
+                dbBookDto = getEntity(bookDto);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(bookForm, "Knjiga nije uspesno ucitana.", "GRESKA", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            bookForm = new BookForm(parentForm, true, dbBookDto);
             try {
                 setUpAuthorsData();
-                areAuthorsSetUp = true;
             } catch (Exception ex) {
-                areAuthorsSetUp = false;
+                JOptionPane.showMessageDialog(bookForm, "Autori nisu uspesno ucitani!.", "GRESKA", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             setBookFormListeners();
             bookForm.setVisible(true);
         });
-        if(isBookForBookFormSetUp == false) throw new Exception("The book is not set up!");
-        if(areAuthorsSetUp == false) throw new Exception("Authors are not set up!");
     }
     private void setBookFormDeleteListener() {
         bookForm.getDeleteButton().addActionListener((ActionEvent e) -> {
             try {
-                BookDto book = bookForm.getBook();
-                if(book.getCurrentAmount() > 0){
+                BookDto bookDto = bookForm.getBook();
+                if(bookDto.getCurrentAmount() > 0){
                     JOptionPane.showMessageDialog(bookForm, "Nije dozvoljeno brisanje knjiga ciji primerci su cuvani u bazi.", "Nedozvoljena operacija", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                BookDto dbBook = deleteEntity(book);
+                BookDto dbBookDto = deleteEntity(bookDto);
                 refreshViewBooksForm();
-                JOptionPane.showMessageDialog(bookForm, "Knjiga " + dbBook + " je uspesno obrisana.", "Knjiga obrisana", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(bookForm, "Knjiga " + dbBookDto + " je uspesno obrisana.", "Knjiga obrisana", JOptionPane.INFORMATION_MESSAGE);
                 bookForm.dispose();
                 bookForm = null;
             } catch (Exception ex) {
@@ -114,14 +111,13 @@ public class BookController extends EntityController<BookDto> {
     }
     private void setBookFormSaveListener() {
         bookForm.getSaveButton().addActionListener((ActionEvent e) -> {
-            BookDto book = bookForm.getBook();
+            BookDto bookDto = bookForm.getBook();
             boolean isBookNew = false;
             boolean hasChanges = false;
-            if(book == null) {
-                book = new BookDto();
+            if(bookDto == null) {
+                bookDto = new BookDto();
                 isBookNew = true;
                 hasChanges = true;
-                book.setIsUpdated(true);
             }
             String title = bookForm.getTitleTextField().getText().trim();
             String description = bookForm.getDescriptionTextArea().getText().trim();
@@ -137,10 +133,10 @@ public class BookController extends EntityController<BookDto> {
                 JOptionPane.showMessageDialog(bookForm, "Pogresno uneti podaci.", "Za broj dodatih primeraka knjige mora biti unet poztivan celi broj.", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            if(hasChanges == false && (book.getTitle().equals(title) == false || book.getDescription().equals(description) == false
-                    || book.getAuthor().equals(author) == false)){
+            if(hasChanges == false && (bookDto.getTitle().equals(title) == false || bookDto.getDescription().equals(description) == false
+                    || bookDto.getAuthor().equals(author) == false)){
                 hasChanges = true;
-                book.setIsUpdated(true);
+                bookDto.setIsUpdated(true);
             }
             if(hasChanges == false && addingAmount > 0){
                 hasChanges = true;
@@ -149,23 +145,24 @@ public class BookController extends EntityController<BookDto> {
                     JOptionPane.showMessageDialog(bookForm, "Podaci o clanu nisu promenjeni.", "Podaci nisu promenjeni", JOptionPane.INFORMATION_MESSAGE);
                     return;
             }
-            book.setTitle(title);
-            book.setDescription(description);
-            book.setAuthor(author);
-            book.setAddingAmount(addingAmount);
-            book.setBuildingId(Session.getBuilding().getId());
+            bookDto.setTitle(title);
+            bookDto.setDescription(description);
+            bookDto.setAuthor(author);
+            bookDto.setAddingAmount(addingAmount);
+            bookDto.setBuildingId(Session.getBuilding().getId());
             try {
-                validator.isValid(book);
+                validator.isValid(bookDto);
             } catch (ValidationException ex) {
                 JOptionPane.showMessageDialog(bookForm, ex.getMessage(), "Knjiga nije sacuvana", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             try {
-                BookDto dbBook = isBookNew == true ? createEntity(book) : updateEntity(book);
+                BookDto dbBook = isBookNew == true ? createEntity(bookDto) : updateEntity(bookDto);
                 bookForm.setBook(dbBook);
                 refreshViewBooksForm();
-                JOptionPane.showMessageDialog(bookForm, "Knjiga " + dbBook + " je uspesno sacuvana.", "Knjiga sacuvan", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(bookForm, "Knjiga " + dbBook + " je uspesno sacuvana.", "Knjiga sacuvana", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
+                ex.printStackTrace();
                 JOptionPane.showMessageDialog(bookForm, "Knjiga nije uspesno sacuvana.", "GRESKA", JOptionPane.ERROR_MESSAGE);
             }
         });

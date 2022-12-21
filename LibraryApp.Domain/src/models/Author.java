@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
+import java.io.Serializable;
 import java.util.Objects;
 import message.ModelElement;
 
@@ -11,7 +8,7 @@ import message.ModelElement;
  *
  * @author Djordjije
  */
-public class Author implements IEntity {
+public class Author implements IEntity, Serializable {
     private Long id;
     private String firstname;
     private String lastname;

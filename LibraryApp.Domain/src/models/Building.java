@@ -1,18 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
+import java.io.Serializable;
 import message.ModelElement;
 
 /**
  *
  * @author Djordjije
  */
-public class Building implements IEntity {
+public class Building implements IEntity, Serializable {
     private Long id;
     private String name;
+
+    public Building(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    public Building() {
+    }
     
     @Override
     public ModelElement getModelElement() {

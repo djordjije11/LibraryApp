@@ -16,8 +16,8 @@ import models.IEntity;
 public class SqlBook extends SqlEntity {
     private Book book;
     
-    public SqlBook(IEntity entity) {
-        super(entity);
+    public SqlBook(Book book) {
+        super(book);
         this.book = book;
     }
     
@@ -28,7 +28,7 @@ public class SqlBook extends SqlEntity {
 
     @Override
     public String getPreparedStatementInsertQuery() {
-        return "INSERT INTO " + getTableName() + "(title, description, authorID) VALUES (?,?)";
+        return "INSERT INTO " + getTableName() + "(title, description, authorID) VALUES (?,?,?)";
     }
 
     @Override
@@ -48,19 +48,24 @@ public class SqlBook extends SqlEntity {
         preparedStatement.setString(1, book.getTitle());
         preparedStatement.setString(2, book.getDescription());
         preparedStatement.setLong(3, book.getAuthor().getId());
-        preparedStatement.setLong(3, book.getId());
+        preparedStatement.setLong(4, book.getId());
+    }
+
+    @Override
+    public String getStatementSelectAllQuery() {
+        return "SELECT b.*, a.firstname, a.lastname FROM " + getTableName() + " as b INNER JOIN " + new SqlAuthor().getTableName() + " as a ON (b.authorID = a.ID)";
     }
     
     @Override
     public String getStatementSelectByIdQuery() {
-        return "SELECT b.*, a.firstname, a.lastname FROM " + getTableName() + " as b INNER JOIN " + new SqlAuthor().getTableName() + " as a ON (b.authorID = a.ID)";
+        return "SELECT b.*, a.firstname, a.lastname FROM " + getTableName() + " as b INNER JOIN " + new SqlAuthor().getTableName() + " as a ON (b.authorID = a.ID) WHERE b.ID = " + book.getId();
     }
 
     @Override
     public String getStatementSelectWithConditionQuery() {
         List<String> conditions = new ArrayList<>();
         if(book.getTitle() != null && book.getTitle().isBlank() == false){
-            conditions.add("firstname LIKE '" + book.getTitle() + "%'");
+            conditions.add("title LIKE '" + book.getTitle() + "%'");
         }
         return constructSelectWithConditionsQuery(conditions);
     }

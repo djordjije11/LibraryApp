@@ -1,16 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
+import java.io.Serializable;
 import message.ModelElement;
 
 /**
  *
  * @author Djordjije 
  */
-public class Employee implements IEntity {
+public class Employee implements IEntity, Serializable {
     private Long id;
     private String firstname;
     private String lastname;
@@ -21,6 +18,13 @@ public class Employee implements IEntity {
     public Employee(Long id, String password){
         this.id = id;
         this.password = password;
+    }
+    public Employee(Long id, String firstname, String lastname, String password, Building building) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.building = building;
     }
     
     @Override
@@ -37,5 +41,8 @@ public class Employee implements IEntity {
     }
     public String getPassword(){
         return password;
+    }
+    public Building getBuilding(){
+        return building;
     }
 }

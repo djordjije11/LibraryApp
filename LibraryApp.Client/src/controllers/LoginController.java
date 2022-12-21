@@ -4,13 +4,11 @@ import forms.LoginForm;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.JOptionPane;
-import main.Client;
 import message.Method;
 import message.ModelElement;
 import message.Request;
 import message.Response;
 import models.Employee;
-import models.dto.LoginDto;
 import session.Session;
 import tcp.TcpClient;
 
@@ -20,16 +18,15 @@ import tcp.TcpClient;
  */
 public class LoginController {
     private final TcpClient tcpClient;
-    private final Client client;
     private LoginForm loginForm;
     
-    public LoginController(TcpClient tcpClient, Client client){
+    public LoginController(TcpClient tcpClient){
         this.tcpClient = tcpClient;
-        this.client = client;
         loginForm = new LoginForm();
         setLoginListener();
         loginForm.setVisible(true);
     }
+    
     private void setLoginListener(){
         loginForm.getLoginButton().addActionListener((ActionEvent e) -> {
             Long employeeID;
@@ -45,14 +42,17 @@ public class LoginController {
                 sendLogin(employee);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(loginForm, "Neuspesno poslati podaci za prijavljivanje u sistem.", "GRESKA", JOptionPane.ERROR_MESSAGE);
+                return;
             }
             try {
                 if(isLoggedIn() == true){
                     loginForm.dispose();
                     loginForm = null;
-                    synchronized(client){
-                        client.notify();
+                    synchronized(tcpClient){
+                        tcpClient.notify();
                     }
+                } else{
+                    JOptionPane.showMessageDialog(loginForm, "Neuspesno prijavljivanje u sistem.", "GRESKA", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (IOException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(loginForm, "Neuspesno prijavljivanje u sistem.", "GRESKA", JOptionPane.ERROR_MESSAGE);
@@ -65,11 +65,11 @@ public class LoginController {
         tcpClient.sendObject(request);
     }
     private boolean isLoggedIn() throws IOException, ClassNotFoundException{
-        Response response = tcpClient.readObject();
+        Response response = tcpClient.<Response>readObject();
         if(response.isConfirmed() == true){
-            LoginDto loginInformation = (LoginDto) response.getObject();
-            Session.setEmployee(loginInformation.getEmployee());
-            Session.setBuilding(loginInformation.getBuilding());
+            Employee employee = (Employee) response.getObject();
+            Session.setEmployee(employee);
+            Session.setBuilding(employee.getBuilding());
             return true;
         } else return false;
     }

@@ -1,10 +1,13 @@
 package message;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Djordjije
  */
-public enum Method {
+public enum Method implements Serializable {
+    EXIT,
     LOGIN,
     CREATE,
     READALL,    //get all entities

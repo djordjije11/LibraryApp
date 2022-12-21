@@ -1,6 +1,5 @@
 package forms;
 
-import java.util.Arrays;
 import javax.swing.JButton;
 
 public class LoginForm extends javax.swing.JFrame {
@@ -95,7 +94,7 @@ public class LoginForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public String getPassword() {
-       return Arrays.toString(txtPassword.getPassword());
+       return String.valueOf(txtPassword.getPassword());
     }
 
     public Long getEmployeeID() throws NumberFormatException {

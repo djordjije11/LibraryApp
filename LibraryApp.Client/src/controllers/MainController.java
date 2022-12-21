@@ -40,8 +40,10 @@ public class MainController {
                 bookController = new BookController(tcpClient, form);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(form, "Greska prilikom otvaranja forme za knige.", "GRESKA", JOptionPane.ERROR_MESSAGE);
-                bookController.closeForms();
+                if(bookController != null){
+                    bookController.closeForms();
                 bookController = null;
+                }
             }
         });
     }

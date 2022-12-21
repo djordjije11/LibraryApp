@@ -3,9 +3,9 @@ package main;
 import controllers.LoginController;
 import controllers.MainController;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import message.ModelElement;
+import message.Request;
 import tcp.TcpClient;
 
 /**
@@ -15,17 +15,21 @@ import tcp.TcpClient;
 public class Client {
     public static void main(String[] args) {
         try {
-            Client client = new Client();
             TcpClient tcpClient = new TcpClient("localhost", 9001);
-            new LoginController(tcpClient, client);
-            synchronized(client){
-                client.wait();
+            new LoginController(tcpClient);
+            synchronized(tcpClient){
+                tcpClient.wait();
             }
-            new MainController(tcpClient);
+             new MainController(tcpClient);
+             synchronized(tcpClient){
+                 tcpClient.wait();
+            }
+            
+            tcpClient.sendObject(new Request(null, ModelElement.EXIT_MESSAGE, null));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Uspostavljanje konekcije je neuspesno.", "GRESKA", JOptionPane.ERROR_MESSAGE);
         } catch (InterruptedException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 }

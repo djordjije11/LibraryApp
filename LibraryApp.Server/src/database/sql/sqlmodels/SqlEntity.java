@@ -52,7 +52,6 @@ public abstract class SqlEntity {
             }
             query += " AND ";
         }
-        System.out.println(query);
         return query;
     }
 }

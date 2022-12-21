@@ -4,6 +4,7 @@
  */
 package models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import message.ModelElement;
 
@@ -11,7 +12,7 @@ import message.ModelElement;
  *
  * @author Djordjije
  */
-public class Lending implements IEntity {
+public class Lending implements IEntity, Serializable {
     private Long id;
     private Book book;
     private CopyOfBook copyOfBook;

@@ -26,6 +26,8 @@ public class MembersTableModel extends AbstractTableModel{
         fireTableDataChanged();
     }
     public Member getMember(int index){
+        if(index < 0)
+            return null;
         return members.get(index);
     }
     @Override

@@ -3,7 +3,7 @@ package database.sql.brokers.impl;
 import database.sql.brokers.interfaces.IMemberBroker;
 import database.sql.sqlmodels.SqlMember;
 import helper.EntitiesConverter;
-import java.sql.SQLException;
+import java.sql.Connection;
 import java.util.List;
 import models.Member;
 
@@ -14,27 +14,27 @@ import models.Member;
 public class SqlMemberBroker extends SqlEntityBroker implements IMemberBroker {
     
     @Override
-    public Member createMember(Member member) throws Exception {
-        return (Member) create(new SqlMember(member));
+    public Member createMember(Member member, Connection connection) throws Exception {
+        return (Member) create(new SqlMember(member), connection);
     }
     @Override
-    public Member findMember(Member member) throws Exception {
-        return (Member)find(new SqlMember(member));
+    public Member findMember(Member member, Connection connection) throws Exception {
+        return (Member)find(new SqlMember(member), connection);
     }
     @Override
-    public List<Member> findMembers(Member member) throws Exception {
-        return EntitiesConverter.<Member>convertList(findEntities(new SqlMember(member)));
+    public List<Member> findMembers(Member member, Connection connection) throws Exception {
+        return EntitiesConverter.<Member>convertList(findEntities(new SqlMember(member), connection));
     }
     @Override
-    public List<Member> readAllMembers(Member member) throws Exception {
-        return EntitiesConverter.<Member>convertList(readAll(new SqlMember(member)));
+    public List<Member> readAllMembers(Member member, Connection connection) throws Exception {
+        return EntitiesConverter.<Member>convertList(readAll(new SqlMember(member), connection));
     }
     @Override
-    public Member updateMember(Member member) throws Exception {
-        return (Member)update(new SqlMember(member));
+    public Member updateMember(Member member, Connection connection) throws Exception {
+        return (Member)update(new SqlMember(member), connection);
     }
     @Override
-    public Member deleteMember(Member member) throws Exception {
-        return (Member)delete(new SqlMember(member));
+    public Member deleteMember(Member member, Connection connection) throws Exception {
+        return (Member)delete(new SqlMember(member), connection);
     }
 }

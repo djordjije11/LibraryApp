@@ -22,6 +22,8 @@ public class BooksTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
     public BookDto getBook(int index){
+        if(index < 0)
+            return null;
         return books.get(index);
     }
     @Override

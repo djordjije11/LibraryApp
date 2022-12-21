@@ -1,9 +1,11 @@
 package logics.impl;
 
 import database.sql.brokers.interfaces.IAuthorBroker;
+import database.sql.connection.SqlConnectionFactory;
 import java.util.List;
 import logics.interfaces.IAuthorLogic;
 import models.Author;
+import java.sql.Connection;
 
 /**
  *
@@ -16,20 +18,20 @@ public class AuthorLogic implements IAuthorLogic {
     }
     @Override
     public Author findAuthor(Author author) throws Exception {
+        Connection connection = SqlConnectionFactory.getConnection();
         try{
-            authorBroker.openConnection();
-            return authorBroker.findAuthor(author);
+            return authorBroker.findAuthor(author, connection);
         } finally{
-            authorBroker.closeConnection();
+            SqlConnectionFactory.releaseConnection(connection);
         }
     }
     @Override
     public List<Author> readAllAuthors() throws Exception {
+        Connection connection = SqlConnectionFactory.getConnection();
         try{
-            authorBroker.openConnection();
-            return authorBroker.readAllAuthors(new Author());
+            return authorBroker.readAllAuthors(new Author(), connection);
         } finally{
-            authorBroker.closeConnection();
+            SqlConnectionFactory.releaseConnection(connection);
         }
     }
 }
