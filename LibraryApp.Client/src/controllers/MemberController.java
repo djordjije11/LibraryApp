@@ -18,10 +18,10 @@ import validations.exceptions.ValidationException;
  */
 public class MemberController extends EntityController<Member> {
     
-    private ViewMembersForm viewMembersForm;
+    private final ViewMembersForm viewMembersForm;
     private MemberForm memberForm;
-    private MainForm parentForm;
-    private MemberValidator validator;
+    private final MainForm parentForm;
+    private final MemberValidator validator;
     
     public MemberController(TcpClient tcpClient, MainForm parentForm) throws Exception{
         super(tcpClient);

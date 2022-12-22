@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
 import javax.swing.JOptionPane;
-import session.Session;
 
 /**
  *
@@ -22,7 +21,6 @@ public class TcpClient extends TcpCommunicator {
             return input.readLine();
         } catch(SocketException ex) {
             JOptionPane.showMessageDialog(null, "Konekcija sa serverom je prekinuta.", "Prekinuta konekcija", JOptionPane.ERROR_MESSAGE);
-            //Session.closeAllForms();
             System.exit(0);
             throw ex;
         }

@@ -40,9 +40,10 @@ public class Server implements Runnable {
         tcpServersList.remove(tcpServer);
     }
     private synchronized void removeAllTcpServers() throws IOException{
-        for(int i = 0, size = tcpServersList.size(); i < size; i++){
-            removeTcpServer(tcpServersList.get(i));
+        for (TcpServer tcpServer : tcpServersList) {
+            tcpServer.closeConnection();
         }
+        tcpServersList.clear();
     }
     public void closeServer() throws IOException{
         serverUp = false;

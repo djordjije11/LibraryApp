@@ -3,7 +3,6 @@ package controllers;
 import forms.MainForm;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
-import session.Session;
 import tcp.TcpClient;
 
 /**
@@ -45,7 +44,7 @@ public class MainController {
                 JOptionPane.showMessageDialog(form, "Greska prilikom otvaranja forme za knige.", "GRESKA", JOptionPane.ERROR_MESSAGE);
                 if(bookController != null){
                     bookController.closeForms();
-                bookController = null;
+                    bookController = null;
                 }
             }
         });

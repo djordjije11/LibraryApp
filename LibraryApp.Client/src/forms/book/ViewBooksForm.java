@@ -1,20 +1,16 @@
 package forms.book;
 
 import forms.book.table.BooksTableModel;
-import java.awt.Window;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import models.dto.BookDto;
-import session.Session;
 
 /**
  *
  * @author Djordjije
  */
-public class ViewBooksForm extends javax.swing.JDialog {
+public final class ViewBooksForm extends javax.swing.JDialog {
 
     /**
      * Creates new form ViewBooksForm
@@ -24,19 +20,8 @@ public class ViewBooksForm extends javax.swing.JDialog {
         initComponents();
         pack();
         setLocationRelativeTo(null);
-        Session.addWindowForm(this);
-        setUpCloseButton(this);
     }
     
-    private void setUpCloseButton(Window form){
-        addWindowListener((new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                Session.removeWindowForm(form);
-            }
-        }));
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -1,37 +1,22 @@
 package forms.member;
 
 import forms.member.table.MembersTableModel;
-import java.awt.Window;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import models.Member;
-import session.Session;
 
 /**
  *
  * @author Djordjije
  */
-public class ViewMembersForm extends javax.swing.JDialog {
+public final class ViewMembersForm extends javax.swing.JDialog {
     
     public ViewMembersForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         pack();
         setLocationRelativeTo(null);
-        Session.addWindowForm(this);
-        setUpCloseButton(this);
-    }
-
-    private void setUpCloseButton(Window form){
-        addWindowListener((new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                Session.removeWindowForm(form);
-            }
-        }));
     }
     
     /**

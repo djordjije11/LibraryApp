@@ -2,12 +2,10 @@ package controllers;
 
 import java.io.IOException;
 import java.util.List;
-import javax.swing.JOptionPane;
 import message.Method;
 import message.Request;
 import message.Response;
 import models.IEntity;
-import session.Session;
 import tcp.TcpClient;
 
 /**
