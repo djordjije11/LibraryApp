@@ -1,6 +1,10 @@
 package forms;
 
+import java.awt.Window;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JButton;
+import session.Session;
 
 public class LoginForm extends javax.swing.JFrame {
 
@@ -9,7 +13,19 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         initComponents();
+        pack();
         setLocationRelativeTo(null);
+        Session.addWindowForm(this);
+        setUpCloseButton(this);
+    }
+    
+    private void setUpCloseButton(Window form){
+        addWindowListener((new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                Session.removeWindowForm(form);
+            }
+        }));
     }
 
     /**

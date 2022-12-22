@@ -15,10 +15,12 @@ import tcp.TcpServer;
  * @author Djordjije
  */
 public class ClientHandler extends Thread {
+    private final Server server;
     private final TcpServer tcpServer;
     private final String threadID;
     
-    public ClientHandler(TcpServer tcpServer, String threadID){
+    public ClientHandler(Server server, TcpServer tcpServer, String threadID){
+        this.server = server;
         this.tcpServer = tcpServer;
         this.threadID = threadID;
         System.out.println("Connection opened: thread ID - " + threadID);
@@ -52,19 +54,27 @@ public class ClientHandler extends Thread {
                         response.setException(new ExecutionControl.NotImplementedException("There is not implemented action for revieved request."));
                 }
                 tcpServer.sendObject(response);
-                
             } catch (IOException | ClassNotFoundException ex) {
-                System.out.println("Connection closed - thread ID: " + threadID );
+                try {
+                    server.removeTcpServer(tcpServer);
+                    System.out.println("Connection closed - thread ID: " + threadID );
+                } catch (IOException ex1) {
+                    System.out.println("Exception while trying to close the socket communication in the ClientHandler " + threadID + ": \n" + ex1.getMessage());
+                }
                 return;
             } catch(Exception ex){
-                ex.printStackTrace();
                 Response response = new Response();
                 response.setConfirmed(false);
                 response.setException(ex);
                 try {
                     tcpServer.sendObject(response);
                 } catch (IOException ex1) {
-                    System.out.println("Connection closed - thread ID: " + threadID );
+                    try {
+                        server.removeTcpServer(tcpServer);
+                        System.out.println("Connection closed - thread ID: " + threadID );
+                    } catch (IOException ex2) {
+                        System.out.println("Exception while trying to close the socket communication in the ClientHandler " + threadID + ": \n" + ex1.getMessage());
+                    }
                     return;
                 }
             }

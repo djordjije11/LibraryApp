@@ -19,11 +19,20 @@ public class TcpCommunicator {
     protected final Socket socketCommunication;
     protected final BufferedReader input;
     protected final PrintStream output;
-    
+
     public TcpCommunicator(Socket socketCommunication) throws IOException{
         this.socketCommunication = socketCommunication;
         input = new BufferedReader(new InputStreamReader(socketCommunication.getInputStream()));
         output = new PrintStream(socketCommunication.getOutputStream());
+    }
+    
+    public boolean isConnectionClosed(){
+        return socketCommunication.isClosed();
+    }
+    
+    public void closeConnection() throws IOException{
+        if(socketCommunication != null && socketCommunication.isClosed() == false)
+            socketCommunication.close();
     }
     
     public void sendMessage(String message){
@@ -33,11 +42,6 @@ public class TcpCommunicator {
     
     public String readMessage() throws IOException{
         return input.readLine();
-    }
-    
-    public void closeConnection() throws IOException{
-        if(socketCommunication != null && socketCommunication.isClosed() == false)
-            socketCommunication.close();
     }
     
     public <T> void sendObject(T object) throws IOException{

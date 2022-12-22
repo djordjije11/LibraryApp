@@ -1,10 +1,14 @@
 package forms.book;
 
 import forms.book.table.BooksTableModel;
+import java.awt.Window;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import models.dto.BookDto;
+import session.Session;
 
 /**
  *
@@ -18,7 +22,19 @@ public class ViewBooksForm extends javax.swing.JDialog {
     public ViewBooksForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        pack();
         setLocationRelativeTo(null);
+        Session.addWindowForm(this);
+        setUpCloseButton(this);
+    }
+    
+    private void setUpCloseButton(Window form){
+        addWindowListener((new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                Session.removeWindowForm(form);
+            }
+        }));
     }
 
     /**
@@ -79,11 +95,11 @@ public class ViewBooksForm extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnFind)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtTitle)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addComponent(btnFind))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

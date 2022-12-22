@@ -13,9 +13,12 @@ import tcp.TcpClient;
  * @author Djordjije
  */
 public class Client {
+    private final static String IP_ADDRESS = "localhost";
+    private final static int PORT_NUMBER = 9001;
+    
     public static void main(String[] args) {
         try {
-            TcpClient tcpClient = new TcpClient("localhost", 9001);
+            TcpClient tcpClient = new TcpClient(IP_ADDRESS, PORT_NUMBER);
             /*
             new LoginController(tcpClient);
             synchronized(tcpClient){

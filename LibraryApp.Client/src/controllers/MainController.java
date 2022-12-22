@@ -3,6 +3,7 @@ package controllers;
 import forms.MainForm;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import session.Session;
 import tcp.TcpClient;
 
 /**
@@ -29,8 +30,10 @@ public class MainController {
                 memberController = new MemberController(tcpClient, form);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(form, "Greska prilikom otvaranja forme za clanove.", "GRESKA", JOptionPane.ERROR_MESSAGE);
-                memberController.closeForms();
-                memberController = null;
+                if(memberController != null){
+                    memberController.closeForms();
+                    memberController = null;
+                }
             }
         });
     }

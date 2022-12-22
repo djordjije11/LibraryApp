@@ -1,5 +1,8 @@
 package forms.member;
 
+import java.awt.Window;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import models.Member;
 import java.time.Month;
@@ -8,6 +11,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import session.Session;
 
 /*
  *
@@ -19,13 +23,25 @@ public class MemberForm extends javax.swing.JDialog {
     public MemberForm(java.awt.Frame parent, boolean modal, Member member) {
         super(parent, modal);
         initComponents();
+        pack();
         setLocationRelativeTo(null);
         setUpYears();
         setUpMonths();
         setUpDays();
         setMember(member);
+        Session.addWindowForm(this);
+        setUpCloseButton(this);
     }
 
+    private void setUpCloseButton(Window form){
+        addWindowListener((new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                Session.removeWindowForm(form);
+            }
+        }));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

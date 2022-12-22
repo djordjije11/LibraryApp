@@ -1,5 +1,8 @@
 package forms.book;
 
+import java.awt.Window;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -7,6 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import models.Author;
 import models.dto.BookDto;
+import session.Session;
 
 /**
  *
@@ -19,10 +23,22 @@ public class BookForm extends javax.swing.JDialog {
     public BookForm(java.awt.Frame parent, boolean modal, BookDto book) {
         super(parent, modal);
         initComponents();
+        pack();
         setLocationRelativeTo(null);
         setBook(book);
+        Session.addWindowForm(this);
+        setUpCloseButton(this);
     }
 
+    private void setUpCloseButton(Window form){
+        addWindowListener((new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                Session.removeWindowForm(form);
+            }
+        }));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
