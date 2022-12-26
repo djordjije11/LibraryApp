@@ -4,6 +4,8 @@ import database.sql.brokers.interfaces.IMemberBroker;
 import database.sql.sqlmodels.SqlMember;
 import helper.EntitiesConverter;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 import models.Member;
 
@@ -36,5 +38,16 @@ public class SqlMemberBroker extends SqlEntityBroker implements IMemberBroker {
     @Override
     public Member deleteMember(Member member, Connection connection) throws Exception {
         return (Member)delete(new SqlMember(member), connection);
+    }
+
+    @Override
+    public Long getCountOfAllLendingsByMember(Member member, Connection connection) throws Exception {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM lending WHERE memberID = " + member.getId());
+        resultSet.next();
+        Long amount = resultSet.getLong("amount");
+        resultSet.close();
+        statement.close();
+        return amount;
     }
 }

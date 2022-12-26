@@ -39,7 +39,7 @@ public class BookController implements IController {
             case CREATE:
                 if(addingAmount > 0){
                     Book dbBook = bookLogic.createBook(book, addingAmount, buildingID);
-                    Long newCurrentAmount = bookLogic.getNumberOfCopiesOfBookInBuilding(new CopyOfBook(dbBook.getId(), buildingID));
+                    Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook.getId(), buildingID));
                     dbObject = new BookDto(dbBook, buildingID, newCurrentAmount);
                 } else {
                     dbObject = new BookDto(bookLogic.createBook(book));
@@ -53,7 +53,7 @@ public class BookController implements IController {
                 break;
             case GET:{
                 Book dbBook = bookLogic.findBook(book);
-                Long newCurrentAmount = bookLogic.getNumberOfCopiesOfBookInBuilding(new CopyOfBook(dbBook.getId(), buildingID));
+                Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook.getId(), buildingID));
                 dbObject = new BookDto(dbBook, buildingID, newCurrentAmount);
                 break;
             }
@@ -66,7 +66,7 @@ public class BookController implements IController {
                     dbObject = new BookDto(bookLogic.updateBook(book), buildingID, currentAmount);
                 } else if(bookDto.getIsUpdated() == true && addingAmount > 0) {
                     Book dbBook = bookLogic.updateBook(book, addingAmount, buildingID);
-                    Long newCurrentAmount = bookLogic.getNumberOfCopiesOfBookInBuilding(new CopyOfBook(dbBook.getId(), buildingID));
+                    Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook.getId(), buildingID));
                     dbObject = new BookDto(dbBook, buildingID, newCurrentAmount);
                 } else{
                     response.setConfirmed(false);

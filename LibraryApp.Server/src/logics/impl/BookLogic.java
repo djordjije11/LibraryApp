@@ -83,7 +83,7 @@ public class BookLogic implements IBookLogic {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
             connection.setAutoCommit(false);
-            if(copyOfBookBroker.getNumberOfAllCopiesOfBook(new CopyOfBook(book.getId()), connection) > 0)
+            if(copyOfBookBroker.getCountOfAllCopiesOfBook(new CopyOfBook(book.getId()), connection) > 0)
                 throw new Exception("Book can't be deleted if it is already have been copied.");
             Book deletedBook = bookBroker.deleteBook(book, connection);
             connection.commit();
@@ -157,10 +157,10 @@ public class BookLogic implements IBookLogic {
     }
 
     @Override
-    public Long getNumberOfCopiesOfBookInBuilding(CopyOfBook copyOfBook) throws Exception {
+    public Long getCountOfCopiesOfBookInBuilding(CopyOfBook copyOfBook) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            return copyOfBookBroker.getNumberOfCopiesOfBookInBuilding(copyOfBook, connection);
+            return copyOfBookBroker.getCountOfCopiesOfBookInBuilding(copyOfBook, connection);
         } finally{
             SqlConnectionFactory.releaseConnection(connection);
         }

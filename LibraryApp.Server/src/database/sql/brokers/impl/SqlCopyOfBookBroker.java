@@ -51,7 +51,7 @@ public class SqlCopyOfBookBroker implements ICopyOfBookBroker {
     }
 
     @Override
-    public Long getNumberOfCopiesOfBookInBuilding(CopyOfBook copyOfBook, Connection connection) throws Exception {
+    public Long getCountOfCopiesOfBookInBuilding(CopyOfBook copyOfBook, Connection connection) throws Exception {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM copyofbook WHERE bookID = " + copyOfBook.getBookId() + " AND buildingID = " + copyOfBook.getBuildingId());
         resultSet.next();
@@ -62,7 +62,7 @@ public class SqlCopyOfBookBroker implements ICopyOfBookBroker {
     }
 
     @Override
-    public Long getNumberOfAllCopiesOfBook(CopyOfBook copyOfBook, Connection connection) throws Exception {
+    public Long getCountOfAllCopiesOfBook(CopyOfBook copyOfBook, Connection connection) throws Exception {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM copyofbook WHERE bookID = " + copyOfBook.getBookId());
         resultSet.next();

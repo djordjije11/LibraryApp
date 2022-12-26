@@ -13,7 +13,7 @@ public interface IBookLogic {
     Book createBook(Book book, Long amount, Long buildingID) throws Exception;
     Book findBook(Book book) throws Exception;
     List<CopyOfBook> findCopiesOfBookInBuilding(CopyOfBook copyOfBook) throws Exception;
-    Long getNumberOfCopiesOfBookInBuilding(CopyOfBook copyOfBook) throws Exception;
+    Long getCountOfCopiesOfBookInBuilding(CopyOfBook copyOfBook) throws Exception;
     List<Book> findBooks(Book book) throws Exception;
     List<Book> readAllBooks() throws Exception;
     Book updateBook(Book book) throws Exception;

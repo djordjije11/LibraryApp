@@ -75,10 +75,13 @@ public class MemberLogic implements IMemberLogic {
     }
     @Override
     public Member deleteMember(Member member) throws Exception {
-        //ovu logiku treba obnoviti kasnije
         Connection connection = SqlConnectionFactory.getConnection();
         try{
             connection.setAutoCommit(false);
+            Long amount = memberBroker.getCountOfAllLendingsByMember(member, connection);
+            if(amount > 0) {
+                throw new Exception("A member can't be deleted from database if it has a history of lendings.");
+            }
             Member deletedMember = memberBroker.deleteMember(member, connection);
             connection.commit();
             return deletedMember;

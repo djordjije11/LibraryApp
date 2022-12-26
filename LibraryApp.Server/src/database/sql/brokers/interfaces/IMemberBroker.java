@@ -15,4 +15,5 @@ public interface IMemberBroker {
     List<Member> readAllMembers(Member member, Connection connection) throws Exception;
     Member updateMember(Member member, Connection connection) throws Exception;
     Member deleteMember(Member member, Connection connection) throws Exception;
+    Long getCountOfAllLendingsByMember(Member member, Connection connection) throws Exception;
 }
