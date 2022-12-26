@@ -3,6 +3,7 @@ package controllers;
 import forms.MainForm;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import session.Session;
 import tcp.TcpClient;
 
 /**
@@ -20,6 +21,7 @@ public class MainController {
         form = new MainForm();
         setMembersMenuListener();
         setBooksMenuListener();
+        setLogoutMenuListeners();
         form.setVisible(true);
     }
 
@@ -48,5 +50,21 @@ public class MainController {
                 }
             }
         });
+    }
+    private void setLogoutMenuListeners(){
+        form.getLogoutAndLoginMenu().addActionListener((ActionEvent e) -> {
+            Session.restartSession();
+            closeMainForm();
+        });
+        form.getLogoutAndExitMenu().addActionListener((ActionEvent e) -> {
+            Session.exitSession();
+            closeMainForm();
+        });
+    }
+    private void closeMainForm(){
+        form.dispose();
+        synchronized (tcpClient) {
+            tcpClient.notify();
+        }
     }
 }

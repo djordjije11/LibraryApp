@@ -3,6 +3,7 @@ package forms.book;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import models.Author;
@@ -22,6 +23,8 @@ public final class BookForm extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
         setBook(book);
+        
+        
     }
     
     /**
@@ -49,6 +52,7 @@ public final class BookForm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Knjiga");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
         jLabel1.setText("Naslov:");
@@ -62,7 +66,11 @@ public final class BookForm extends javax.swing.JDialog {
         jLabel5.setText("Broj primeraka knjige koji se dodaje:");
 
         txtAreaDescription.setColumns(20);
+        txtAreaDescription.setLineWrap(true);
         txtAreaDescription.setRows(5);
+        txtAreaDescription.setWrapStyleWord(true);
+        txtAreaDescription.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtAreaDescription.setRequestFocusEnabled(false);
         jScrollPane1.setViewportView(txtAreaDescription);
 
         txtAddingAmount.setHorizontalAlignment(javax.swing.JTextField.RIGHT);

@@ -1,5 +1,6 @@
 package forms;
 
+import java.awt.Color;
 import javax.swing.JButton;
 
 public class LoginForm extends javax.swing.JFrame {
@@ -11,6 +12,7 @@ public class LoginForm extends javax.swing.JFrame {
         initComponents();
         pack();
         setLocationRelativeTo(null);
+        setColors();
     }
 
     /**
@@ -32,11 +34,13 @@ public class LoginForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
         setLocation(new java.awt.Point(0, 0));
+        setResizable(false);
 
         lblEmployeeID.setText("ID zaposlenog:");
 
         lblPassword.setText("Lozinka:");
 
+        btnLogin.setBackground(new java.awt.Color(217, 238, 255));
         btnLogin.setText("Login");
 
         lblPasswordError.setForeground(new java.awt.Color(255, 0, 0));
@@ -94,6 +98,10 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 
+    private void setColors(){
+        getContentPane().setBackground(new Color(175, 135, 255));
+    }
+    
     public String getPassword() {
        return String.valueOf(txtPassword.getPassword());
     }

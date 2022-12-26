@@ -34,7 +34,8 @@ public class ClientHandler extends Thread {
                 Response response = null;
                 switch (request.getModelElement()) {
                     case EXIT_MESSAGE:
-                        tcpServer.closeConnection();
+                        server.removeTcpServer(tcpServer);
+                        System.out.println("Connection closed - thread ID: " + threadID );
                         return;
                     case EMPLOYEE:
                         response = new EmployeeController().handle(request);

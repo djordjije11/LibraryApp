@@ -30,6 +30,18 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Log out"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuLogoutAndLogin">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Log out and log in again"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuLogoutAndExit">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Log out and exit"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>

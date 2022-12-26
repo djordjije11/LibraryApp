@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import message.ModelElement;
 import message.Request;
+import session.Session;
 import tcp.TcpClient;
 
 /**
@@ -19,17 +20,16 @@ public class Client {
     public static void main(String[] args) {
         try {
             TcpClient tcpClient = new TcpClient(IP_ADDRESS, PORT_NUMBER);
-            /*
-            new LoginController(tcpClient);
-            synchronized(tcpClient){
-                tcpClient.wait();
+            while(Session.doesClientWantToLogin() == true){
+                new LoginController(tcpClient);
+                synchronized(tcpClient){
+                    tcpClient.wait();
+                }
+                new MainController(tcpClient);
+                synchronized(tcpClient){
+                    tcpClient.wait();
+                }
             }
-            */
-             new MainController(tcpClient);
-             synchronized(tcpClient){
-                 tcpClient.wait();
-            }
-            
             tcpClient.sendObject(new Request(null, ModelElement.EXIT_MESSAGE, null));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Uspostavljanje konekcije je neuspesno.", "GRESKA", JOptionPane.ERROR_MESSAGE);

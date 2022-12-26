@@ -29,6 +29,8 @@ public class MainForm extends javax.swing.JFrame {
         menuItemBooks = new javax.swing.JMenuItem();
         menuItemLending = new javax.swing.JMenuItem();
         menuLogout = new javax.swing.JMenu();
+        menuLogoutAndLogin = new javax.swing.JMenuItem();
+        menuLogoutAndExit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,6 +48,13 @@ public class MainForm extends javax.swing.JFrame {
         jMenuBar2.add(menuModels);
 
         menuLogout.setText("Log out");
+
+        menuLogoutAndLogin.setText("Log out and log in again");
+        menuLogout.add(menuLogoutAndLogin);
+
+        menuLogoutAndExit.setText("Log out and exit");
+        menuLogout.add(menuLogoutAndExit);
+
         jMenuBar2.add(menuLogout);
 
         setJMenuBar(jMenuBar2);
@@ -70,6 +79,12 @@ public class MainForm extends javax.swing.JFrame {
     public JMenuItem getBooksMenu(){
         return menuItemBooks;
     }
+    public JMenuItem getLogoutAndLoginMenu(){
+        return menuLogoutAndLogin;
+    }
+    public JMenuItem getLogoutAndExitMenu(){
+        return menuLogoutAndExit;
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar2;
@@ -77,6 +92,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemLending;
     private javax.swing.JMenuItem menuItemMembers;
     private javax.swing.JMenu menuLogout;
+    private javax.swing.JMenuItem menuLogoutAndExit;
+    private javax.swing.JMenuItem menuLogoutAndLogin;
     private javax.swing.JMenu menuModels;
     // End of variables declaration//GEN-END:variables
 }

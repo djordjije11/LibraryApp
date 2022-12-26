@@ -70,7 +70,7 @@ public class MemberController extends EntityController<Member> {
             try {
                 Member member = deleteEntity(memberForm.getMember());
                 refreshViewMembersForm();
-                JOptionPane.showMessageDialog(memberForm, "Clan " + member + " je uspesno obrisan.", "Clan obrisan", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(memberForm, "Clan je uspesno obrisan.\n\n" +  member, "Clan obrisan", JOptionPane.INFORMATION_MESSAGE);
                 memberForm.dispose();
                 memberForm = null;
             } catch (Exception ex) {
@@ -114,7 +114,7 @@ public class MemberController extends EntityController<Member> {
                 Member dbMember = isMemberNew == true ? createEntity(member) : updateEntity(member);
                 memberForm.setMember(dbMember);
                 refreshViewMembersForm();
-                JOptionPane.showMessageDialog(memberForm, "Clan " + dbMember + " je uspesno sacuvan.", "Clan sacuvan", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(memberForm, "Clan je uspesno sacuvan.\n\n" + dbMember, "Clan sacuvan", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(memberForm, "Clan nije uspesno sacuvan.", "GRESKA", JOptionPane.ERROR_MESSAGE);
             }

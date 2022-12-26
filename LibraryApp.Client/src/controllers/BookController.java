@@ -69,7 +69,7 @@ public class BookController extends EntityController<BookDto> {
         viewBooksForm.getOpenBookFormButton().addActionListener((ActionEvent e) -> {
             BookDto bookDto = viewBooksForm.getSelectedBook();
             if(bookDto == null){
-                JOptionPane.showMessageDialog(bookForm, "Nije odabrana nijedna knjiga..", "Odaberite knjigu", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(bookForm, "Nije odabrana nijedna knjiga.", "Odaberite knjigu", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             bookDto.setBuildingId(Session.getBuilding().getId());
@@ -101,7 +101,7 @@ public class BookController extends EntityController<BookDto> {
                 }
                 BookDto dbBookDto = deleteEntity(bookDto);
                 refreshViewBooksForm();
-                JOptionPane.showMessageDialog(bookForm, "Knjiga " + dbBookDto + " je uspesno obrisana.", "Knjiga obrisana", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(bookForm, "Knjiga je uspesno obrisana.\n\n" + dbBookDto, "Knjiga obrisana", JOptionPane.INFORMATION_MESSAGE);
                 bookForm.dispose();
                 bookForm = null;
             } catch (Exception ex) {
@@ -160,7 +160,7 @@ public class BookController extends EntityController<BookDto> {
                 BookDto dbBook = isBookNew == true ? createEntity(bookDto) : updateEntity(bookDto);
                 bookForm.setBook(dbBook);
                 refreshViewBooksForm();
-                JOptionPane.showMessageDialog(bookForm, "Knjiga " + dbBook + " je uspesno sacuvana.", "Knjiga sacuvana", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(bookForm, "Knjiga je uspesno sacuvana.\n\n" + dbBook, "Knjiga sacuvana", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(bookForm, "Knjiga nije uspesno sacuvana.", "GRESKA", JOptionPane.ERROR_MESSAGE);
