@@ -7,19 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import models.Author;
 import models.Book;
-import models.IEntity;
 
 /**
  *
  * @author Djordjije
  */
-public class SqlBook extends SqlEntity {
-    private Book book;
-    
+public class SqlBook extends SqlEntity<Book> {
     public SqlBook(){}
     public SqlBook(Book book) {
         super(book);
-        this.book = book;
     }
     
     @Override
@@ -34,12 +30,12 @@ public class SqlBook extends SqlEntity {
 
     @Override
     public void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setString(1, book.getTitle());
-        preparedStatement.setString(2, book.getDescription());
-        if(book.getAuthor() == null){
+        preparedStatement.setString(1, entity.getTitle());
+        preparedStatement.setString(2, entity.getDescription());
+        if(entity.getAuthor() == null){
             preparedStatement.setObject(3, null);
         } else{
-            preparedStatement.setLong(3, book.getAuthor().getId());
+            preparedStatement.setLong(3, entity.getAuthor().getId());
         }
     }
 
@@ -50,14 +46,14 @@ public class SqlBook extends SqlEntity {
 
     @Override
     public void setUpPreparedStatementUpdate(PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setString(1, book.getTitle());
-        preparedStatement.setString(2, book.getDescription());
-        if(book.getAuthor() == null){
+        preparedStatement.setString(1, entity.getTitle());
+        preparedStatement.setString(2, entity.getDescription());
+        if(entity.getAuthor() == null){
             preparedStatement.setObject(3, null);
         } else{
-            preparedStatement.setLong(3, book.getAuthor().getId());
+            preparedStatement.setLong(3, entity.getAuthor().getId());
         }
-        preparedStatement.setLong(4, book.getId());
+        preparedStatement.setLong(4, entity.getId());
     }
 
     @Override
@@ -67,26 +63,21 @@ public class SqlBook extends SqlEntity {
     
     @Override
     public String getStatementSelectByIdQuery() {
-        return "SELECT b.*, a.firstname, a.lastname FROM " + getTableName() + " as b LEFT OUTER JOIN " + new SqlAuthor().getTableName() + " as a ON (b.authorID = a.ID) WHERE b.ID = " + book.getId();
+        return "SELECT b.*, a.firstname, a.lastname FROM " + getTableName() + " as b LEFT OUTER JOIN " + new SqlAuthor().getTableName() + " as a ON (b.authorID = a.ID) WHERE b.ID = " + entity.getId();
     }
 
     @Override
     public String getStatementSelectWithConditionQuery() {
         List<String> conditions = new ArrayList<>();
-        if(book.getTitle() != null && book.getTitle().isBlank() == false){
-            conditions.add("title LIKE '" + book.getTitle() + "%'");
+        if(entity.getTitle() != null && entity.getTitle().isBlank() == false){
+            conditions.add("title LIKE '" + entity.getTitle() + "%'");
         }
         return constructSelectWithConditionsQuery(conditions);
     }
 
     @Override
-    public IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException {
+    public Book getEntityFromResultSet(ResultSet resultSet) throws SQLException {
         Author author = new Author(resultSet.getLong("authorID"), resultSet.getString("firstname"), resultSet.getString("lastname"));
         return new Book(resultSet.getLong("ID"), resultSet.getString("title"), resultSet.getString("description"), author);
-    }
-
-    @Override
-    public List<IEntity> getListOfEntities() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

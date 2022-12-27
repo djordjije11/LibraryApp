@@ -7,26 +7,19 @@ import java.sql.Date;
 import java.util.List;
 import models.Book;
 import models.CopyOfBook;
-import models.IEntity;
 import models.Lending;
 
 /**
  *
  * @author Djordjije
  */
-public class SqlLending extends SqlEntity {
-
-    private Lending lending;
-    private List<Lending> listOfLendings;
-    
+public class SqlLending extends SqlEntity<Lending> {
     public SqlLending(Lending lending){
         super(lending);
-        this.lending = lending;
     }
     public SqlLending(){}
     public SqlLending(List<Lending> listOfLendings){
-        super(listOfLendings.get(0));
-        this.listOfLendings = listOfLendings;
+        super(listOfLendings);
     }
     
     @Override
@@ -40,22 +33,23 @@ public class SqlLending extends SqlEntity {
 
     @Override
     public void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException {
-        CopyOfBook copyOfBook = lending.getCopyOfBook();
+        CopyOfBook copyOfBook = entity.getCopyOfBook();
         Book book = copyOfBook.getBook();
         preparedStatement.setLong(1, book.getId());
         preparedStatement.setLong(2, copyOfBook.getId());
-        preparedStatement.setLong(3, lending.getMember().getId());
-        preparedStatement.setDate(4, Date.valueOf(lending.getLendingDate()));
+        preparedStatement.setLong(3, entity.getMember().getId());
+        preparedStatement.setDate(4, Date.valueOf(entity.getLendingDate()));
     }
 
     @Override
     public String getPreparedStatementUpdateQuery() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "UPDATE " + getTableName() + " SET return_date = ? WHERE ID = ?";
     }
 
     @Override
     public void setUpPreparedStatementUpdate(PreparedStatement preparedStatement) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        preparedStatement.setDate(1, Date.valueOf(entity.getReturnDate()));
+        preparedStatement.setLong(2, entity.getId());
     }
 
     @Override
@@ -64,13 +58,7 @@ public class SqlLending extends SqlEntity {
     }
 
     @Override
-    public IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException {
+    public Lending getEntityFromResultSet(ResultSet resultSet) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public List<IEntity> getListOfEntities() {
-        return null;
-    }
-    
 }

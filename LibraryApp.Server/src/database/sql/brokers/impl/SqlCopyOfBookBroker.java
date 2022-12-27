@@ -15,27 +15,12 @@ import models.CopyOfBook;
  *
  * @author Djordjije
  */
-public class SqlCopyOfBookBroker extends SqlEntityBroker implements ICopyOfBookBroker {
-
+public class SqlCopyOfBookBroker extends SqlEntityBroker<CopyOfBook> implements ICopyOfBookBroker {
+    
     @Override
-    public List<CopyOfBook> createCopiesOfBook(CopyOfBook copyOfBook, Long amount, Connection connection) throws Exception {
-        List<CopyOfBook> copiesOfBook = new ArrayList<>();
-        SqlCopyOfBook sqlCopyOfBook = new SqlCopyOfBook(copyOfBook);
-        PreparedStatement preparedStatement = connection.prepareStatement(sqlCopyOfBook.getPreparedStatementInsertQuery(), Statement.RETURN_GENERATED_KEYS);
-        sqlCopyOfBook.setUpPreparedStatementInsert(preparedStatement);
-        ResultSet result = null;
-        for (int i = 0; i < amount; i++) {
-            preparedStatement.executeUpdate();
-            result = preparedStatement.getGeneratedKeys();
-            if(result.next()){
-                copiesOfBook.add(new CopyOfBook(result.getLong(1), copyOfBook.getBook(), copyOfBook.getBuildingId()));
-            }
-        }
-        if(result != null) result.close();
-        preparedStatement.close();
-        return copiesOfBook;
+    public List<CopyOfBook> createCopiesOfBook(List<CopyOfBook> copiesOfBook, Connection connection) throws Exception {
+        return createList(new SqlCopyOfBook(copiesOfBook), connection);
     }
-
     @Override
     public List<CopyOfBook> readAllCopiesOfBookInBuilding(CopyOfBook copyOfBook, Connection connection) throws Exception {
         List<CopyOfBook> copiesOfBook = new ArrayList<>();
@@ -49,7 +34,6 @@ public class SqlCopyOfBookBroker extends SqlEntityBroker implements ICopyOfBookB
         statement.close();
         return copiesOfBook;
     }
-
     @Override
     public Long getCountOfCopiesOfBookInBuilding(CopyOfBook copyOfBook, Connection connection) throws Exception {
         Statement statement = connection.createStatement();
@@ -60,7 +44,6 @@ public class SqlCopyOfBookBroker extends SqlEntityBroker implements ICopyOfBookB
         statement.close();
         return amount;
     }
-
     @Override
     public Long getCountOfAllCopiesOfBook(CopyOfBook copyOfBook, Connection connection) throws Exception {
         Statement statement = connection.createStatement();
@@ -71,9 +54,12 @@ public class SqlCopyOfBookBroker extends SqlEntityBroker implements ICopyOfBookB
         statement.close();
         return amount;
     }
-
     @Override
     public CopyOfBook findCopyOfBookInBuilding(CopyOfBook copyOfBook, Connection connection) throws Exception {
-        return (CopyOfBook)find(new SqlCopyOfBook(copyOfBook), connection);
+        return find(new SqlCopyOfBook(copyOfBook), connection);
+    }
+    @Override
+    public List<CopyOfBook> updateCopiesOfBook(List<CopyOfBook> copiesOfBook, Connection connection) throws Exception {
+        return updateList(new SqlCopyOfBook(copiesOfBook), connection);
     }
 }

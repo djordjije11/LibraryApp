@@ -10,16 +10,26 @@ import models.IEntity;
  *
  * @author Djordjije
  */
-public abstract class SqlEntity {
-    protected IEntity entity;
-    protected SqlEntity(IEntity entity){
+public abstract class SqlEntity<T extends IEntity> {
+    protected T entity;
+    protected List<T> listOfEntities;
+    protected SqlEntity(T entity){
         this.entity = entity;
     }
+    protected SqlEntity(List<T> listOfEntities){
+        this(listOfEntities.get(0));
+        this.listOfEntities = listOfEntities;
+    }
     protected SqlEntity() {}
-    public IEntity getEntity(){
+    public T getEntity(){
         return entity;
     }
-    public abstract List<IEntity> getListOfEntities();
+    public void setEntity(T entity){
+        this.entity = entity;
+    }
+    public List<T> getListOfEntities(){
+        return listOfEntities;
+    }
     protected abstract String getTableName();
     public abstract String getPreparedStatementInsertQuery();
     public abstract void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException;
@@ -38,7 +48,7 @@ public abstract class SqlEntity {
     public String getStatementSelectAllQuery(){
         return "SELECT * FROM " + getTableName();
     }
-    public abstract IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException;
+    public abstract T getEntityFromResultSet(ResultSet resultSet) throws SQLException;
     protected String constructSelectWithConditionsQuery(List<String> conditions){
         String query = getStatementSelectAllQuery();
         if(conditions == null || conditions.isEmpty()){

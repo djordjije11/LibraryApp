@@ -6,25 +6,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import models.Author;
-import models.IEntity;
 
 /**
  *
  * @author Djordjije
  */
-public class SqlAuthor extends SqlEntity {
-    private Author author;
+public class SqlAuthor extends SqlEntity<Author> {
     
     public SqlAuthor(Author author){
         super(author);
-        this.author = author;
     }
     public SqlAuthor(){}
-    
-    @Override
-    public IEntity getEntity(){
-        return author;
-    }
     
     @Override
     protected String getTableName() {
@@ -38,8 +30,8 @@ public class SqlAuthor extends SqlEntity {
 
     @Override
     public void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setString(1, author.getFirstname());
-        preparedStatement.setString(2, author.getLastname());
+        preparedStatement.setString(1, entity.getFirstname());
+        preparedStatement.setString(2, entity.getLastname());
     }
 
     @Override
@@ -49,30 +41,25 @@ public class SqlAuthor extends SqlEntity {
 
     @Override
     public void setUpPreparedStatementUpdate(PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setString(1, author.getFirstname());
-        preparedStatement.setString(2, author.getLastname());
-        preparedStatement.setLong(3, author.getId());
+        preparedStatement.setString(1, entity.getFirstname());
+        preparedStatement.setString(2, entity.getLastname());
+        preparedStatement.setLong(3, entity.getId());
     }
     
     @Override
     public String getStatementSelectWithConditionQuery(){
         List<String> conditions = new ArrayList<>();
-        if(author.getFirstname() != null && author.getFirstname().isBlank() == false){
-            conditions.add("firstname LIKE '" + author.getFirstname() + "%'");
+        if(entity.getFirstname() != null && entity.getFirstname().isBlank() == false){
+            conditions.add("firstname LIKE '" + entity.getFirstname() + "%'");
         }
-        if(author.getLastname() != null && author.getLastname().isBlank() == false){
-            conditions.add("lastname LIKE '" + author.getLastname() + "%'");
+        if(entity.getLastname() != null && entity.getLastname().isBlank() == false){
+            conditions.add("lastname LIKE '" + entity.getLastname() + "%'");
         }
         return constructSelectWithConditionsQuery(conditions);
     }
 
     @Override
-    public IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException {
+    public Author getEntityFromResultSet(ResultSet resultSet) throws SQLException {
         return new Author(resultSet.getLong("ID"), resultSet.getString("firstname"), resultSet.getString("lastname"));
-    }
-
-    @Override
-    public List<IEntity> getListOfEntities() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

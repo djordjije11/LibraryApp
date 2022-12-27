@@ -5,31 +5,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Types;
 import models.Author;
 import models.Book;
 import models.CopyOfBook;
-import models.IEntity;
 
 /**
  *
  * @author Djordjije
  */
-public class SqlCopyOfBook extends SqlEntity {
-    private CopyOfBook copyOfBook;
-    
+public class SqlCopyOfBook extends SqlEntity<CopyOfBook> {
     public SqlCopyOfBook(CopyOfBook copyOfBook){
         super(copyOfBook);
-        this.copyOfBook = copyOfBook;
     }
     public SqlCopyOfBook(){}
-    
+    public SqlCopyOfBook(List<CopyOfBook> listOfCopiesOfBook){
+        super(listOfCopiesOfBook);
+    }
     @Override
     protected String getTableName() {
         return "copyofbook";
-    }
-
-    public void setCopyOfBook(CopyOfBook copyOfBook){
-        this.copyOfBook = copyOfBook;
     }
     
     @Override
@@ -39,11 +34,11 @@ public class SqlCopyOfBook extends SqlEntity {
 
     @Override
     public void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException {
-        Book book = copyOfBook.getBook();
+        Book book = entity.getBook();
         if(book != null){
-            preparedStatement.setLong(1, copyOfBook.getId());
+            preparedStatement.setLong(1, entity.getId());
         }
-        preparedStatement.setLong(2, copyOfBook.getBuildingId());
+        preparedStatement.setLong(2, entity.getBuildingId());
     }
 
     @Override
@@ -53,23 +48,28 @@ public class SqlCopyOfBook extends SqlEntity {
 
     @Override
     public void setUpPreparedStatementUpdate(PreparedStatement preparedStatement) throws SQLException {
-        preparedStatement.setLong(1, copyOfBook.getBuildingId());
-        preparedStatement.setLong(1, copyOfBook.getId());
+        Long buildingID = entity.getBuildingId();
+        if(buildingID == null){
+            preparedStatement.setNull(1, Types.BIGINT);
+        } else{
+            preparedStatement.setLong(1, entity.getBuildingId());
+        }
+        preparedStatement.setLong(2, entity.getId());
     }
 
     @Override
     public String getStatementSelectWithConditionQuery() {
         List<String> conditions = new ArrayList<>();
-        Book book = copyOfBook.getBook();
+        Book book = entity.getBook();
         if(book != null){
             conditions.add("bookID = " + book.getId());
         }
-        conditions.add("buildingID = " + copyOfBook.getBuildingId());
+        conditions.add("buildingID = " + entity.getBuildingId());
         return constructSelectWithConditionsQuery(conditions);
     }
 
     @Override
-    public IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException {
+    public CopyOfBook getEntityFromResultSet(ResultSet resultSet) throws SQLException {
         return new CopyOfBook(resultSet.getLong("ID"), new Book(resultSet.getLong("bookID"), resultSet.getString("title"), resultSet.getString("description"), 
                 new Author(resultSet.getLong("authorID"), resultSet.getString("firstname"), resultSet.getString("lastname"))), resultSet.getLong("buildingID"));
     }
@@ -81,11 +81,6 @@ public class SqlCopyOfBook extends SqlEntity {
     
     @Override
     public String getStatementSelectByIdQuery() {
-        return getStatementSelectAllQuery() + " WHERE cob.ID = " + entity.getId() + " AND buildingID = " + copyOfBook.getBuildingId();
-    }
-
-    @Override
-    public List<IEntity> getListOfEntities() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return getStatementSelectAllQuery() + " WHERE cob.ID = " + entity.getId() + " AND buildingID = " + entity.getBuildingId();
     }
 }

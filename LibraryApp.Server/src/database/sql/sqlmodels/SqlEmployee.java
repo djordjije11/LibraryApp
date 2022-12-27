@@ -5,20 +5,16 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import models.Building;
 import models.Employee;
-import models.IEntity;
 
 /**
  *
  * @author Djordjije
  */
-public class SqlEmployee extends SqlEntity {
-    private Employee employee;
+public class SqlEmployee extends SqlEntity<Employee> {
     public SqlEmployee(Employee employee){
         super(employee);
-        this.employee = employee;
     }
     public SqlEmployee(){}
     
@@ -49,7 +45,7 @@ public class SqlEmployee extends SqlEntity {
 
     @Override
     public String getStatementSelectByIdQuery() {
-        return "SELECT e.*, b.name FROM " + getTableName() + " AS e INNER JOIN " + new SqlBuilding().getTableName() + " AS b ON (e.buildingID = b.id) WHERE e.ID = " + employee.getId();
+        return "SELECT e.*, b.name FROM " + getTableName() + " AS e INNER JOIN " + new SqlBuilding().getTableName() + " AS b ON (e.buildingID = b.id) WHERE e.ID = " + entity.getId();
     }
     
     @Override
@@ -63,18 +59,12 @@ public class SqlEmployee extends SqlEntity {
     }
 
     @Override
-    public IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException {
+    public Employee getEntityFromResultSet(ResultSet resultSet) throws SQLException {
         return new Employee(resultSet.getLong("ID"), resultSet.getString("firstname"), resultSet.getString("lastname"), resultSet.getString("password"), 
                 new Building(resultSet.getLong("buildingID"), resultSet.getString("name")));
     }
     
     public String getStatementSelectWithIdAndPasswordQuery() throws NoSuchAlgorithmException {
-        return "SELECT e.*, b.name FROM " + getTableName() + " AS e INNER JOIN " + new SqlBuilding().getTableName() + " AS b ON (e.buildingID = b.id) WHERE e.ID = " + employee.getId() + " AND e.password = '" + HashPassword.hashPassword(employee.getPassword()) + "'";
+        return "SELECT e.*, b.name FROM " + getTableName() + " AS e INNER JOIN " + new SqlBuilding().getTableName() + " AS b ON (e.buildingID = b.id) WHERE e.ID = " + entity.getId() + " AND e.password = '" + HashPassword.hashPassword(entity.getPassword()) + "'";
     }
-
-    @Override
-    public List<IEntity> getListOfEntities() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
 }

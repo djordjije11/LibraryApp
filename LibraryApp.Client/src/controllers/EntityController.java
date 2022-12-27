@@ -33,11 +33,23 @@ public abstract class EntityController<T extends IEntity> {
         checkResponse(response);
         return (T)response.getObject();
     }
+    public List<T> createEntities(List<T> entities) throws Exception{
+        Request request = new Request(entities, entities.get(0).getModelElement(), Method.CREATELIST);
+        Response response = sendRequestAndGetResponse(request);
+        checkResponse(response);
+        return (List<T>)response.getObject();
+    }
     public T updateEntity(T entity) throws Exception{
         Request request = new Request(entity, entity.getModelElement(), Method.UPDATE);
         Response response = sendRequestAndGetResponse(request);
         checkResponse(response);
         return (T)response.getObject();
+    }
+    public List<T> updateEntities(List<T> entities) throws Exception{
+        Request request = new Request(entities, entities.get(0).getModelElement(), Method.UPDATELIST);
+        Response response = sendRequestAndGetResponse(request);
+        checkResponse(response);
+        return (List<T>)response.getObject();
     }
     public T deleteEntity(T entity) throws Exception{
         Request request = new Request(entity, entity.getModelElement(), Method.DELETE);

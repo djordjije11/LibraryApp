@@ -1,15 +1,18 @@
 package forms.controllers;
 
 import controllers.CopyOfBookController;
+import controllers.LendingController;
 import controllers.MemberController;
 import forms.MainForm;
 import forms.lending.LendingForm;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import models.Book;
 import models.CopyOfBook;
+import models.Lending;
 import models.Member;
 import session.Session;
 import tcp.TcpClient;
@@ -21,19 +24,21 @@ import tcp.TcpClient;
 public class LendingFormsController {
     private MainForm parentForm;
     private LendingForm lendingForm;
+    private LendingController lendingController;
     private CopyOfBookController copyOfBookController;
     private MemberController memberController;
     
     public LendingFormsController(TcpClient tcpClient, MainForm parentForm) throws Exception {
+        lendingController = new LendingController(tcpClient);
         copyOfBookController = new CopyOfBookController(tcpClient);
         memberController = new MemberController(tcpClient);
         this.parentForm = parentForm;
         lendingForm = new LendingForm(parentForm, true);
         setFindListener();
-        
+        setApproveListener();
         lendingForm.setVisible(true);
     }
-    public void setFindListener(){
+    private void setFindListener(){
         lendingForm.getFindButton().addActionListener((ActionEvent e) -> {
             boolean oneCopy;
             Long copyOfBookID = null;
@@ -86,7 +91,36 @@ public class LendingFormsController {
     public void closeForms(){
         
     }
-    
-    
-    
+
+    private void setApproveListener() {
+        lendingForm.getApproveButton().addActionListener((ActionEvent e) -> {
+            Member member = lendingForm.getSelectedMemberToLend();
+            if(member == null){
+                JOptionPane.showMessageDialog(lendingForm, "Nije odabran clan biblioteke koji iznajmljuje knjige,", "Info", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            List<CopyOfBook> copiesOfBook = lendingForm.getListOfSelectedCopiesOfBooksToLend();
+            if(copiesOfBook == null || copiesOfBook.isEmpty()){
+                JOptionPane.showMessageDialog(lendingForm, "Nije odabran nijedan primerak knjige za iznajmljivanje,", "Info", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            List<Lending> lendings = new ArrayList<>();
+            LocalDate date = LocalDate.now();
+            for (CopyOfBook copyOfBook : copiesOfBook) {
+                lendings.add(new Lending(copyOfBook, member, date));
+            }
+            try {
+                List<Lending> dbLendings = lendingController.createEntities(lendings);
+                JOptionPane.showMessageDialog(lendingForm, "Iznajmljivanje knjiga je uspesno zabelezeno.", "Knjige su iznajmljene", JOptionPane.INFORMATION_MESSAGE);
+                
+                StringBuilder sb = new StringBuilder();
+                for (Lending dbLending : dbLendings) {
+                    sb.append(dbLending).append("\n\n");
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(lendingForm, "Iznajmljivanje knjiga nije uspesno zabelezeno.", "GRESKA", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+    }
 }

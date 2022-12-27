@@ -12,7 +12,7 @@ import models.IEntity;
  *
  * @author Djordjije
  */
-public class SqlEmployeeBroker extends SqlEntityBroker implements IEmployeeBroker {
+public class SqlEmployeeBroker extends SqlEntityBroker<Employee> implements IEmployeeBroker {
 
     @Override
     public synchronized Employee findEmployeeWithIdAndPassword(Employee employee, Connection connection) throws Exception {

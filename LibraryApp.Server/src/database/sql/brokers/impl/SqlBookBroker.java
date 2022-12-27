@@ -2,7 +2,6 @@ package database.sql.brokers.impl;
 
 import database.sql.brokers.interfaces.IBookBroker;
 import database.sql.sqlmodels.SqlBook;
-import helper.EntitiesConverter;
 import java.sql.Connection;
 import java.util.List;
 import models.Book;
@@ -11,35 +10,35 @@ import models.Book;
  *
  * @author Djordjije
  */
-public class SqlBookBroker extends SqlEntityBroker implements IBookBroker {
+public class SqlBookBroker extends SqlEntityBroker<Book> implements IBookBroker {
 
     @Override
     public Book createBook(Book book, Connection connection) throws Exception {
-        return (Book)create(new SqlBook(book), connection);
+        return create(new SqlBook(book), connection);
     }
 
     @Override
     public Book findBook(Book book, Connection connection) throws Exception {
-        return (Book)find(new SqlBook(book), connection);
+        return find(new SqlBook(book), connection);
     }
 
     @Override
     public List<Book> findBooks(Book book, Connection connection) throws Exception {
-        return EntitiesConverter.<Book>convertList(findEntities(new SqlBook(book), connection));
+        return findEntities(new SqlBook(book), connection);
     }
 
     @Override
     public List<Book> readAllBooks(Book book, Connection connection) throws Exception {
-        return EntitiesConverter.<Book>convertList(readAll(new SqlBook(book), connection));
+        return readAll(new SqlBook(book), connection);
     }
 
     @Override
     public Book updateBook(Book book, Connection connection) throws Exception {
-        return (Book)update(new SqlBook(book), connection);
+        return update(new SqlBook(book), connection);
     }
 
     @Override
     public Book deleteBook(Book book, Connection connection) throws Exception {
-        return (Book)delete(new SqlBook(book), connection);
+        return delete(new SqlBook(book), connection);
     }
 }

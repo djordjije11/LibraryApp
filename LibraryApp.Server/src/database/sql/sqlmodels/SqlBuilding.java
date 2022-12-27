@@ -3,19 +3,15 @@ package database.sql.sqlmodels;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import models.Building;
-import models.IEntity;
 
 /**
  *
  * @author Djordjije
  */
-public class SqlBuilding extends SqlEntity {
-    private Building building;
+public class SqlBuilding extends SqlEntity<Building> {
     public SqlBuilding(Building building){
         super(building);
-        this.building = building;
     }
     public SqlBuilding(){}
     
@@ -50,13 +46,7 @@ public class SqlBuilding extends SqlEntity {
     }
 
     @Override
-    public IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException {
+    public Building getEntityFromResultSet(ResultSet resultSet) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    @Override
-    public List<IEntity> getListOfEntities() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
 }

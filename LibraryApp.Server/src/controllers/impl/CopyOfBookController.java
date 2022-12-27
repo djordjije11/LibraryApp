@@ -46,8 +46,7 @@ public class CopyOfBookController implements IController {
                 dbObject = dbCopiesOfBooks;
                 break;
             case GET:
-                CopyOfBook dbCopyOfBook = bookLogic.findCopyOfBookInBuilding(copyOfBook);
-                dbObject = dbCopyOfBook;
+                dbObject = bookLogic.findCopyOfBookInBuilding(copyOfBook);
                 break;
             default:
                 throw new ExecutionControl.NotImplementedException("The request method is not able for a Book object.");

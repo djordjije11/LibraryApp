@@ -8,6 +8,7 @@ import logics.interfaces.IBookLogic;
 import models.Book;
 import models.CopyOfBook;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 /**
  *
@@ -98,7 +99,12 @@ public class BookLogic implements IBookLogic {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
             Book createdBook = bookBroker.createBook(book, connection);
-            copyOfBookBroker.createCopiesOfBook(new CopyOfBook(book.getId(), buildingID), amount, connection);
+            CopyOfBook copyOfBook = new CopyOfBook(createdBook, buildingID);
+            List<CopyOfBook> copiesOfBook = new ArrayList<>();
+            for (int i = 0; i < amount; i++){
+                copiesOfBook.add(copyOfBook);
+            }
+            copyOfBookBroker.createCopiesOfBook(copiesOfBook, connection);
             connection.commit();
             return createdBook;
         } catch(Exception ex){
@@ -124,7 +130,12 @@ public class BookLogic implements IBookLogic {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
             Book updatedBook = bookBroker.updateBook(book, connection);
-            copyOfBookBroker.createCopiesOfBook(new CopyOfBook(book.getId(), buildingID), amount, connection);
+            CopyOfBook copyOfBook = new CopyOfBook(updatedBook, buildingID);
+            List<CopyOfBook> copiesOfBook = new ArrayList<>();
+            for (int i = 0; i < amount; i++){
+                copiesOfBook.add(copyOfBook);
+            }
+            copyOfBookBroker.createCopiesOfBook(copiesOfBook, connection);
             connection.commit();
             return updatedBook;
         } catch(Exception ex){
@@ -139,9 +150,13 @@ public class BookLogic implements IBookLogic {
     public List<CopyOfBook> addCopiesOfBookInBuilding(CopyOfBook copyOfBook, Long amount) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            List<CopyOfBook> copiesOfBook = copyOfBookBroker.createCopiesOfBook(copyOfBook, amount, connection);
+            List<CopyOfBook> copiesOfBook = new ArrayList<>();
+            for (int i = 0; i < amount; i++){
+                copiesOfBook.add(copyOfBook);
+            }
+            List<CopyOfBook> dbCopiesOfBook = copyOfBookBroker.createCopiesOfBook(copiesOfBook, connection);
             connection.commit();
-            return copiesOfBook;
+            return dbCopiesOfBook;
         } catch(Exception ex){
             connection.rollback();
             throw ex;

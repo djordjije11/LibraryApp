@@ -15,6 +15,13 @@ public class Lending implements IEntity, Serializable {
     private LocalDate lendingDate;
     private LocalDate returnDate;
     
+    public Lending(){}
+    public Lending(CopyOfBook copyOfBook, Member member, LocalDate lendingDate){
+        this.copyOfBook = copyOfBook;
+        this.member = member;
+        this.lendingDate = lendingDate;
+    }
+    
     @Override
     public ModelElement getModelElement() {
         return ModelElement.LENDING;
@@ -58,5 +65,10 @@ public class Lending implements IEntity, Serializable {
 
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id + "\nKnjiga: " + copyOfBook + "\nClan biblioteke: " + member + "\nDatuma: " + lendingDate;
     }
 }
