@@ -94,4 +94,7 @@ public class BookDto implements IEntity, Serializable {
     public void setBuildingId(Long buildingId) {
         this.buildingId = buildingId;
     }
+    public String singlePrint(){
+        return "ID: " + id + ",\n" + title + " - " + author + ",\nOpis: " + description + "\nNa stanju: " + currentAmount;
+    }
 }

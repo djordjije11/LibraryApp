@@ -41,6 +41,7 @@ public class Member implements IEntity, Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    @Override
     public Long getId() {
         return id;
     }
@@ -68,9 +69,13 @@ public class Member implements IEntity, Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public String singlePrint(){
+        return "ID: " + id + ",\n" + firstname + " " + lastname + ",\nDatum rodjenja: " + birthday + ",\nE-mail adresa: " + email;
+    }
 
     @Override
     public String toString() {
-        return "ID: " + id + ",\n" + firstname + " " + lastname + ",\nrodjen: " + birthday + ",\nemail adresa: " + email;
+        return "ID: " + id + ", " + firstname + " " + lastname;
     }
 }

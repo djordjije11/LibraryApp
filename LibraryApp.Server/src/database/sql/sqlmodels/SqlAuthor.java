@@ -27,7 +27,7 @@ public class SqlAuthor extends SqlEntity {
     }
     
     @Override
-    String getTableName() {
+    protected String getTableName() {
         return "author";
     }
 
@@ -69,5 +69,10 @@ public class SqlAuthor extends SqlEntity {
     @Override
     public IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException {
         return new Author(resultSet.getLong("ID"), resultSet.getString("firstname"), resultSet.getString("lastname"));
+    }
+
+    @Override
+    public List<IEntity> getListOfEntities() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -19,7 +19,8 @@ public abstract class SqlEntity {
     public IEntity getEntity(){
         return entity;
     }
-    abstract String getTableName();
+    public abstract List<IEntity> getListOfEntities();
+    protected abstract String getTableName();
     public abstract String getPreparedStatementInsertQuery();
     public abstract void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException;
     public abstract String getPreparedStatementUpdateQuery();

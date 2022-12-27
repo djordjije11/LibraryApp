@@ -52,6 +52,7 @@ public class SqlConnectionFactory {
             connection = createConnection();
         }
         usedConnections.add(connection);
+        connection.setAutoCommit(false);
         return connection;
     }
     

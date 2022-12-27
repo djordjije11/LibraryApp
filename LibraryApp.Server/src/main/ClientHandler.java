@@ -4,6 +4,7 @@ import controllers.impl.AuthorController;
 import controllers.impl.BookController;
 import controllers.impl.CopyOfBookController;
 import controllers.impl.EmployeeController;
+import controllers.impl.LendingController;
 import controllers.impl.MemberController;
 import java.io.IOException;
 import jdk.jshell.spi.ExecutionControl;
@@ -52,6 +53,9 @@ public class ClientHandler extends Thread {
                         break;
                     case COPYOFBOOK:
                         response = new CopyOfBookController().handle(request);
+                        break;
+                    case LENDING:
+                        response = new LendingController().handle(request);
                         break;
                     default:
                         response = new Response();

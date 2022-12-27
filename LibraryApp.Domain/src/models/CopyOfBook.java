@@ -57,4 +57,8 @@ public class CopyOfBook implements IEntity, Serializable {
     public void setBuildingId(Long buildingId) {
         this.buildingId = buildingId;
     }
+    @Override
+    public String toString() {
+        return "ID: " + id + ", " + book;
+    }
 }

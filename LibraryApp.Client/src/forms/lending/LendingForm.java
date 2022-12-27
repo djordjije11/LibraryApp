@@ -1,9 +1,13 @@
 package forms.lending;
 
 import forms.lending.table.CopiesOfBookTableModel;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import models.CopyOfBook;
 import models.Member;
@@ -14,14 +18,15 @@ import models.Member;
  */
 public class LendingForm extends javax.swing.JDialog {
 
-    /**
-     * Creates new form LendingForm
-     */
+    private DefaultListModel listModel;
+    
     public LendingForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         pack();
         setLocationRelativeTo(null);
+        listModel = new DefaultListModel<CopyOfBook>();
+        listSelectedCopiesOfBook.setModel(listModel);
     }
 
     /**
@@ -76,13 +81,29 @@ public class LendingForm extends javax.swing.JDialog {
 
         jScrollPane1.setViewportView(listSelectedCopiesOfBook);
 
-        txtSelectedMember.setEnabled(false);
+        txtSelectedMember.setEditable(false);
+
+        cmbxMembers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbxMembersActionPerformed(evt);
+            }
+        });
 
         btnAddSelectedCopyOfBook.setText("DODAJ ODABRANI PRIMERAK");
         btnAddSelectedCopyOfBook.setFocusable(false);
+        btnAddSelectedCopyOfBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddSelectedCopyOfBookActionPerformed(evt);
+            }
+        });
 
         btnReturnSelectedCopyOfBook.setText("VRATI ODABRANI PRIMERAK");
         btnReturnSelectedCopyOfBook.setFocusable(false);
+        btnReturnSelectedCopyOfBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReturnSelectedCopyOfBookActionPerformed(evt);
+            }
+        });
 
         btnApprove.setText("POTVRDI");
         btnApprove.setFocusable(false);
@@ -194,6 +215,43 @@ public class LendingForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmbxMembersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbxMembersActionPerformed
+        Object member = cmbxMembers.getSelectedItem();
+        if(member != null){
+            txtSelectedMember.setText(member.toString());
+        }
+    }//GEN-LAST:event_cmbxMembersActionPerformed
+
+    private void btnAddSelectedCopyOfBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSelectedCopyOfBookActionPerformed
+        int[] selectedRows = tblCopiesOfBook.getSelectedRows();
+        if(selectedRows.length == 0){
+            JOptionPane.showMessageDialog(this, "Niste odabrali nijedan primerak knjige.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        Collection<CopyOfBook> copiesOfBook = new ArrayList<>();
+        CopiesOfBookTableModel copiesOfBookTableModel = (CopiesOfBookTableModel) tblCopiesOfBook.getModel();
+        for (int selectedRow : selectedRows) {
+            CopyOfBook copyOfBook = copiesOfBookTableModel.getCopyOfBook(selectedRow);
+            if(listModel.contains(copyOfBook)){
+                //JOptionPane.showMessageDialog(this, "Trazeni primerak knjige je vec odabran.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            } else{
+                copiesOfBook.add(copyOfBook);
+            }
+        }
+        listModel.addAll(copiesOfBook);
+    }//GEN-LAST:event_btnAddSelectedCopyOfBookActionPerformed
+
+    private void btnReturnSelectedCopyOfBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReturnSelectedCopyOfBookActionPerformed
+        int[] selectedRows = listSelectedCopiesOfBook.getSelectedIndices();
+        if(selectedRows == null || selectedRows.length == 0){
+            JOptionPane.showMessageDialog(this, "Niste odabrali nijedan primerak knjige.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        for (int i = selectedRows.length - 1; i >= 0; i--) {
+            listModel.remove(selectedRows[i]);
+        }
+    }//GEN-LAST:event_btnReturnSelectedCopyOfBookActionPerformed
+
     public CopyOfBook getSelectedCopyOfBook(){
         return ((CopiesOfBookTableModel)tblCopiesOfBook.getModel()).getCopyOfBook(tblCopiesOfBook.getSelectedRow());
     }
@@ -239,7 +297,7 @@ public class LendingForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> listSelectedCopiesOfBook;
+    private javax.swing.JList<CopyOfBook> listSelectedCopiesOfBook;
     private javax.swing.JTable tblCopiesOfBook;
     private javax.swing.JTextField txtBookTitle;
     private javax.swing.JTextField txtCopyOfBookID;

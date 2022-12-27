@@ -1,6 +1,6 @@
 package forms.controllers;
 
-import controllers.CopiesOfBookController;
+import controllers.CopyOfBookController;
 import controllers.MemberController;
 import forms.MainForm;
 import forms.lending.LendingForm;
@@ -8,9 +8,9 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import models.Book;
 import models.CopyOfBook;
 import models.Member;
-import models.dto.CopiesOfBookDto;
 import session.Session;
 import tcp.TcpClient;
 
@@ -21,11 +21,11 @@ import tcp.TcpClient;
 public class LendingFormsController {
     private MainForm parentForm;
     private LendingForm lendingForm;
-    private CopiesOfBookController copiesOfBookController;
+    private CopyOfBookController copyOfBookController;
     private MemberController memberController;
     
     public LendingFormsController(TcpClient tcpClient, MainForm parentForm) throws Exception {
-        copiesOfBookController = new CopiesOfBookController(tcpClient);
+        copyOfBookController = new CopyOfBookController(tcpClient);
         memberController = new MemberController(tcpClient);
         this.parentForm = parentForm;
         lendingForm = new LendingForm(parentForm, true);
@@ -35,9 +35,6 @@ public class LendingFormsController {
     }
     public void setFindListener(){
         lendingForm.getFindButton().addActionListener((ActionEvent e) -> {
-            String title = lendingForm.getBookTitleTextField().getText().trim();
-            CopiesOfBookDto copiesOfBookDto = new CopiesOfBookDto();
-            copiesOfBookDto.setBuildingId(Session.getBuilding().getId());
             boolean oneCopy;
             Long copyOfBookID = null;
             try {
@@ -48,27 +45,33 @@ public class LendingFormsController {
                 //JOptionPane.showMessageDialog(lendingForm, "Pogresno uneti podaci.", "ID primerka knjige mora biti poztivan celi broj.", JOptionPane.WARNING_MESSAGE);
             }
             try{
-                List<CopyOfBook> dbCopiesOfBook = new ArrayList<>();
+                List<CopyOfBook> dbCopiesOfBook;
+                CopyOfBook copyOfBook = new CopyOfBook();
+                copyOfBook.setBuildingId(Session.getBuilding().getId());
                 if(oneCopy == true){
-                    copiesOfBookDto.setCopyOfBookId(copyOfBookID);
-                    CopiesOfBookDto dbCopiesOfBookDto = copiesOfBookController.getEntity(copiesOfBookDto);
-                    CopyOfBook dbCopyOfBook = dbCopiesOfBookDto.getCopyOfBookFromCopiesOfBookDto();
+                    copyOfBook.setId(copyOfBookID);
+                    CopyOfBook dbCopyOfBook = copyOfBookController.getEntity(copyOfBook);
+                    dbCopiesOfBook = new ArrayList();
                     dbCopiesOfBook.add(dbCopyOfBook);
                     lendingForm.setBooksTableData(dbCopiesOfBook);
                 } else {
-                    copiesOfBookDto.setTitle(title);
-                    List<CopiesOfBookDto> dbListOfCopiesOfBookDto = copiesOfBookController.findEntities(copiesOfBookDto);
-                    for (CopiesOfBookDto dbCopiesOfBookDto : dbListOfCopiesOfBookDto) {
-                        dbCopiesOfBook.addAll(dbCopiesOfBookDto.getCopiesOfBook());
+                    Book book = new Book();
+                    String title = lendingForm.getBookTitleTextField().getText().trim();
+                    if(title != null && title.isBlank() == false){
+                        book.setTitle(title);
+                        copyOfBook.setBook(book);
+                        dbCopiesOfBook = copyOfBookController.findEntities(copyOfBook);
+                        lendingForm.setBooksTableData(dbCopiesOfBook);
                     }
-                    lendingForm.setBooksTableData(dbCopiesOfBook);
                 }
             } catch(Exception ex){
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(lendingForm, "Pretraga primeraka knjiga nije uspesno izvresna.", "GRESKA", JOptionPane.WARNING_MESSAGE);
             }
             String firstname = lendingForm.getMemberFirstnameTextField().getText().trim();
             String lastname = lendingForm.getMemberLastnameTextField().getText().trim();
+            if((firstname == null || firstname.isBlank() == true) && (lastname == null || lastname.isBlank() == true)){
+                return;
+            }
             Member member = new Member();
             member.setFirstname(firstname);
             member.setLastname(lastname);

@@ -41,7 +41,6 @@ public class SqlCopyOfBookBroker extends SqlEntityBroker implements ICopyOfBookB
         List<CopyOfBook> copiesOfBook = new ArrayList<>();
         SqlCopyOfBook sqlCopyOfBook = new SqlCopyOfBook(copyOfBook);
         Statement statement = connection.createStatement();
-        System.out.println(sqlCopyOfBook.getStatementSelectWithConditionQuery());
         ResultSet resultSet = statement.executeQuery(sqlCopyOfBook.getStatementSelectWithConditionQuery());
         while(resultSet.next()){
             copiesOfBook.add((CopyOfBook)sqlCopyOfBook.getEntityFromResultSet(resultSet));

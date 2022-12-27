@@ -54,9 +54,11 @@ public class Book implements IEntity, Serializable {
     public void setAuthor(Author author) {
         this.author = author;
     }
-
+    public String singlePrint(){
+        return "ID: " + id + ",\n" + title + " - " + author + ",\nOpis: " + description;
+    }
     @Override
     public String toString() {
-        return "ID: " + id + ",\n" + title + " - " + author + ",\nopis: " + description;
+        return title + " - " + author;
     }
 }

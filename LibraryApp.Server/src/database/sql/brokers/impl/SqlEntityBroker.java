@@ -26,6 +26,11 @@ public abstract class SqlEntityBroker {
         preparedStatement.close();
         return entity;
     }
+    /*
+    protected synchronized IEntity create(SqlEntity sqlEntity, Connection connection) throws Exception{
+        
+    }
+*/
     protected synchronized IEntity find(SqlEntity sqlEntity, Connection connection) throws Exception{
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sqlEntity.getStatementSelectByIdQuery());

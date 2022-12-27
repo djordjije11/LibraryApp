@@ -23,7 +23,7 @@ public class SqlBook extends SqlEntity {
     }
     
     @Override
-    String getTableName() {
+    protected String getTableName() {
         return "book";
     }
 
@@ -83,5 +83,10 @@ public class SqlBook extends SqlEntity {
     public IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException {
         Author author = new Author(resultSet.getLong("authorID"), resultSet.getString("firstname"), resultSet.getString("lastname"));
         return new Book(resultSet.getLong("ID"), resultSet.getString("title"), resultSet.getString("description"), author);
+    }
+
+    @Override
+    public List<IEntity> getListOfEntities() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

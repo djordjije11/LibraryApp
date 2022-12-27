@@ -25,7 +25,6 @@ public class BookLogic implements IBookLogic {
     public Book createBook(Book book) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            connection.setAutoCommit(false);
             Book createdBook = bookBroker.createBook(book, connection);
             connection.commit();
             return createdBook;
@@ -67,7 +66,6 @@ public class BookLogic implements IBookLogic {
     public Book updateBook(Book book) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            connection.setAutoCommit(false);
             Book updatedBook = bookBroker.updateBook(book, connection);
             connection.commit();
             return updatedBook;
@@ -82,7 +80,6 @@ public class BookLogic implements IBookLogic {
     public Book deleteBook(Book book) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            connection.setAutoCommit(false);
             if(copyOfBookBroker.getCountOfAllCopiesOfBook(new CopyOfBook(book.getId()), connection) > 0)
                 throw new Exception("Book can't be deleted if it is already have been copied.");
             Book deletedBook = bookBroker.deleteBook(book, connection);
@@ -100,7 +97,6 @@ public class BookLogic implements IBookLogic {
     public Book createBook(Book book, Long amount, Long buildingID) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            connection.setAutoCommit(false);
             Book createdBook = bookBroker.createBook(book, connection);
             copyOfBookBroker.createCopiesOfBook(new CopyOfBook(book.getId(), buildingID), amount, connection);
             connection.commit();
@@ -127,7 +123,6 @@ public class BookLogic implements IBookLogic {
     public Book updateBook(Book book, Long amount, Long buildingID) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            connection.setAutoCommit(false);
             Book updatedBook = bookBroker.updateBook(book, connection);
             copyOfBookBroker.createCopiesOfBook(new CopyOfBook(book.getId(), buildingID), amount, connection);
             connection.commit();
@@ -144,7 +139,6 @@ public class BookLogic implements IBookLogic {
     public List<CopyOfBook> addCopiesOfBookInBuilding(CopyOfBook copyOfBook, Long amount) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            connection.setAutoCommit(false);
             List<CopyOfBook> copiesOfBook = copyOfBookBroker.createCopiesOfBook(copyOfBook, amount, connection);
             connection.commit();
             return copiesOfBook;

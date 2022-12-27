@@ -47,14 +47,14 @@ public class Author implements IEntity, Serializable {
     }
     @Override
     public String toString() {
-        String firstname = this.firstname != null ? this.firstname : "";
-        String lastname = this.lastname != null ? this.lastname : "";
-        return firstname + " " + lastname;
+        String firstnameToPrint = this.firstname != null ? this.firstname : "";
+        String lastnameToPrint = this.lastname != null ? this.lastname : "";
+        return firstnameToPrint + " " + lastnameToPrint;
     }
     @Override
     public boolean equals(Object obj) {
         if(obj != null && obj instanceof Author author){
-            return this.id == author.id;
+            return Objects.equals(this.id, author.id);
         } else return false;
     }
 }

@@ -70,9 +70,9 @@ public class MemberFormsController {
     private void setMemberFormDeleteListener() {
         memberForm.getDeleteButton().addActionListener((ActionEvent e) -> {
             try {
-                Member member = memberController.deleteEntity(memberForm.getMember());
+                Member dbMember = memberController.deleteEntity(memberForm.getMember());
                 refreshViewMembersForm();
-                JOptionPane.showMessageDialog(memberForm, "Clan je uspesno obrisan.\n\n" +  member, "Clan obrisan", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(memberForm, "Clan je uspesno obrisan.\n\n" +  dbMember.singlePrint(), "Clan obrisan", JOptionPane.INFORMATION_MESSAGE);
                 memberForm.dispose();
                 memberForm = null;
             } catch (Exception ex) {
@@ -116,7 +116,7 @@ public class MemberFormsController {
                 Member dbMember = isMemberNew == true ? memberController.createEntity(member) : memberController.updateEntity(member);
                 memberForm.setMember(dbMember);
                 refreshViewMembersForm();
-                JOptionPane.showMessageDialog(memberForm, "Clan je uspesno sacuvan.\n\n" + dbMember, "Clan sacuvan", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(memberForm, "Clan je uspesno sacuvan.\n\n" + dbMember.singlePrint(), "Clan sacuvan", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(memberForm, "Clan nije uspesno sacuvan.", "GRESKA", JOptionPane.ERROR_MESSAGE);
             }

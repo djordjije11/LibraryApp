@@ -24,7 +24,7 @@ public class SqlCopyOfBook extends SqlEntity {
     public SqlCopyOfBook(){}
     
     @Override
-    String getTableName() {
+    protected String getTableName() {
         return "copyofbook";
     }
 
@@ -82,5 +82,10 @@ public class SqlCopyOfBook extends SqlEntity {
     @Override
     public String getStatementSelectByIdQuery() {
         return getStatementSelectAllQuery() + " WHERE cob.ID = " + entity.getId() + " AND buildingID = " + copyOfBook.getBuildingId();
+    }
+
+    @Override
+    public List<IEntity> getListOfEntities() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

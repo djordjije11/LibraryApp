@@ -23,7 +23,7 @@ public class SqlMember extends SqlEntity {
     public SqlMember(){}
     
     @Override
-    String getTableName() {
+    protected String getTableName() {
         return "member";
     }
     @Override
@@ -73,5 +73,10 @@ public class SqlMember extends SqlEntity {
     @Override
     public IEntity getEntityFromResultSet(ResultSet resultSet) throws SQLException {
         return new Member(resultSet.getLong("ID"), resultSet.getString("firstname"), resultSet.getString("lastname"), resultSet.getDate("birthday").toLocalDate(), resultSet.getString("email"));
+    }
+
+    @Override
+    public List<IEntity> getListOfEntities() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

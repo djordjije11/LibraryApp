@@ -12,7 +12,6 @@ import message.Request;
 import message.Response;
 import models.Book;
 import models.CopyOfBook;
-import models.dto.CopiesOfBookDto;
 
 /**
  *
@@ -28,38 +27,27 @@ public class CopyOfBookController implements IController {
     @Override
     public Response handle(Request request) throws Exception {
         Response response = new Response();
-        CopiesOfBookDto copyOfBookDto = (CopiesOfBookDto)request.getObject();
-        Book book = copyOfBookDto.getBookFromCopiesOfBookDto();
-        Long buildingID = copyOfBookDto.getBuildingId();
+        CopyOfBook copyOfBook = (CopyOfBook)request.getObject();
+        Book book = copyOfBook.getBook();
+        Long buildingID = copyOfBook.getBuildingId();
         Object dbObject = null;
         try{
             switch (request.getMethod()) {
-            case CREATE:
-                break;
-            case READALL:
-                break;
             case FINDWHERE:
-                List<CopiesOfBookDto> copiesOfBookDto = new ArrayList<>();
-                List<Book> books = bookLogic.findBooks(book);
-                for (Book dbBook : books) {
+                List<CopyOfBook> dbCopiesOfBooks = new ArrayList<>();
+                List<Book> dbBooks = bookLogic.findBooks(book);
+                for (Book dbBook : dbBooks) {
                     List<CopyOfBook> dbCopiesOfBook = bookLogic.findCopiesOfBookInBuilding(new CopyOfBook(dbBook, buildingID));
                     if(dbCopiesOfBook == null || dbCopiesOfBook.isEmpty()){
                         continue;
                     }
-                    copiesOfBookDto.add(new CopiesOfBookDto(dbBook, buildingID, dbCopiesOfBook));
+                    dbCopiesOfBooks.addAll(dbCopiesOfBook);
                 }
-                dbObject = copiesOfBookDto;
+                dbObject = dbCopiesOfBooks;
                 break;
             case GET:
-                Long copyOfBookID = copyOfBookDto.getCopyOfBookId();
-                CopyOfBook copyOfBook = bookLogic.findCopyOfBookInBuilding(new CopyOfBook(copyOfBookID, buildingID));
-                CopiesOfBookDto dbCopiesOfBookDto = new CopiesOfBookDto(copyOfBook.getBook(), buildingID);
-                dbCopiesOfBookDto.setCopyOfBookId(copyOfBook.getId());
-                dbObject = dbCopiesOfBookDto;
-                break;
-            case UPDATE:
-                break;
-            case DELETE:
+                CopyOfBook dbCopyOfBook = bookLogic.findCopyOfBookInBuilding(copyOfBook);
+                dbObject = dbCopyOfBook;
                 break;
             default:
                 throw new ExecutionControl.NotImplementedException("The request method is not able for a Book object.");

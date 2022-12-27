@@ -20,7 +20,6 @@ public class MemberLogic implements IMemberLogic {
     public Member createMember(Member member) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            connection.setAutoCommit(false);
             Member createdMember = memberBroker.createMember(member, connection);
             connection.commit();
             return createdMember;
@@ -62,7 +61,6 @@ public class MemberLogic implements IMemberLogic {
     public Member updateMember(Member member) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            connection.setAutoCommit(false);
             Member updatedMember = memberBroker.updateMember(member, connection);
             connection.commit();
             return updatedMember;
@@ -77,7 +75,6 @@ public class MemberLogic implements IMemberLogic {
     public Member deleteMember(Member member) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            connection.setAutoCommit(false);
             Long amount = memberBroker.getCountOfAllLendingsByMember(member, connection);
             if(amount > 0) {
                 throw new Exception("A member can't be deleted from database if it has a history of lendings.");
