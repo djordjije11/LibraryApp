@@ -1,32 +1,34 @@
-package forms.book.table;
+package forms.lending.table;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import models.Author;
-import models.dto.BookDto;
+import models.Book;
+import models.CopyOfBook;
 
 /**
  *
  * @author Djordjije
  */
-public class BooksTableModel extends AbstractTableModel {
-    private List<BookDto> books;
+public class CopiesOfBookTableModel extends AbstractTableModel {
+    private List<CopyOfBook> copiesOfBook;
     private final String[] columnNames = {"ID","Naslov", "Autor"};
     private final Class[] columnTypes = {Long.class, String.class, Author.class};
     
-    public BooksTableModel(List<BookDto> books){
-        this.books = books;
+    public CopiesOfBookTableModel(List<CopyOfBook> copiesOfBook){
+        this.copiesOfBook = copiesOfBook;
     }
-    public BookDto getBook(int index){
+    public CopyOfBook getCopyOfBook(int index){
         if(index < 0)
             return null;
-        return books.get(index);
+        return copiesOfBook.get(index);
     }
     @Override
     public int getRowCount() {
-        if(books == null)
+        if(copiesOfBook == null || copiesOfBook.isEmpty()){
             return 0;
-        return books.size();
+        }
+        return copiesOfBook.size();
     }
     @Override
     public int getColumnCount() {
@@ -34,13 +36,20 @@ public class BooksTableModel extends AbstractTableModel {
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        BookDto book = books.get(rowIndex);
+        CopyOfBook copyOfBook = copiesOfBook.get(rowIndex);
+        Book book = copyOfBook.getBook();
         switch (columnIndex) {
             case 0:
-                return book.getId();
+                return copyOfBook.getId();
             case 1:
+                if(book == null){
+                    return "n/a";
+                }
                 return book.getTitle();
             case 2:
+                if(book == null){
+                    return "n/a";
+                }
                 return book.getAuthor();
             default:
                 return "n/a";

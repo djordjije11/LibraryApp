@@ -1,7 +1,7 @@
 package main;
 
-import controllers.LoginController;
-import controllers.MainController;
+import forms.controllers.LoginFormsController;
+import forms.controllers.MainFormsController;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import message.ModelElement;
@@ -21,11 +21,11 @@ public class Client {
         try {
             TcpClient tcpClient = new TcpClient(IP_ADDRESS, PORT_NUMBER);
             while(Session.doesClientWantToLogin() == true){
-                new LoginController(tcpClient);
+                new LoginFormsController(tcpClient);
                 synchronized(tcpClient){
                     tcpClient.wait();
                 }
-                new MainController(tcpClient);
+                new MainFormsController(tcpClient);
                 synchronized(tcpClient){
                     tcpClient.wait();
                 }

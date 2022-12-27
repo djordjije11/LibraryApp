@@ -9,21 +9,28 @@ import message.ModelElement;
  */
 public class CopyOfBook implements IEntity, Serializable {
     private Long id;
-    private Long bookId;
+    private Book book;
     private Long buildingId;
     
     public CopyOfBook(){}
     public CopyOfBook(Long id) {
         this.id = id;
     }
-    public CopyOfBook(Long id, Long bookId, Long buildingId){
-        this.id = id;
-        this.bookId = bookId;
+    public CopyOfBook(Long id, Long buildingId){
+        this(id);
         this.buildingId = buildingId;
     }
-    public CopyOfBook(Long bookId, Long buildingId){
-        this.bookId = bookId;
+    public CopyOfBook(Long id, Book book){
+        this(id);
+        this.book = book;
+    }
+    public CopyOfBook(Book book, Long buildingId){
+        this.book = book;
         this.buildingId = buildingId;
+    }
+    public CopyOfBook(Long id, Book book, Long buildingId){
+        this(id, buildingId);
+        this.book = book;
     }
     
     @Override
@@ -38,11 +45,11 @@ public class CopyOfBook implements IEntity, Serializable {
     public Long getId(){
         return id;
     }
-    public Long getBookId() {
-        return bookId;
+    public Book getBook(){
+        return book;
     }
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book){
+        this.book = book;
     }
     public Long getBuildingId() {
         return buildingId;

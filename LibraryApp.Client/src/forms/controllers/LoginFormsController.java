@@ -1,4 +1,4 @@
-package controllers;
+package forms.controllers;
 
 import forms.LoginForm;
 import java.awt.event.ActionEvent;
@@ -16,11 +16,11 @@ import tcp.TcpClient;
  *
  * @author Djordjije
  */
-public class LoginController {
+public class LoginFormsController {
     private final TcpClient tcpClient;
     private LoginForm loginForm;
     
-    public LoginController(TcpClient tcpClient){
+    public LoginFormsController(TcpClient tcpClient){
         this.tcpClient = tcpClient;
         loginForm = new LoginForm();
         setLoginListener();

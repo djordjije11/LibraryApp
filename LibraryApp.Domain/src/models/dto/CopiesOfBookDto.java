@@ -1,48 +1,53 @@
 package models.dto;
 
 import java.io.Serializable;
+import java.util.List;
 import message.ModelElement;
 import models.Author;
 import models.Book;
+import models.CopyOfBook;
 import models.IEntity;
 
 /**
  *
  * @author Djordjije
  */
-public class BookDto implements IEntity, Serializable {
+public class CopiesOfBookDto implements IEntity, Serializable {
     private Long id;
     private String title;
     private String description;
     private Author author;
-    private Long currentAmount;
-    private Long addingAmount;
-    private boolean isUpdated = false;
+    private Long copyOfBookId;
+    private List<CopyOfBook> copiesOfBook;
     private Long buildingId;
-
-    public BookDto() {
+    
+    public CopiesOfBookDto() {
     }
-    public BookDto(Book book){
+    public CopiesOfBookDto(Book book){
         this.id = book.getId();
         this.title = book.getTitle();
         this.description = book.getDescription();
         this.author = book.getAuthor();
     }
-    public BookDto(Book book, Long buildingID){
+    public CopiesOfBookDto(Book book, Long buildingID){
         this(book);
         this.buildingId = buildingID;
     }
-    public BookDto(Book book, Long buildingID, Long currentAmount){
+    public CopiesOfBookDto(Book book, Long buildingID, List<CopyOfBook> copiesOfBook){
         this(book, buildingID);
-        this.currentAmount = currentAmount;
+        this.copiesOfBook = copiesOfBook;
     }
     
-    public Book getBookFromBookDto(){
+    public Book getBookFromCopiesOfBookDto(){
         return new Book(id, title, description, author);
+    }
+    public CopyOfBook getCopyOfBookFromCopiesOfBookDto(){
+        Book book = getBookFromCopiesOfBookDto();
+        return new CopyOfBook(copyOfBookId, book);
     }
     @Override
     public ModelElement getModelElement() {
-        return ModelElement.BOOK;
+        return ModelElement.COPYOFBOOK;
     }
     @Override
     public void setId(Long id) {
@@ -70,28 +75,24 @@ public class BookDto implements IEntity, Serializable {
     public void setAuthor(Author author) {
         this.author = author;
     }
-    public Long getCurrentAmount() {
-        return currentAmount;
+    public Long getCopyOfBookId(){
+        return copyOfBookId;
     }
-    public void setCurrentAmount(Long currentAmount) {
-        this.currentAmount = currentAmount;
-    }
-    public Long getAddingAmount() {
-        return addingAmount;
-    }
-    public void setAddingAmount(Long addingAmount) {
-        this.addingAmount = addingAmount;
-    }
-    public boolean getIsUpdated() {
-        return isUpdated;
-    }
-    public void setIsUpdated(boolean isUpdated) {
-        this.isUpdated = isUpdated;
+    public void setCopyOfBookId(Long copyOfBookId){
+        this.copyOfBookId = copyOfBookId;
     }
     public Long getBuildingId() {
         return buildingId;
     }
     public void setBuildingId(Long buildingId) {
         this.buildingId = buildingId;
+    }
+    public List<CopyOfBook> getCopiesOfBook(){
+        return copiesOfBook;
+    }
+    public int getNumberOfCopiesOfBook(){
+        if(copiesOfBook == null || copiesOfBook.isEmpty())
+            return 0;
+        return copiesOfBook.size();
     }
 }

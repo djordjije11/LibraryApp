@@ -165,4 +165,14 @@ public class BookLogic implements IBookLogic {
             SqlConnectionFactory.releaseConnection(connection);
         }
     }
+
+    @Override
+    public CopyOfBook findCopyOfBookInBuilding(CopyOfBook copyOfBook) throws Exception {
+        Connection connection = SqlConnectionFactory.getConnection();
+        try{
+            return copyOfBookBroker.findCopyOfBookInBuilding(copyOfBook, connection);
+        } finally{
+            SqlConnectionFactory.releaseConnection(connection);
+        }
+    }
 }

@@ -15,7 +15,7 @@ import models.CopyOfBook;
  *
  * @author Djordjije
  */
-public class SqlCopyOfBookBroker implements ICopyOfBookBroker {
+public class SqlCopyOfBookBroker extends SqlEntityBroker implements ICopyOfBookBroker {
 
     @Override
     public List<CopyOfBook> createCopiesOfBook(CopyOfBook copyOfBook, Long amount, Connection connection) throws Exception {
@@ -28,7 +28,7 @@ public class SqlCopyOfBookBroker implements ICopyOfBookBroker {
             preparedStatement.executeUpdate();
             result = preparedStatement.getGeneratedKeys();
             if(result.next()){
-                copiesOfBook.add(new CopyOfBook(result.getLong(1), copyOfBook.getBookId(), copyOfBook.getBuildingId()));
+                copiesOfBook.add(new CopyOfBook(result.getLong(1), copyOfBook.getBook(), copyOfBook.getBuildingId()));
             }
         }
         if(result != null) result.close();
@@ -41,6 +41,7 @@ public class SqlCopyOfBookBroker implements ICopyOfBookBroker {
         List<CopyOfBook> copiesOfBook = new ArrayList<>();
         SqlCopyOfBook sqlCopyOfBook = new SqlCopyOfBook(copyOfBook);
         Statement statement = connection.createStatement();
+        System.out.println(sqlCopyOfBook.getStatementSelectWithConditionQuery());
         ResultSet resultSet = statement.executeQuery(sqlCopyOfBook.getStatementSelectWithConditionQuery());
         while(resultSet.next()){
             copiesOfBook.add((CopyOfBook)sqlCopyOfBook.getEntityFromResultSet(resultSet));
@@ -53,7 +54,7 @@ public class SqlCopyOfBookBroker implements ICopyOfBookBroker {
     @Override
     public Long getCountOfCopiesOfBookInBuilding(CopyOfBook copyOfBook, Connection connection) throws Exception {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM copyofbook WHERE bookID = " + copyOfBook.getBookId() + " AND buildingID = " + copyOfBook.getBuildingId());
+        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM copyofbook WHERE bookID = " + copyOfBook.getBook().getId() + " AND buildingID = " + copyOfBook.getBuildingId());
         resultSet.next();
         Long amount = resultSet.getLong("amount");
         resultSet.close();
@@ -64,11 +65,16 @@ public class SqlCopyOfBookBroker implements ICopyOfBookBroker {
     @Override
     public Long getCountOfAllCopiesOfBook(CopyOfBook copyOfBook, Connection connection) throws Exception {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM copyofbook WHERE bookID = " + copyOfBook.getBookId());
+        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM copyofbook WHERE bookID = " + copyOfBook.getBook().getId());
         resultSet.next();
         Long amount = resultSet.getLong("amount");
         resultSet.close();
         statement.close();
         return amount;
+    }
+
+    @Override
+    public CopyOfBook findCopyOfBookInBuilding(CopyOfBook copyOfBook, Connection connection) throws Exception {
+        return (CopyOfBook)find(new SqlCopyOfBook(copyOfBook), connection);
     }
 }

@@ -21,10 +21,6 @@ public class MembersTableModel extends AbstractTableModel{
     public MembersTableModel(List<Member> members){
         this.members = members;
     }
-    public void updateMembersList(List<Member> members){
-        this.members = members;
-        fireTableDataChanged();
-    }
     public Member getMember(int index){
         if(index < 0)
             return null;

@@ -16,6 +16,7 @@ import models.IEntity;
 public class SqlBook extends SqlEntity {
     private Book book;
     
+    public SqlBook(){}
     public SqlBook(Book book) {
         super(book);
         this.book = book;

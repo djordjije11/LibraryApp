@@ -19,9 +19,9 @@
                 <Property name="text" type="java.lang.String" value="Otvori formu za knjige"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuItemLending">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemLendings">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jMenuItem1"/>
+                <Property name="text" type="java.lang.String" value="Otvori formu za iznajmljivanje knjiga"/>
               </Properties>
             </MenuItem>
           </SubComponents>

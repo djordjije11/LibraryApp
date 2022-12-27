@@ -15,8 +15,11 @@ public class Book implements IEntity, Serializable {
     
     public Book(){
     }
-    public Book(Long id, String title, String description, Author author){
+    public Book(Long id){
         this.id = id;
+    }
+    public Book(Long id, String title, String description, Author author){
+        this(id);
         this.title = title;
         this.description = description;
         this.author = author;

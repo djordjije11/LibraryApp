@@ -2,6 +2,7 @@ package main;
 
 import controllers.impl.AuthorController;
 import controllers.impl.BookController;
+import controllers.impl.CopyOfBookController;
 import controllers.impl.EmployeeController;
 import controllers.impl.MemberController;
 import java.io.IOException;
@@ -48,6 +49,9 @@ public class ClientHandler extends Thread {
                         break;
                     case BOOK:
                         response = new BookController().handle(request);
+                        break;
+                    case COPYOFBOOK:
+                        response = new CopyOfBookController().handle(request);
                         break;
                     default:
                         response = new Response();

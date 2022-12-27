@@ -53,7 +53,7 @@ public class BookController implements IController {
                 break;
             case GET:{
                 Book dbBook = bookLogic.findBook(book);
-                Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook.getId(), buildingID));
+                Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook, buildingID));
                 dbObject = new BookDto(dbBook, buildingID, newCurrentAmount);
                 break;
             }
