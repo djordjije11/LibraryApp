@@ -28,6 +28,7 @@ public class MainForm extends javax.swing.JFrame {
         menuItemMembers = new javax.swing.JMenuItem();
         menuItemBooks = new javax.swing.JMenuItem();
         menuItemLendings = new javax.swing.JMenuItem();
+        menuItemReturnLendings = new javax.swing.JMenuItem();
         menuLogout = new javax.swing.JMenu();
         menuLogoutAndLogin = new javax.swing.JMenuItem();
         menuLogoutAndExit = new javax.swing.JMenuItem();
@@ -44,6 +45,9 @@ public class MainForm extends javax.swing.JFrame {
 
         menuItemLendings.setText("Otvori formu za iznajmljivanje knjiga");
         menuModels.add(menuItemLendings);
+
+        menuItemReturnLendings.setText("Otvori formu za vracanje iznajmljenih knjiga");
+        menuModels.add(menuItemReturnLendings);
 
         jMenuBar2.add(menuModels);
 
@@ -88,12 +92,16 @@ public class MainForm extends javax.swing.JFrame {
     public JMenuItem getLendingsMenu(){
         return menuItemLendings;
     }
+    public JMenuItem getReturnLendingsMenu(){
+        return menuItemReturnLendings;
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem menuItemBooks;
     private javax.swing.JMenuItem menuItemLendings;
     private javax.swing.JMenuItem menuItemMembers;
+    private javax.swing.JMenuItem menuItemReturnLendings;
     private javax.swing.JMenu menuLogout;
     private javax.swing.JMenuItem menuLogoutAndExit;
     private javax.swing.JMenuItem menuLogoutAndLogin;

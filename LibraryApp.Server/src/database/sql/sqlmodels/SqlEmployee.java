@@ -19,7 +19,7 @@ public class SqlEmployee extends SqlEntity<Employee> {
     public SqlEmployee(){}
     
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "employee";
     }
 

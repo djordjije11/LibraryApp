@@ -30,7 +30,7 @@ public abstract class SqlEntity<T extends IEntity> {
     public List<T> getListOfEntities(){
         return listOfEntities;
     }
-    protected abstract String getTableName();
+    public abstract String getTableName();
     public abstract String getPreparedStatementInsertQuery();
     public abstract void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException;
     public abstract String getPreparedStatementUpdateQuery();
@@ -49,7 +49,7 @@ public abstract class SqlEntity<T extends IEntity> {
         return "SELECT * FROM " + getTableName();
     }
     public abstract T getEntityFromResultSet(ResultSet resultSet) throws SQLException;
-    protected String constructSelectWithConditionsQuery(List<String> conditions){
+    public String constructSelectWithConditionsQuery(List<String> conditions){
         String query = getStatementSelectAllQuery();
         if(conditions == null || conditions.isEmpty()){
             return query;

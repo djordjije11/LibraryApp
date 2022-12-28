@@ -1,6 +1,7 @@
 package database.sql.brokers.impl;
 
 import database.sql.brokers.interfaces.IMemberBroker;
+import database.sql.sqlmodels.SqlLending;
 import database.sql.sqlmodels.SqlMember;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -42,7 +43,7 @@ public class SqlMemberBroker extends SqlEntityBroker<Member> implements IMemberB
     @Override
     public Long getCountOfAllLendingsByMember(Member member, Connection connection) throws Exception {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM lending WHERE memberID = " + member.getId());
+        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM " + new SqlLending().getTableName() + " WHERE memberID = " + member.getId());
         resultSet.next();
         Long amount = resultSet.getLong("amount");
         resultSet.close();

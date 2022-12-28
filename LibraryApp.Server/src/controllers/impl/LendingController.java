@@ -24,15 +24,24 @@ public class LendingController implements IController {
     @Override
     public Response handle(Request request) throws Exception {
         Response response = new Response();
-        List<Lending> lendings = (List<Lending>)request.getObject();
         Object dbObject = null;
         try{
             switch (request.getMethod()) {
             case CREATELIST:
+            {
+                List<Lending> lendings = (List<Lending>)request.getObject();
                 dbObject = lendingLogic.createLendings(lendings);
                 break;
+            }
             case UPDATELIST:
+            {
+                List<Lending> lendings = (List<Lending>)request.getObject();
                 dbObject = lendingLogic.returnLendings(lendings);
+                break;
+            }
+            case FINDWHERE:
+                Lending lending = (Lending)request.getObject();
+                dbObject = lendingLogic.findUnreturnedLendingsByMember(lending);
                 break;
             default:
                 throw new ExecutionControl.NotImplementedException("The request method is not able for a Book object.");

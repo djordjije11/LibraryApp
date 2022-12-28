@@ -16,14 +16,16 @@ public class MainFormsController {
     private MemberFormsController memberController;
     private BookFormsController bookController;
     private LendingFormsController lendingController;
+    private ReturnLendingFormsController returnLendingController;
     
     public MainFormsController(TcpClient tcpClient){
         this.tcpClient = tcpClient;
         form = new MainForm();
         setMembersMenuListener();
         setBooksMenuListener();
-        setLogoutMenuListeners();
         setLendingsMenuListener();
+        setReturnLendingsMenuListener();
+        setLogoutMenuListeners();
         form.setVisible(true);
     }
 
@@ -62,6 +64,19 @@ public class MainFormsController {
                if(lendingController != null){
                    lendingController.closeForms();
                    lendingController = null;
+               }
+           }
+        });
+    }
+    private void setReturnLendingsMenuListener(){
+        form.getReturnLendingsMenu().addActionListener((ActionEvent e) -> {
+            try{
+               returnLendingController = new ReturnLendingFormsController(tcpClient, form);
+           } catch(Exception ex){
+               JOptionPane.showMessageDialog(form, "Greska prilikom otvaranja forme za vracanje iznajmljenih knjiga.", "GRESKA", JOptionPane.ERROR_MESSAGE);
+               if(returnLendingController != null){
+                   returnLendingController.closeForms();
+                   returnLendingController = null;
                }
            }
         });

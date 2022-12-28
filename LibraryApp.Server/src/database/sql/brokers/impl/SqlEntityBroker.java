@@ -63,6 +63,17 @@ public abstract class SqlEntityBroker<T extends IEntity> {
         statement.close();
         return entities;
     }
+    protected synchronized List<T> findEntitiesWithCondition(SqlEntity<T> sqlEntity, Connection connection, List<String> conditions) throws Exception{
+        List<T> entities = new LinkedList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sqlEntity.constructSelectWithConditionsQuery(conditions));
+        while(resultSet.next()){
+            entities.add(sqlEntity.getEntityFromResultSet(resultSet));
+        }
+        resultSet.close();
+        statement.close();
+        return entities;
+    }
     protected synchronized List<T> readAll(SqlEntity<T> sqlEntity, Connection connection) throws Exception{
         List<T> entities = new LinkedList<>();
         Statement statement = connection.createStatement();

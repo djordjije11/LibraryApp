@@ -61,4 +61,14 @@ public class LendingLogic implements ILendingLogic {
             SqlConnectionFactory.releaseConnection(connection);
         }
     }
+
+    @Override
+    public List<Lending> findUnreturnedLendingsByMember(Lending lending) throws Exception {
+        Connection connection = SqlConnectionFactory.getConnection();
+        try{
+            return lendingBroker.findUnreturnedLendingsByMember(lending, connection);
+        } finally{
+            SqlConnectionFactory.releaseConnection(connection);
+        }
+    }
 }

@@ -10,4 +10,5 @@ import models.Lending;
 public interface ILendingLogic {
     List<Lending> createLendings(List<Lending> lendings) throws Exception;
     List<Lending> returnLendings(List<Lending> lendings) throws Exception;
+    List<Lending> findUnreturnedLendingsByMember(Lending lending) throws Exception;
 }

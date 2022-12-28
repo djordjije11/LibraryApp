@@ -16,7 +16,7 @@ public class SqlBuilding extends SqlEntity<Building> {
     public SqlBuilding(){}
     
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "building";
     }
 

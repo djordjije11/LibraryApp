@@ -23,7 +23,7 @@ public class SqlCopyOfBook extends SqlEntity<CopyOfBook> {
         super(listOfCopiesOfBook);
     }
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "copyofbook";
     }
     

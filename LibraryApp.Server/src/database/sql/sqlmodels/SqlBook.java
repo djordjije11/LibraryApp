@@ -19,7 +19,7 @@ public class SqlBook extends SqlEntity<Book> {
     }
     
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "book";
     }
 

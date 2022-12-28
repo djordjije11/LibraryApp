@@ -35,16 +35,6 @@ public class Server implements Runnable {
             throw ex;
         }
     }
-    public synchronized void removeTcpServer(TcpServer tcpServer) throws IOException{
-        tcpServer.closeConnection();
-        tcpServersList.remove(tcpServer);
-    }
-    private synchronized void removeAllTcpServers() throws IOException{
-        for (TcpServer tcpServer : tcpServersList) {
-            tcpServer.closeConnection();
-        }
-        tcpServersList.clear();
-    }
     public void closeServer() throws IOException{
         serverUp = false;
         if(socket.isClosed() == false){
@@ -59,6 +49,16 @@ public class Server implements Runnable {
             tcpServersList.add(tcpServer);
             new ClientHandler(this, tcpServer, RandomID.getRandomID()).start();
         }
+    }
+    public synchronized void removeTcpServer(TcpServer tcpServer) throws IOException{
+        tcpServer.closeConnection();
+        tcpServersList.remove(tcpServer);
+    }
+    private synchronized void removeAllTcpServers() throws IOException{
+        for (TcpServer tcpServer : tcpServersList) {
+            tcpServer.closeConnection();
+        }
+        tcpServersList.clear();
     }
     
     public static void main(String[] args) throws Exception {

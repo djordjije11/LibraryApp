@@ -19,7 +19,7 @@ public class SqlAuthor extends SqlEntity<Author> {
     public SqlAuthor(){}
     
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "author";
     }
 

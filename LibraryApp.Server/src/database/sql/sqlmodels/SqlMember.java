@@ -19,7 +19,7 @@ public class SqlMember extends SqlEntity<Member> {
     public SqlMember(){}
     
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return "member";
     }
 

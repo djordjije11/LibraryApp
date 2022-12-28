@@ -34,12 +34,17 @@ public class LendingFormsController {
         memberController = new MemberController(tcpClient);
         this.parentForm = parentForm;
         lendingForm = new LendingForm(parentForm, true);
-        setFindListener();
+        setFindListeners();
         setApproveListener();
         lendingForm.setVisible(true);
     }
-    private void setFindListener(){
-        lendingForm.getFindButton().addActionListener((ActionEvent e) -> {
+    
+    private void setFindListeners(){
+        setFindBookListener();
+        setFindMemberListener();
+    }
+    private void setFindBookListener(){
+        lendingForm.getFindBookButton().addActionListener((ActionEvent e) -> {
             boolean oneCopy;
             Long copyOfBookID = null;
             try {
@@ -72,6 +77,10 @@ public class LendingFormsController {
             } catch(Exception ex){
                 JOptionPane.showMessageDialog(lendingForm, "Pretraga primeraka knjiga nije uspesno izvresna.", "GRESKA", JOptionPane.WARNING_MESSAGE);
             }
+        });
+    }
+    private void setFindMemberListener(){
+        lendingForm.getFindMemberButton().addActionListener((ActionEvent e) -> {
             String firstname = lendingForm.getMemberFirstnameTextField().getText().trim();
             String lastname = lendingForm.getMemberLastnameTextField().getText().trim();
             if((firstname == null || firstname.isBlank() == true) && (lastname == null || lastname.isBlank() == true)){
@@ -88,10 +97,6 @@ public class LendingFormsController {
             }
         });
     }
-    public void closeForms(){
-        
-    }
-
     private void setApproveListener() {
         lendingForm.getApproveButton().addActionListener((ActionEvent e) -> {
             Member member = lendingForm.getSelectedMemberToLend();
@@ -122,5 +127,10 @@ public class LendingFormsController {
                 JOptionPane.showMessageDialog(lendingForm, "Iznajmljivanje knjiga nije uspesno zabelezeno.", "GRESKA", JOptionPane.WARNING_MESSAGE);
             }
         });
+    }
+    public void closeForms(){
+        if(lendingForm != null){
+            lendingForm.dispose();
+        }
     }
 }

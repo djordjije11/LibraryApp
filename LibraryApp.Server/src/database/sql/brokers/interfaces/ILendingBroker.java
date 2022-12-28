@@ -11,4 +11,5 @@ import java.sql.Connection;
 public interface ILendingBroker {
     List<Lending> createLendings(List<Lending> lendings, Connection connection) throws Exception;
     List<Lending> updateLendings(List<Lending> lendings, Connection connection) throws Exception;
+    List<Lending> findUnreturnedLendingsByMember(Lending lending, Connection connection) throws Exception;
 }
