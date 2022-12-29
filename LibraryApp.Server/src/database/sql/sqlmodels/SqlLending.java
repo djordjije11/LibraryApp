@@ -63,8 +63,8 @@ public class SqlLending extends SqlEntity<Lending> {
     public String getStatementSelectAllQuery() {
         return "SELECT l.*, cob.buildingID, b.title, b.description, b.authorID, a.firstname AS author_firstname, a.lastname AS author_lastname, "
                 + "m.firstname AS member_firstname, m.lastname AS member_lastname, m.birthday, m.email FROM " +  getTableName() + 
-                " AS l JOIN " + new SqlMember().getTableName() + " AS m ON (l.memberID = m.ID) JOIN " + new SqlCopyOfBook().getTableName() + 
-                " AS cob ON (l.copyofbookID = cob.ID) JOIN " + new SqlBook().getTableName() + " AS b ON(cob.bookID = b.ID) JOIN " + new SqlAuthor().getTableName()  + " AS a ON(b.authorID = a.ID)";
+                " AS l INNER JOIN " + new SqlMember().getTableName() + " AS m ON (l.memberID = m.ID) INNER JOIN " + new SqlCopyOfBook().getTableName() + 
+                " AS cob ON (l.copyofbookID = cob.ID) INNER JOIN " + new SqlBook().getTableName() + " AS b ON(cob.bookID = b.ID) LEFT OUTER JOIN " + new SqlAuthor().getTableName()  + " AS a ON(b.authorID = a.ID)";
     }
 
     @Override
@@ -73,6 +73,6 @@ public class SqlLending extends SqlEntity<Lending> {
         Book book = new Book(resultSet.getLong("bookID"), resultSet.getString("title"), resultSet.getString("description"), author);
         CopyOfBook copyOfBook = new CopyOfBook(resultSet.getLong("copyofbookID"), book, resultSet.getLong("buildingID"));
         Member member = new Member(resultSet.getLong("memberID"), resultSet.getString("member_firstname"), resultSet.getString("member_lastname"), resultSet.getDate("birthday").toLocalDate(), resultSet.getString("email"));
-        return new Lending(copyOfBook, member, resultSet.getDate("lending_date").toLocalDate());
+        return new Lending(resultSet.getLong("ID"), copyOfBook, member, resultSet.getDate("lending_date").toLocalDate());
     }
 }

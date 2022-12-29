@@ -65,9 +65,9 @@ public class LendingFormsController {
                     dbCopiesOfBook.add(dbCopyOfBook);
                     lendingForm.setBooksTableData(dbCopiesOfBook);
                 } else {
-                    Book book = new Book();
                     String title = lendingForm.getBookTitleTextField().getText().trim();
                     if(title != null && title.isBlank() == false){
+                        Book book = new Book();
                         book.setTitle(title);
                         copyOfBook.setBook(book);
                         dbCopiesOfBook = copyOfBookController.findEntities(copyOfBook);
@@ -118,12 +118,15 @@ public class LendingFormsController {
                 List<Lending> dbLendings = lendingController.createEntities(lendings);
                 JOptionPane.showMessageDialog(lendingForm, "Iznajmljivanje knjiga je uspesno zabelezeno.", "Knjige su iznajmljene", JOptionPane.INFORMATION_MESSAGE);
                 
+                /*
                 StringBuilder sb = new StringBuilder();
                 for (Lending dbLending : dbLendings) {
                     sb.append(dbLending).append("\n\n");
                 }
+                */
+                
+                lendingForm.refreshForm();
             } catch (Exception ex) {
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(lendingForm, "Iznajmljivanje knjiga nije uspesno zabelezeno.", "GRESKA", JOptionPane.WARNING_MESSAGE);
             }
         });

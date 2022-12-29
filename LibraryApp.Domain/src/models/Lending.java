@@ -21,6 +21,10 @@ public class Lending implements IEntity, Serializable {
         this.member = member;
         this.lendingDate = lendingDate;
     }
+    public Lending(Long id, CopyOfBook copyOfBook, Member member, LocalDate lendingDate){
+        this(copyOfBook, member, lendingDate);
+        this.id = id;
+    }
     
     @Override
     public ModelElement getModelElement() {

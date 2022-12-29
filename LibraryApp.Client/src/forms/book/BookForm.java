@@ -23,8 +23,6 @@ public final class BookForm extends javax.swing.JDialog {
         pack();
         setLocationRelativeTo(null);
         setBook(book);
-        
-        
     }
     
     /**
@@ -41,14 +39,14 @@ public final class BookForm extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtAreaDescription = new javax.swing.JTextArea();
         txtAddingAmount = new javax.swing.JTextField();
         txtCurrentAmount = new javax.swing.JTextField();
         cmbxAuthor = new javax.swing.JComboBox<>();
         txtTitle = new javax.swing.JTextField();
         btnSave = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaDescription = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Knjiga");
@@ -65,14 +63,6 @@ public final class BookForm extends javax.swing.JDialog {
 
         jLabel5.setText("Broj primeraka knjige koji se dodaje:");
 
-        txtAreaDescription.setColumns(20);
-        txtAreaDescription.setLineWrap(true);
-        txtAreaDescription.setRows(5);
-        txtAreaDescription.setWrapStyleWord(true);
-        txtAreaDescription.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        txtAreaDescription.setRequestFocusEnabled(false);
-        jScrollPane1.setViewportView(txtAreaDescription);
-
         txtAddingAmount.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtAddingAmount.setText("0");
 
@@ -86,6 +76,12 @@ public final class BookForm extends javax.swing.JDialog {
         btnDelete.setText("OBRISI");
         btnDelete.setFocusable(false);
 
+        txtAreaDescription.setColumns(20);
+        txtAreaDescription.setLineWrap(true);
+        txtAreaDescription.setRows(5);
+        txtAreaDescription.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(txtAreaDescription);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,7 +89,6 @@ public final class BookForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(30, 30, 30)
@@ -117,7 +112,8 @@ public final class BookForm extends javax.swing.JDialog {
                                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -130,7 +126,7 @@ public final class BookForm extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbxAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,7 +203,7 @@ public final class BookForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField txtAddingAmount;
     private javax.swing.JTextArea txtAreaDescription;
     private javax.swing.JTextField txtCurrentAmount;

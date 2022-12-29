@@ -37,7 +37,7 @@ public class SqlCopyOfBookBroker extends SqlEntityBroker<CopyOfBook> implements 
     @Override
     public Long getCountOfCopiesOfBookInBuilding(CopyOfBook copyOfBook, Connection connection) throws Exception {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM copyofbook WHERE bookID = " + copyOfBook.getBook().getId() + " AND buildingID = " + copyOfBook.getBuildingId());
+        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM " + new SqlCopyOfBook().getTableName() + " WHERE bookID = " + copyOfBook.getBook().getId() + " AND buildingID = " + copyOfBook.getBuildingId());
         resultSet.next();
         Long amount = resultSet.getLong("amount");
         resultSet.close();

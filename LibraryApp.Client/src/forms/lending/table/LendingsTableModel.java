@@ -19,6 +19,11 @@ public class LendingsTableModel extends AbstractTableModel {
     public LendingsTableModel(List<Lending> lendings){
         this.lendings = lendings;
     }
+    
+    public void clearData(){
+        lendings.clear();
+        fireTableDataChanged();
+    }
     public Lending getLending(int index){
         if(index < 0)
             return null;

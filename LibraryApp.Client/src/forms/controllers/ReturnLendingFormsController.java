@@ -5,12 +5,12 @@ import controllers.MemberController;
 import forms.MainForm;
 import forms.lending.ReturnLendingForm;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import models.Lending;
 import models.Member;
+import session.Session;
 import tcp.TcpClient;
 
 /**
@@ -30,7 +30,7 @@ public class ReturnLendingFormsController {
         returnLendingForm = new ReturnLendingForm(parentForm, true);
         setFindMemberListener();
         setFindLendingsForSelectedMemberListener();
-        
+        setApproveListener();
         returnLendingForm.setVisible(true);
     }
     
@@ -56,22 +56,47 @@ public class ReturnLendingFormsController {
     private void setFindLendingsForSelectedMemberListener(){
         returnLendingForm.getMembersComboBox().addActionListener((ActionEvent e) -> {
            Object member = returnLendingForm.getMembersComboBox().getSelectedItem();
-            if(member != null){
-                returnLendingForm.getSelectedMemberTextField().setText(member.toString());
-            } 
+            if(member == null){
+                return;
+            }
+            returnLendingForm.getSelectedMemberTextField().setText(member.toString());
             Lending lending = new Lending();
             lending.setMember((Member) member);
             try {
                 List<Lending> dbLendings = lendingController.findEntities(lending);
                 returnLendingForm.setLendingsTableData(dbLendings);
             } catch (Exception ex) {
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(returnLendingForm, "Pretraga iznajmljivanja knjiga trazenog clana nije uspesno izvresna.", "GRESKA", JOptionPane.WARNING_MESSAGE);
             }
         });
     }
     
+    private void setApproveListener() {
+        returnLendingForm.getApproveButton().addActionListener((ActionEvent e) -> {
+            Member member = returnLendingForm.getSelectedMemberToReturnLendings();
+            List<Lending> lendings = returnLendingForm.getListOfSelectedLendingsToReturn();
+            if(member == null || lendings == null || lendings.isEmpty()){
+                JOptionPane.showMessageDialog(returnLendingForm, "Nisu uneti potrebni podaci,", "Info", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            LocalDate date = LocalDate.now();
+            Long buildingID = Session.getBuilding().getId();
+            for (Lending lending : lendings) {
+                lending.setReturnDate(date);
+                lending.getCopyOfBook().setBuildingId(buildingID);
+            }
+            try{
+                lendingController.updateEntities(lendings);
+                JOptionPane.showMessageDialog(returnLendingForm, "Vracanje iznajmljenih knjiga je uspesno zabelezeno.", "Knjige su vracene", JOptionPane.INFORMATION_MESSAGE);
+                returnLendingForm.refreshForm();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(returnLendingForm, "Vracanje iznajmljenih knjiga nije uspesno zabelezeno.", "GRESKA", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+    }
     public void closeForms(){
-        
+        if(returnLendingForm != null){
+            returnLendingForm.dispose();
+        }
     }
 }

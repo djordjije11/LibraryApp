@@ -166,7 +166,6 @@ public class BookFormsController {
                 refreshViewBooksForm();
                 JOptionPane.showMessageDialog(bookForm, "Knjiga je uspesno sacuvana.\n\n" + dbBook.singlePrint(), "Knjiga sacuvana", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception ex) {
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(bookForm, "Knjiga nije uspesno sacuvana.", "GRESKA", JOptionPane.ERROR_MESSAGE);
             }
         });

@@ -36,7 +36,7 @@ public class SqlCopyOfBook extends SqlEntity<CopyOfBook> {
     public void setUpPreparedStatementInsert(PreparedStatement preparedStatement) throws SQLException {
         Book book = entity.getBook();
         if(book != null){
-            preparedStatement.setLong(1, entity.getId());
+            preparedStatement.setLong(1, book.getId());
         }
         preparedStatement.setLong(2, entity.getBuildingId());
     }
@@ -52,7 +52,7 @@ public class SqlCopyOfBook extends SqlEntity<CopyOfBook> {
         if(buildingID == null){
             preparedStatement.setNull(1, Types.BIGINT);
         } else{
-            preparedStatement.setLong(1, entity.getBuildingId());
+            preparedStatement.setLong(1, buildingID);
         }
         preparedStatement.setLong(2, entity.getId());
     }
@@ -76,7 +76,7 @@ public class SqlCopyOfBook extends SqlEntity<CopyOfBook> {
 
     @Override
     public String getStatementSelectAllQuery() {
-        return "SELECT cob.*, b.title, b.description, b.authorID, a.firstname, a.lastname FROM " + getTableName() +  " AS cob JOIN " + new SqlBook().getTableName() + " AS b ON(cob.bookID = b.ID) JOIN " + new SqlAuthor().getTableName() + " AS a ON(b.authorID = a.ID)";
+        return "SELECT cob.*, b.title, b.description, b.authorID, a.firstname, a.lastname FROM " + getTableName() +  " AS cob INNER JOIN " + new SqlBook().getTableName() + " AS b ON(cob.bookID = b.ID) LEFT OUTER JOIN " + new SqlAuthor().getTableName() + " AS a ON(b.authorID = a.ID)";
     }
     
     @Override

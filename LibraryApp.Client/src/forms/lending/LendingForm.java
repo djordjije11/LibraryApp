@@ -308,6 +308,16 @@ public class LendingForm extends javax.swing.JDialog {
     public JTextField getMemberLastnameTextField(){
         return txtMemberLastname;
     }
+    public void refreshForm(){
+        txtBookTitle.setText("");
+        txtCopyOfBookID.setText("");
+        txtMemberFirstname.setText("");
+        txtMemberLastname.setText("");
+        txtSelectedMember.setText("");
+        cmbxMembers.removeAllItems();
+        ((CopiesOfBookTableModel)tblCopiesOfBook.getModel()).clearData();
+        listModel.clear();
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddSelectedCopyOfBook;

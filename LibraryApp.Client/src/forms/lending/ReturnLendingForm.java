@@ -270,6 +270,15 @@ public class ReturnLendingForm extends javax.swing.JDialog {
         return txtSelectedMember;
     }
     
+    public void refreshForm(){
+        txtMemberFirstname.setText("");
+        txtMemberLastname.setText("");
+        txtSelectedMember.setText("");
+        cmbxMembers.removeAllItems();
+        ((LendingsTableModel)tblLendings.getModel()).clearData();
+        listModel.clear();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddSelectedLending;
     private javax.swing.JButton btnApprove;

@@ -15,6 +15,10 @@ public class CopiesOfBookTableModel extends AbstractTableModel {
     private final String[] columnNames = {"ID","Naslov", "Autor"};
     private final Class[] columnTypes = {Long.class, String.class, Author.class};
     
+    public void clearData(){
+        copiesOfBook.clear();
+        fireTableDataChanged();
+    }
     public CopiesOfBookTableModel(List<CopyOfBook> copiesOfBook){
         this.copiesOfBook = copiesOfBook;
     }

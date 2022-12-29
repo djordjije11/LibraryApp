@@ -39,7 +39,7 @@ public class BookController implements IController {
             case CREATE:
                 if(addingAmount > 0){
                     Book dbBook = bookLogic.createBook(book, addingAmount, buildingID);
-                    Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook.getId(), buildingID));
+                    Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook, buildingID));
                     dbObject = new BookDto(dbBook, buildingID, newCurrentAmount);
                 } else {
                     dbObject = new BookDto(bookLogic.createBook(book));
@@ -59,14 +59,14 @@ public class BookController implements IController {
             }
             case UPDATE:
                 if(bookDto.getIsUpdated() == false && addingAmount > 0){
-                    List<CopyOfBook> copiesOfBook = bookLogic.addCopiesOfBookInBuilding(new CopyOfBook(book.getId(), buildingID), addingAmount);
+                    List<CopyOfBook> copiesOfBook = bookLogic.addCopiesOfBookInBuilding(new CopyOfBook(book, buildingID), addingAmount);
                     Long newCurrentAmount = (long)copiesOfBook.size() + currentAmount;
                     dbObject = new BookDto(book, buildingID, newCurrentAmount);
                 } else if(bookDto.getIsUpdated() == true && addingAmount == 0){
                     dbObject = new BookDto(bookLogic.updateBook(book), buildingID, currentAmount);
                 } else if(bookDto.getIsUpdated() == true && addingAmount > 0) {
                     Book dbBook = bookLogic.updateBook(book, addingAmount, buildingID);
-                    Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook.getId(), buildingID));
+                    Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook, buildingID));
                     dbObject = new BookDto(dbBook, buildingID, newCurrentAmount);
                 } else{
                     response.setConfirmed(false);
