@@ -1,5 +1,12 @@
 package forms;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 /**
@@ -8,10 +15,13 @@ import javax.swing.JMenuItem;
  */
 public class MainForm extends javax.swing.JFrame {
     
-    public MainForm() {
+    public MainForm() throws IOException {
         initComponents();
         pack();
         setLocationRelativeTo(null);
+        BufferedImage img = ImageIO.read(new File("D:\\MyDocs\\Repositories\\LibraryApp\\LibraryApp.Client\\images\\book.png"));
+        lblImage.setIcon(new ImageIcon(img));
+        getContentPane().setBackground(Color.white);
     }
 
     /**
@@ -23,10 +33,17 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblEmployee = new javax.swing.JLabel();
+        lblBuilding = new javax.swing.JLabel();
+        lblImage = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
-        menuModels = new javax.swing.JMenu();
-        menuItemMembers = new javax.swing.JMenuItem();
+        menuBooks = new javax.swing.JMenu();
         menuItemBooks = new javax.swing.JMenuItem();
+        menuMembers = new javax.swing.JMenu();
+        menuItemMembers = new javax.swing.JMenuItem();
+        menuLendings = new javax.swing.JMenu();
         menuItemLendings = new javax.swing.JMenuItem();
         menuItemReturnLendings = new javax.swing.JMenuItem();
         menuLogout = new javax.swing.JMenu();
@@ -34,29 +51,86 @@ public class MainForm extends javax.swing.JFrame {
         menuLogoutAndExit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Biblioteka");
+        setResizable(false);
 
-        menuModels.setText("Forme");
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
+        jLabel1.setText("Prijavljeni zaposleni:");
 
-        menuItemMembers.setText("Otvori formu za clanove");
-        menuModels.add(menuItemMembers);
+        jLabel2.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
+        jLabel2.setText("Zgrada biblioteke:");
 
+        lblEmployee.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
+        lblEmployee.setText("{employee}");
+
+        lblBuilding.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
+        lblBuilding.setText("{building}");
+
+        lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jMenuBar2.setBackground(new java.awt.Color(0, 102, 102));
+        jMenuBar2.setForeground(new java.awt.Color(255, 255, 255));
+
+        menuBooks.setBackground(new java.awt.Color(0, 102, 102));
+        menuBooks.setForeground(new java.awt.Color(255, 255, 255));
+        menuBooks.setText("Knjige");
+        menuBooks.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
+
+        menuItemBooks.setBackground(new java.awt.Color(0, 153, 153));
+        menuItemBooks.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
+        menuItemBooks.setForeground(new java.awt.Color(255, 255, 255));
         menuItemBooks.setText("Otvori formu za knjige");
-        menuModels.add(menuItemBooks);
+        menuBooks.add(menuItemBooks);
 
+        jMenuBar2.add(menuBooks);
+
+        menuMembers.setBackground(new java.awt.Color(0, 102, 102));
+        menuMembers.setForeground(new java.awt.Color(255, 255, 255));
+        menuMembers.setText("Clanovi");
+        menuMembers.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
+
+        menuItemMembers.setBackground(new java.awt.Color(0, 153, 153));
+        menuItemMembers.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
+        menuItemMembers.setForeground(new java.awt.Color(255, 255, 255));
+        menuItemMembers.setText("Otvori formu za clanove");
+        menuMembers.add(menuItemMembers);
+
+        jMenuBar2.add(menuMembers);
+
+        menuLendings.setBackground(new java.awt.Color(0, 102, 102));
+        menuLendings.setForeground(new java.awt.Color(255, 255, 255));
+        menuLendings.setText("Iznajmljivanja");
+        menuLendings.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
+
+        menuItemLendings.setBackground(new java.awt.Color(0, 153, 153));
+        menuItemLendings.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
+        menuItemLendings.setForeground(new java.awt.Color(255, 255, 255));
         menuItemLendings.setText("Otvori formu za iznajmljivanje knjiga");
-        menuModels.add(menuItemLendings);
+        menuLendings.add(menuItemLendings);
 
+        menuItemReturnLendings.setBackground(new java.awt.Color(0, 153, 153));
+        menuItemReturnLendings.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
+        menuItemReturnLendings.setForeground(new java.awt.Color(255, 255, 255));
         menuItemReturnLendings.setText("Otvori formu za vracanje iznajmljenih knjiga");
-        menuModels.add(menuItemReturnLendings);
+        menuLendings.add(menuItemReturnLendings);
 
-        jMenuBar2.add(menuModels);
+        jMenuBar2.add(menuLendings);
 
+        menuLogout.setBackground(new java.awt.Color(0, 102, 102));
+        menuLogout.setForeground(new java.awt.Color(255, 255, 255));
         menuLogout.setText("Log out");
+        menuLogout.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
 
-        menuLogoutAndLogin.setText("Log out and log in again");
+        menuLogoutAndLogin.setBackground(new java.awt.Color(0, 153, 153));
+        menuLogoutAndLogin.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
+        menuLogoutAndLogin.setForeground(new java.awt.Color(255, 255, 255));
+        menuLogoutAndLogin.setText("Log out i log in");
         menuLogout.add(menuLogoutAndLogin);
 
-        menuLogoutAndExit.setText("Log out and exit");
+        menuLogoutAndExit.setBackground(new java.awt.Color(0, 153, 153));
+        menuLogoutAndExit.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
+        menuLogoutAndExit.setForeground(new java.awt.Color(255, 255, 255));
+        menuLogoutAndExit.setText("Log out i exit");
         menuLogout.add(menuLogoutAndExit);
 
         jMenuBar2.add(menuLogout);
@@ -67,11 +141,33 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblBuilding, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBuilding, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
 
         pack();
@@ -95,16 +191,29 @@ public class MainForm extends javax.swing.JFrame {
     public JMenuItem getReturnLendingsMenu(){
         return menuItemReturnLendings;
     }
+    public void setEmployeeText(String employee){
+        lblEmployee.setText(employee);
+    }
+    public void setBuildingText(String building){
+        lblBuilding.setText(building);
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JLabel lblBuilding;
+    private javax.swing.JLabel lblEmployee;
+    private javax.swing.JLabel lblImage;
+    private javax.swing.JMenu menuBooks;
     private javax.swing.JMenuItem menuItemBooks;
     private javax.swing.JMenuItem menuItemLendings;
     private javax.swing.JMenuItem menuItemMembers;
     private javax.swing.JMenuItem menuItemReturnLendings;
+    private javax.swing.JMenu menuLendings;
     private javax.swing.JMenu menuLogout;
     private javax.swing.JMenuItem menuLogoutAndExit;
     private javax.swing.JMenuItem menuLogoutAndLogin;
-    private javax.swing.JMenu menuModels;
+    private javax.swing.JMenu menuMembers;
     // End of variables declaration//GEN-END:variables
 }

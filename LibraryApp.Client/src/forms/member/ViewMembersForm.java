@@ -1,9 +1,13 @@
 package forms.member;
 
 import forms.member.table.MembersTableModel;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumnModel;
 import models.Member;
 
 /**
@@ -17,6 +21,7 @@ public final class ViewMembersForm extends javax.swing.JDialog {
         initComponents();
         pack();
         setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(150,194,215));
     }
     
     /**
@@ -39,9 +44,12 @@ public final class ViewMembersForm extends javax.swing.JDialog {
         btnCreate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Pretraga clana");
+        setTitle("Clanovi biblioteke");
         setResizable(false);
 
+        tblMembers.setBackground(new java.awt.Color(197, 201, 255));
+        tblMembers.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 255), new java.awt.Color(153, 153, 255)));
+        tblMembers.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         tblMembers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -53,18 +61,35 @@ public final class ViewMembersForm extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblMembers.setFillsViewportHeight(true);
+        tblMembers.setGridColor(new java.awt.Color(197, 201, 255));
+        tblMembers.setSelectionBackground(new java.awt.Color(150, 194, 215));
         jScrollPane1.setViewportView(tblMembers);
 
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel1.setText("Ime:");
 
+        jLabel2.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel2.setText("Prezime:");
 
+        txtFirstName.setBackground(new java.awt.Color(236, 250, 255));
+        txtFirstName.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        btnFind.setBackground(new java.awt.Color(217, 238, 255));
+        btnFind.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnFind.setText("PRETRAZI");
         btnFind.setFocusable(false);
 
+        btnOpenMemberForm.setBackground(new java.awt.Color(217, 238, 255));
+        btnOpenMemberForm.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnOpenMemberForm.setText("OTVORI FORMU ZA ODBRANOG CLANA");
         btnOpenMemberForm.setFocusable(false);
 
+        txtLastName.setBackground(new java.awt.Color(236, 250, 255));
+        txtLastName.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        btnCreate.setBackground(new java.awt.Color(217, 238, 255));
+        btnCreate.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnCreate.setText("DODAJ CLANA");
         btnCreate.setFocusable(false);
 
@@ -95,8 +120,8 @@ public final class ViewMembersForm extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -105,7 +130,7 @@ public final class ViewMembersForm extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)))
-                    .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnFind, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -118,11 +143,28 @@ public final class ViewMembersForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void designTableColumns(){
+        tblMembers.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+        TableColumnModel columnModel = tblMembers.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(20);    
+        columnModel.getColumn(1).setPreferredWidth(40);
+        columnModel.getColumn(2).setPreferredWidth(40);
+        columnModel.getColumn(3).setPreferredWidth(60);
+        columnModel.getColumn(4).setPreferredWidth(200);
+    }
+    private void designTable(){
+        tblMembers.getTableHeader().setOpaque(false);
+        tblMembers.getTableHeader().setBackground(new Color(107,158,183));
+        tblMembers.getTableHeader().setForeground(Color.white);
+        tblMembers.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+        designTableColumns();
+    }
     public Member getSelectedMember(){
         return ((MembersTableModel)tblMembers.getModel()).getMember(tblMembers.getSelectedRow());
     }
     public void setMembersTableData(List<Member> members) throws Exception{
         tblMembers.setModel(new MembersTableModel(members));
+        designTable();
     }
     public JButton getFindButton(){
         return btnFind;

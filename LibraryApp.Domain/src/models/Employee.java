@@ -45,4 +45,9 @@ public class Employee implements IEntity, Serializable {
     public Building getBuilding(){
         return building;
     }
+
+    @Override
+    public String toString() {
+        return firstname + " " + lastname;
+    }
 }

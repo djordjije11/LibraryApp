@@ -1,5 +1,6 @@
 package forms;
 
+import java.awt.Color;
 import java.io.IOException;
 import javax.swing.JButton;
 import main.Server;
@@ -16,6 +17,7 @@ public class ServerForm extends javax.swing.JFrame {
         initComponents();
         this.server = server;
         pack();
+        getContentPane().setBackground(new Color(150,194,215));
         setLocationRelativeTo(null);
         setUpButtons();
     }
@@ -34,7 +36,11 @@ public class ServerForm extends javax.swing.JFrame {
         lblMessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Server biblioteke");
+        setResizable(false);
 
+        btnStart.setBackground(new java.awt.Color(217, 238, 255));
+        btnStart.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnStart.setText("POKRENI SERVER");
         btnStart.setFocusable(false);
         btnStart.addActionListener(new java.awt.event.ActionListener() {
@@ -43,6 +49,8 @@ public class ServerForm extends javax.swing.JFrame {
             }
         });
 
+        btnStop.setBackground(new java.awt.Color(217, 238, 255));
+        btnStop.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnStop.setText("UGASI SERVER");
         btnStop.setFocusable(false);
         btnStop.addActionListener(new java.awt.event.ActionListener() {
@@ -51,7 +59,9 @@ public class ServerForm extends javax.swing.JFrame {
             }
         });
 
-        lblMessage.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
+        lblMessage.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
+        lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMessage.setText("Server nije pokrenut.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

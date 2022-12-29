@@ -1,6 +1,8 @@
 package forms.lending;
 
 import forms.lending.table.CopiesOfBookTableModel;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -8,7 +10,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumnModel;
 import models.CopyOfBook;
 import models.Member;
 
@@ -27,6 +31,8 @@ public class LendingForm extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         listModel = new DefaultListModel<CopyOfBook>();
         listSelectedCopiesOfBook.setModel(listModel);
+        getContentPane().setBackground(new Color(150,194,215));
+        designTable();
     }
 
     /**
@@ -64,32 +70,73 @@ public class LendingForm extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Iznajmljivanje knjiga");
 
+        txtMemberFirstname.setBackground(new java.awt.Color(236, 250, 255));
+        txtMemberFirstname.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        txtMemberLastname.setBackground(new java.awt.Color(236, 250, 255));
+        txtMemberLastname.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        txtBookTitle.setBackground(new java.awt.Color(236, 250, 255));
+        txtBookTitle.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        txtCopyOfBookID.setBackground(new java.awt.Color(236, 250, 255));
+        txtCopyOfBookID.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        tblCopiesOfBook.setBackground(new java.awt.Color(197, 201, 255));
+        tblCopiesOfBook.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 255), new java.awt.Color(153, 153, 255)));
+        tblCopiesOfBook.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         tblCopiesOfBook.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Naslov", "Autor"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Long.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCopiesOfBook.setFillsViewportHeight(true);
+        tblCopiesOfBook.setGridColor(new java.awt.Color(197, 201, 255));
+        tblCopiesOfBook.setSelectionBackground(new java.awt.Color(150, 194, 215));
         jScrollPane2.setViewportView(tblCopiesOfBook);
 
+        btnFindBook.setBackground(new java.awt.Color(217, 238, 255));
+        btnFindBook.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnFindBook.setText("PRETRAZI KNJIGU");
         btnFindBook.setFocusable(false);
 
+        listSelectedCopiesOfBook.setBackground(new java.awt.Color(197, 201, 255));
+        listSelectedCopiesOfBook.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+        listSelectedCopiesOfBook.setSelectionBackground(new java.awt.Color(150, 194, 215));
         jScrollPane1.setViewportView(listSelectedCopiesOfBook);
 
         txtSelectedMember.setEditable(false);
+        txtSelectedMember.setBackground(new java.awt.Color(236, 250, 255));
+        txtSelectedMember.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
 
+        cmbxMembers.setBackground(new java.awt.Color(236, 250, 255));
+        cmbxMembers.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         cmbxMembers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbxMembersActionPerformed(evt);
             }
         });
 
+        btnAddSelectedCopyOfBook.setBackground(new java.awt.Color(217, 238, 255));
+        btnAddSelectedCopyOfBook.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnAddSelectedCopyOfBook.setText("DODAJ ODABRANI PRIMERAK");
         btnAddSelectedCopyOfBook.setFocusable(false);
         btnAddSelectedCopyOfBook.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +145,8 @@ public class LendingForm extends javax.swing.JDialog {
             }
         });
 
+        btnReturnSelectedCopyOfBook.setBackground(new java.awt.Color(217, 238, 255));
+        btnReturnSelectedCopyOfBook.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnReturnSelectedCopyOfBook.setText("VRATI ODABRANI PRIMERAK");
         btnReturnSelectedCopyOfBook.setFocusable(false);
         btnReturnSelectedCopyOfBook.addActionListener(new java.awt.event.ActionListener() {
@@ -106,24 +155,35 @@ public class LendingForm extends javax.swing.JDialog {
             }
         });
 
+        btnApprove.setBackground(new java.awt.Color(217, 238, 255));
+        btnApprove.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnApprove.setText("POTVRDI");
         btnApprove.setFocusable(false);
 
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel1.setText("Ime:");
 
+        jLabel2.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel2.setText("Prezime:");
 
+        jLabel3.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel3.setText("Naslov:");
 
+        jLabel4.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel4.setText("Clan biblioteke");
 
+        jLabel5.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel5.setText("Knjiga");
 
+        jLabel6.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel6.setText("ID primerka:");
 
+        jLabel7.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("ODABERI CLANA BIBLIOTEKE");
 
+        btnFindMember.setBackground(new java.awt.Color(217, 238, 255));
+        btnFindMember.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnFindMember.setText("PRETRAZI CLANA");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,7 +199,7 @@ public class LendingForm extends javax.swing.JDialog {
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCopyOfBookID, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(txtCopyOfBookID, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                             .addComponent(txtBookTitle)))
                     .addComponent(btnFindMember, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFindBook, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -168,7 +228,7 @@ public class LendingForm extends javax.swing.JDialog {
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnReturnSelectedCopyOfBook, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                            .addComponent(btnReturnSelectedCopyOfBook, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                             .addComponent(txtSelectedMember)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
@@ -266,8 +326,24 @@ public class LendingForm extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnReturnSelectedCopyOfBookActionPerformed
 
+    private void designTableColumns(){
+        tblCopiesOfBook.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+        TableColumnModel columnModel = tblCopiesOfBook.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(60);    
+        columnModel.getColumn(1).setPreferredWidth(160);
+        columnModel.getColumn(2).setPreferredWidth(190);
+    }
+    private void designTable(){
+        tblCopiesOfBook.getTableHeader().setOpaque(false);
+        tblCopiesOfBook.getTableHeader().setBackground(new Color(107,158,183));
+        tblCopiesOfBook.getTableHeader().setForeground(Color.white);
+        tblCopiesOfBook.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+        designTableColumns();
+    }
+    
     public void setBooksTableData(List<CopyOfBook> copiesOfBook) throws Exception{
         tblCopiesOfBook.setModel(new CopiesOfBookTableModel(copiesOfBook));
+        designTableColumns();
     }
     public void setUpMembers(List<Member> members){
         Member[] membersArray = new Member[members.size() + 1];

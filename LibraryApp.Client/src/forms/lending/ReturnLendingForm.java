@@ -1,6 +1,8 @@
 package forms.lending;
 
 import forms.lending.table.LendingsTableModel;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -9,7 +11,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumnModel;
 import models.Lending;
 import models.Member;
 
@@ -28,6 +32,8 @@ public class ReturnLendingForm extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         listModel = new DefaultListModel<Lending>();
         listSelectedLendings.setModel(listModel);
+        getContentPane().setBackground(new Color(150,194,215));
+        designTable();
     }
 
     /**
@@ -59,19 +65,39 @@ public class ReturnLendingForm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        tblLendings.setBackground(new java.awt.Color(197, 201, 255));
+        tblLendings.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 255), new java.awt.Color(153, 153, 255)));
+        tblLendings.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         tblLendings.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Naslov", "ID primerka", "Datum iznajmljivanja"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Long.class, java.lang.String.class, java.lang.Long.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblLendings.setFillsViewportHeight(true);
+        tblLendings.setGridColor(new java.awt.Color(197, 201, 255));
+        tblLendings.setSelectionBackground(new java.awt.Color(150, 194, 215));
         jScrollPane2.setViewportView(tblLendings);
 
+        btnAddSelectedLending.setBackground(new java.awt.Color(217, 238, 255));
+        btnAddSelectedLending.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnAddSelectedLending.setText("DODAJ ODABRANI PRIMERAK");
         btnAddSelectedLending.setFocusable(false);
         btnAddSelectedLending.addActionListener(new java.awt.event.ActionListener() {
@@ -80,8 +106,13 @@ public class ReturnLendingForm extends javax.swing.JDialog {
             }
         });
 
+        listSelectedLendings.setBackground(new java.awt.Color(197, 201, 255));
+        listSelectedLendings.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+        listSelectedLendings.setSelectionBackground(new java.awt.Color(150, 194, 215));
         jScrollPane1.setViewportView(listSelectedLendings);
 
+        btnReturnSelectedLending.setBackground(new java.awt.Color(217, 238, 255));
+        btnReturnSelectedLending.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnReturnSelectedLending.setText("VRATI ODABRANI PRIMERAK");
         btnReturnSelectedLending.setFocusable(false);
         btnReturnSelectedLending.addActionListener(new java.awt.event.ActionListener() {
@@ -90,21 +121,37 @@ public class ReturnLendingForm extends javax.swing.JDialog {
             }
         });
 
+        btnApprove.setBackground(new java.awt.Color(217, 238, 255));
+        btnApprove.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnApprove.setText("POTVRDI");
         btnApprove.setFocusable(false);
 
+        btnFindMember.setBackground(new java.awt.Color(217, 238, 255));
+        btnFindMember.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnFindMember.setText("PRETRAZI CLANA");
         btnFindMember.setFocusable(false);
 
+        txtMemberFirstname.setBackground(new java.awt.Color(236, 250, 255));
+        txtMemberFirstname.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        txtMemberLastname.setBackground(new java.awt.Color(236, 250, 255));
+        txtMemberLastname.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel2.setText("Ime:");
 
+        jLabel3.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel3.setText("Prezime:");
 
+        jLabel4.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel4.setText("Clan biblioteke");
 
+        jLabel7.setFont(new java.awt.Font("Cascadia Code", 0, 12)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("ODABERI CLANA BIBLIOTEKE");
 
+        cmbxMembers.setBackground(new java.awt.Color(236, 250, 255));
+        cmbxMembers.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         cmbxMembers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbxMembersActionPerformed(evt);
@@ -112,7 +159,10 @@ public class ReturnLendingForm extends javax.swing.JDialog {
         });
 
         txtSelectedMember.setEditable(false);
+        txtSelectedMember.setBackground(new java.awt.Color(236, 250, 255));
+        txtSelectedMember.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
 
+        jLabel5.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Iznajmljeni primerci koje clan biblioteke vraca:");
 
@@ -122,35 +172,31 @@ public class ReturnLendingForm extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnFindMember, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(26, 26, 26)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtMemberFirstname)
-                                        .addComponent(txtMemberLastname, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbxMembers, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                            .addComponent(txtSelectedMember)))
-                    .addComponent(btnAddSelectedLending, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnFindMember, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(26, 26, 26)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtMemberFirstname)
+                                .addComponent(txtMemberLastname, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbxMembers, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnReturnSelectedLending, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnApprove, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+                    .addComponent(txtSelectedMember)
+                    .addComponent(btnAddSelectedLending, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                    .addComponent(btnApprove, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnReturnSelectedLending, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -230,8 +276,26 @@ public class ReturnLendingForm extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnReturnSelectedLendingActionPerformed
 
+    private void designTableColumns(){
+        tblLendings.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+        TableColumnModel columnModel = tblLendings.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(60);    
+        columnModel.getColumn(1).setPreferredWidth(170);
+        columnModel.getColumn(2).setPreferredWidth(80);
+        columnModel.getColumn(3).setPreferredWidth(140);
+    }
+    
+    private void designTable(){
+        tblLendings.getTableHeader().setOpaque(false);
+        tblLendings.getTableHeader().setBackground(new Color(107,158,183));
+        tblLendings.getTableHeader().setForeground(Color.white);
+        tblLendings.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+        designTableColumns();
+    }
+    
     public void setLendingsTableData(List<Lending> lendings) throws Exception{
         tblLendings.setModel(new LendingsTableModel(lendings));
+        designTableColumns();
     }
     public void setUpMembers(List<Member> members){
         Member[] membersArray = new Member[members.size() + 1];

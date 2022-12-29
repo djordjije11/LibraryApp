@@ -1,5 +1,6 @@
 package forms.member;
 
+import java.awt.Color;
 import java.time.LocalDate;
 import models.Member;
 import java.time.Month;
@@ -21,6 +22,7 @@ public final class MemberForm extends javax.swing.JDialog {
         initComponents();
         pack();
         setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(150,194,215));
         setUpYears();
         setUpMonths();
         setUpDays();
@@ -56,32 +58,59 @@ public final class MemberForm extends javax.swing.JDialog {
         setTitle("Clan");
         setResizable(false);
 
+        txtFirstName.setBackground(new java.awt.Color(236, 250, 255));
+        txtFirstName.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        txtLastName.setBackground(new java.awt.Color(236, 250, 255));
+        txtLastName.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        txtEmail.setBackground(new java.awt.Color(236, 250, 255));
+        txtEmail.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel1.setText("Ime:");
 
+        jLabel2.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel2.setText("Prezime:");
 
+        jLabel3.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel3.setText("Datum rodjenja:");
 
+        jLabel4.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel4.setText("E-mail:");
 
+        btnDelete.setBackground(new java.awt.Color(217, 238, 255));
+        btnDelete.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnDelete.setText("OBRISI");
         btnDelete.setFocusable(false);
 
+        btnSave.setBackground(new java.awt.Color(217, 238, 255));
+        btnSave.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnSave.setText("SACUVAJ");
         btnSave.setFocusable(false);
 
+        jLabel5.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel5.setText("Godina:");
 
+        jLabel6.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel6.setText("Dan:");
 
+        jLabel7.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         jLabel7.setText("Mesec:");
 
+        cmbxDay.setBackground(new java.awt.Color(236, 250, 255));
+        cmbxDay.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        cmbxMonth.setBackground(new java.awt.Color(236, 250, 255));
+        cmbxMonth.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         cmbxMonth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbxMonthActionPerformed(evt);
             }
         });
 
+        cmbxYear.setBackground(new java.awt.Color(236, 250, 255));
+        cmbxYear.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
         cmbxYear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbxYearActionPerformed(evt);
@@ -97,16 +126,15 @@ public final class MemberForm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addGap(10, 10, 10)))
+                                .addGap(10, 10, 10))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,7 +155,7 @@ public final class MemberForm extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,7 +173,7 @@ public final class MemberForm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -159,7 +187,7 @@ public final class MemberForm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbxYear, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -167,7 +195,7 @@ public final class MemberForm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();

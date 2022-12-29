@@ -1,9 +1,13 @@
 package forms.book;
 
 import forms.book.table.BooksTableModel;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumnModel;
 import models.dto.BookDto;
 
 /**
@@ -20,6 +24,7 @@ public final class ViewBooksForm extends javax.swing.JDialog {
         initComponents();
         pack();
         setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(150,194,215));
     }
     
     /**
@@ -43,16 +48,32 @@ public final class ViewBooksForm extends javax.swing.JDialog {
         setTitle("Pretraga knjiga");
         setResizable(false);
 
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
         jLabel1.setText("Naslov:");
 
+        txtTitle.setBackground(new java.awt.Color(236, 250, 255));
+        txtTitle.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+
+        btnFind.setBackground(new java.awt.Color(217, 238, 255));
+        btnFind.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnFind.setText("PRETRAZI");
         btnFind.setFocusable(false);
 
+        btnOpenBookForm.setBackground(new java.awt.Color(217, 238, 255));
+        btnOpenBookForm.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnOpenBookForm.setText("OTVORI FORMU ZA ODBRANU KNJIGU");
         btnOpenBookForm.setFocusable(false);
 
+        tblBooks.setBackground(new java.awt.Color(197, 201, 255));
+        tblBooks.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 255), new java.awt.Color(153, 153, 255)));
+        tblBooks.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+        tblBooks.setFillsViewportHeight(true);
+        tblBooks.setGridColor(new java.awt.Color(197, 201, 255));
+        tblBooks.setSelectionBackground(new java.awt.Color(150, 194, 215));
         jScrollPane1.setViewportView(tblBooks);
 
+        btnCreate.setBackground(new java.awt.Color(217, 238, 255));
+        btnCreate.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
         btnCreate.setText("DODAJ KNJIGU");
         btnCreate.setFocusable(false);
 
@@ -64,44 +85,60 @@ public final class ViewBooksForm extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnFind, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnOpenBookForm, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCreate, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(btnOpenBookForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtTitle)
-                        .addComponent(jLabel1))
-                    .addComponent(btnFind))
+                    .addComponent(btnFind, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                    .addComponent(txtTitle)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOpenBookForm, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void designTableColumns(){
+        tblBooks.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+        TableColumnModel columnModel = tblBooks.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(60);    
+        columnModel.getColumn(1).setPreferredWidth(220);
+        columnModel.getColumn(2).setPreferredWidth(160);
+    }
+    private void designTable(){
+        tblBooks.getTableHeader().setOpaque(false);
+        tblBooks.getTableHeader().setBackground(new Color(107,158,183));
+        tblBooks.getTableHeader().setForeground(Color.white);
+        tblBooks.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+        designTableColumns();
+    }
     public BookDto getSelectedBook(){
         return ((BooksTableModel)tblBooks.getModel()).getBook(tblBooks.getSelectedRow());
     }
     public void setBooksTableData(List<BookDto> books) throws Exception{
         tblBooks.setModel(new BooksTableModel(books));
+        designTable();
     }
     public JButton getFindButton(){
         return btnFind;

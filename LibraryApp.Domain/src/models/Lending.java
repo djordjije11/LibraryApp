@@ -70,9 +70,13 @@ public class Lending implements IEntity, Serializable {
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
+    
+    public String singlePrint(){
+        return "ID: " + id + "\nKnjiga: " + copyOfBook + "\nClan biblioteke: " + member + "\nDatuma: " + lendingDate;
+    }
 
     @Override
     public String toString() {
-        return "ID: " + id + "\nKnjiga: " + copyOfBook + "\nClan biblioteke: " + member + "\nDatuma: " + lendingDate;
+        return "ID: " + id + "; " + lendingDate + "; " + copyOfBook.getId() + " - " + copyOfBook.getBook().getTitle() + "; " + member.getFirstname() + " " + member.getLastname();
     }
 }
