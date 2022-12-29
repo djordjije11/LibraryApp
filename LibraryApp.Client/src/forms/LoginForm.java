@@ -12,7 +12,6 @@ public class LoginForm extends javax.swing.JFrame {
         initComponents();
         pack();
         setLocationRelativeTo(null);
-        setResizable(false);
         setColors();
     }
 
@@ -109,14 +108,11 @@ public class LoginForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void setColors(){
-        //getContentPane().setBackground(new Color(175, 135, 255));
         getContentPane().setBackground(new Color(205,210,255));
     }
-    
     public String getPassword() {
        return String.valueOf(txtPassword.getPassword());
     }
-
     public Long getEmployeeID() throws NumberFormatException {
         return Long.parseLong(txtEmployeeID.getText());
     }

@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 /**
@@ -14,12 +13,13 @@ import javax.swing.JMenuItem;
  * @author Djordjije
  */
 public class MainForm extends javax.swing.JFrame {
+    private final String BACKGROUND_IMAGE_PATH = "images\\book.png";
     
     public MainForm() throws IOException {
         initComponents();
         pack();
         setLocationRelativeTo(null);
-        BufferedImage img = ImageIO.read(new File("D:\\MyDocs\\Repositories\\LibraryApp\\LibraryApp.Client\\images\\book.png"));
+        BufferedImage img = ImageIO.read(new File(BACKGROUND_IMAGE_PATH));
         lblImage.setIcon(new ImageIcon(img));
         getContentPane().setBackground(Color.white);
     }
