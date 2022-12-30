@@ -1,7 +1,7 @@
 package forms.controllers;
 
-import controllers.AuthorController;
-import controllers.BookController;
+import services.AuthorService;
+import services.BookService;
 import forms.MainForm;
 import forms.book.BookForm;
 import forms.book.ViewBooksForm;
@@ -24,12 +24,12 @@ public class BookFormsController {
     private BookForm bookForm;
     private MainForm parentForm;
     private BookDtoValidator validator;
-    private BookController bookController;
-    private AuthorController authorController;
+    private BookService bookService;
+    private AuthorService authorService;
     
     public BookFormsController(TcpClient tcpClient, MainForm parentForm) throws Exception {
-        bookController = new BookController(tcpClient);
-        authorController = new AuthorController(tcpClient);
+        bookService = new BookService(tcpClient);
+        authorService = new AuthorService(tcpClient);
         this.parentForm = parentForm;
         validator = new BookDtoValidator();
         viewBooksForm = new ViewBooksForm(parentForm, true);
@@ -49,7 +49,7 @@ public class BookFormsController {
             BookDto bookDto = new BookDto();
             bookDto.setTitle(viewBooksForm.getTitleTextField().getText().trim());
             try {
-                List<BookDto> books = bookController.findEntities(bookDto);
+                List<BookDto> books = bookService.findEntities(bookDto);
                 viewBooksForm.setBooksTableData(books);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(viewBooksForm, "Pretraga knjiga nije uspesno izvrsena.", "GRESKA", JOptionPane.ERROR_MESSAGE);
@@ -79,7 +79,7 @@ public class BookFormsController {
             bookDto.setBuildingId(Session.getBuilding().getId());
             BookDto dbBookDto;
             try {
-                dbBookDto = bookController.getEntity(bookDto);
+                dbBookDto = bookService.getEntity(bookDto);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(bookForm, "Knjiga nije uspesno ucitana.", "GRESKA", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -103,7 +103,7 @@ public class BookFormsController {
                     JOptionPane.showMessageDialog(bookForm, "Nije dozvoljeno brisanje knjiga ciji primerci su cuvani u bazi.", "Nedozvoljena operacija", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                BookDto dbBookDto = bookController.deleteEntity(bookDto);
+                BookDto dbBookDto = bookService.deleteEntity(bookDto);
                 refreshViewBooksForm();
                 JOptionPane.showMessageDialog(bookForm, "Knjiga je uspesno obrisana.\n\n" + dbBookDto.singlePrint(), "Knjiga obrisana", JOptionPane.INFORMATION_MESSAGE);
                 bookForm.dispose();
@@ -161,7 +161,7 @@ public class BookFormsController {
                 return;
             }
             try {
-                BookDto dbBook = isBookNew == true ? bookController.createEntity(bookDto) : bookController.updateEntity(bookDto);
+                BookDto dbBook = isBookNew == true ? bookService.createEntity(bookDto) : bookService.updateEntity(bookDto);
                 bookForm.setBook(dbBook);
                 refreshViewBooksForm();
                 JOptionPane.showMessageDialog(bookForm, "Knjiga je uspesno sacuvana.\n\n" + dbBook.singlePrint(), "Knjiga sacuvana", JOptionPane.INFORMATION_MESSAGE);
@@ -183,11 +183,11 @@ public class BookFormsController {
         if(viewBooksForm == null)
             return;
         viewBooksForm.emptyTitleTextField();
-        viewBooksForm.setBooksTableData(bookController.readAllEntities(new BookDto()));
+        viewBooksForm.setBooksTableData(bookService.readAllEntities(new BookDto()));
     }
     private void setUpAuthorsData() throws Exception{
         if(bookForm == null)
             return;
-        bookForm.setUpAuthors(authorController.readAllEntities(new Author()));
+        bookForm.setUpAuthors(authorService.readAllEntities(new Author()));
     }
 }

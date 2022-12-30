@@ -1,6 +1,6 @@
 package forms.controllers;
 
-import controllers.MemberController;
+import services.MemberService;
 import forms.MainForm;
 import forms.member.MemberForm;
 import forms.member.ViewMembersForm;
@@ -23,10 +23,10 @@ public class MemberFormsController {
     private MemberForm memberForm;
     private final MainForm parentForm;
     private final MemberValidator validator;
-    private final MemberController memberController;
+    private final MemberService memberService;
     
     public MemberFormsController(TcpClient tcpClient, MainForm parentForm) throws Exception{
-        memberController = new MemberController(tcpClient);
+        memberService = new MemberService(tcpClient);
         this.parentForm = parentForm;
         validator = new MemberValidator();
         viewMembersForm = new ViewMembersForm(parentForm, true);
@@ -46,7 +46,7 @@ public class MemberFormsController {
             member.setFirstname(viewMembersForm.getFirstNameTextField().getText().trim());
             member.setLastname(viewMembersForm.getLastNameTextField().getText().trim());
             try {
-                List<Member> members = memberController.findEntities(member);
+                List<Member> members = memberService.findEntities(member);
                 viewMembersForm.setMembersTableData(members);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(viewMembersForm, "Pretraga clanova nije uspesno izvrsena.", "GRESKA", JOptionPane.ERROR_MESSAGE);
@@ -70,7 +70,7 @@ public class MemberFormsController {
     private void setMemberFormDeleteListener() {
         memberForm.getDeleteButton().addActionListener((ActionEvent e) -> {
             try {
-                Member dbMember = memberController.deleteEntity(memberForm.getMember());
+                Member dbMember = memberService.deleteEntity(memberForm.getMember());
                 refreshViewMembersForm();
                 JOptionPane.showMessageDialog(memberForm, "Clan je uspesno obrisan.\n\n" +  dbMember.singlePrint(), "Clan obrisan", JOptionPane.INFORMATION_MESSAGE);
                 memberForm.dispose();
@@ -113,7 +113,7 @@ public class MemberFormsController {
                     return;
                 }
             try {
-                Member dbMember = isMemberNew == true ? memberController.createEntity(member) : memberController.updateEntity(member);
+                Member dbMember = isMemberNew == true ? memberService.createEntity(member) : memberService.updateEntity(member);
                 memberForm.setMember(dbMember);
                 refreshViewMembersForm();
                 JOptionPane.showMessageDialog(memberForm, "Clan je uspesno sacuvan.\n\n" + dbMember.singlePrint(), "Clan sacuvan", JOptionPane.INFORMATION_MESSAGE);
@@ -136,6 +136,6 @@ public class MemberFormsController {
             return;
         viewMembersForm.emptyFirstNameTextField();
         viewMembersForm.emptyLastNameTextField();
-        viewMembersForm.setMembersTableData(memberController.readAllEntities(new Member()));
+        viewMembersForm.setMembersTableData(memberService.readAllEntities(new Member()));
     }
 }

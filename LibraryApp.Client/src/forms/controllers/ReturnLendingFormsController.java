@@ -1,7 +1,7 @@
 package forms.controllers;
 
-import controllers.LendingController;
-import controllers.MemberController;
+import services.LendingService;
+import services.MemberService;
 import forms.MainForm;
 import forms.lending.ReturnLendingForm;
 import java.awt.event.ActionEvent;
@@ -20,12 +20,12 @@ import tcp.TcpClient;
 public class ReturnLendingFormsController {
     private MainForm parentForm;
     private ReturnLendingForm returnLendingForm;
-    private LendingController lendingController;
-    private MemberController memberController;
+    private LendingService lendingService;
+    private MemberService memberService;
     
     public ReturnLendingFormsController(TcpClient tcpClient, MainForm parentForm) throws Exception {
-        lendingController = new LendingController(tcpClient);
-        memberController = new MemberController(tcpClient);
+        lendingService = new LendingService(tcpClient);
+        memberService = new MemberService(tcpClient);
         this.parentForm = parentForm;
         returnLendingForm = new ReturnLendingForm(parentForm, true);
         setFindMemberListener();
@@ -45,7 +45,7 @@ public class ReturnLendingFormsController {
             member.setFirstname(firstname);
             member.setLastname(lastname);
             try{
-                List<Member> dbMembers = memberController.findEntities(member);
+                List<Member> dbMembers = memberService.findEntities(member);
                 returnLendingForm.setUpMembers(dbMembers);
             } catch(Exception ex){
                 JOptionPane.showMessageDialog(returnLendingForm, "Pretraga clanova nije uspesno izvresna.", "GRESKA", JOptionPane.WARNING_MESSAGE);
@@ -63,7 +63,7 @@ public class ReturnLendingFormsController {
             Lending lending = new Lending();
             lending.setMember((Member) member);
             try {
-                List<Lending> dbLendings = lendingController.findEntities(lending);
+                List<Lending> dbLendings = lendingService.findEntities(lending);
                 returnLendingForm.setLendingsTableData(dbLendings);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(returnLendingForm, "Pretraga iznajmljivanja knjiga trazenog clana nije uspesno izvresna.", "GRESKA", JOptionPane.WARNING_MESSAGE);
@@ -86,7 +86,7 @@ public class ReturnLendingFormsController {
                 lending.getCopyOfBook().setBuildingId(buildingID);
             }
             try{
-                lendingController.updateEntities(lendings);
+                lendingService.updateEntities(lendings);
                 JOptionPane.showMessageDialog(returnLendingForm, "Vracanje iznajmljenih knjiga je uspesno zabelezeno.", "Knjige su vracene", JOptionPane.INFORMATION_MESSAGE);
                 returnLendingForm.refreshForm();
             } catch (Exception ex) {

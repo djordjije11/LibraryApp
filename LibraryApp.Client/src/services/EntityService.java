@@ -1,4 +1,4 @@
-package controllers;
+package services;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,10 +12,10 @@ import tcp.TcpClient;
  *
  * @author Djordjije
  */
-public abstract class EntityController<T extends IEntity> {
+public abstract class EntityService<T extends IEntity> {
     protected TcpClient tcpClient;
     
-    public EntityController(TcpClient tcpClient){
+    public EntityService(TcpClient tcpClient){
         this.tcpClient = tcpClient;
     }
     

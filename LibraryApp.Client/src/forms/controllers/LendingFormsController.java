@@ -1,8 +1,8 @@
 package forms.controllers;
 
-import controllers.CopyOfBookController;
-import controllers.LendingController;
-import controllers.MemberController;
+import services.CopyOfBookService;
+import services.LendingService;
+import services.MemberService;
 import forms.MainForm;
 import forms.lending.LendingForm;
 import java.awt.event.ActionEvent;
@@ -24,14 +24,14 @@ import tcp.TcpClient;
 public class LendingFormsController {
     private MainForm parentForm;
     private LendingForm lendingForm;
-    private LendingController lendingController;
-    private CopyOfBookController copyOfBookController;
-    private MemberController memberController;
+    private LendingService lendingService;
+    private CopyOfBookService copyOfBookService;
+    private MemberService memberService;
     
     public LendingFormsController(TcpClient tcpClient, MainForm parentForm) throws Exception {
-        lendingController = new LendingController(tcpClient);
-        copyOfBookController = new CopyOfBookController(tcpClient);
-        memberController = new MemberController(tcpClient);
+        lendingService = new LendingService(tcpClient);
+        copyOfBookService = new CopyOfBookService(tcpClient);
+        memberService = new MemberService(tcpClient);
         this.parentForm = parentForm;
         lendingForm = new LendingForm(parentForm, true);
         setFindListeners();
@@ -60,7 +60,7 @@ public class LendingFormsController {
                 copyOfBook.setBuildingId(Session.getBuilding().getId());
                 if(oneCopy == true){
                     copyOfBook.setId(copyOfBookID);
-                    CopyOfBook dbCopyOfBook = copyOfBookController.getEntity(copyOfBook);
+                    CopyOfBook dbCopyOfBook = copyOfBookService.getEntity(copyOfBook);
                     dbCopiesOfBook = new ArrayList();
                     dbCopiesOfBook.add(dbCopyOfBook);
                     lendingForm.setBooksTableData(dbCopiesOfBook);
@@ -70,7 +70,7 @@ public class LendingFormsController {
                         Book book = new Book();
                         book.setTitle(title);
                         copyOfBook.setBook(book);
-                        dbCopiesOfBook = copyOfBookController.findEntities(copyOfBook);
+                        dbCopiesOfBook = copyOfBookService.findEntities(copyOfBook);
                         lendingForm.setBooksTableData(dbCopiesOfBook);
                     }
                 }
@@ -90,7 +90,7 @@ public class LendingFormsController {
             member.setFirstname(firstname);
             member.setLastname(lastname);
             try{
-                List<Member> dbMembers = memberController.findEntities(member);
+                List<Member> dbMembers = memberService.findEntities(member);
                 lendingForm.setUpMembers(dbMembers);
             } catch(Exception ex){
                 JOptionPane.showMessageDialog(lendingForm, "Pretraga clanova nije uspesno izvresna.", "GRESKA", JOptionPane.WARNING_MESSAGE);
@@ -115,7 +115,7 @@ public class LendingFormsController {
                 lendings.add(new Lending(copyOfBook, member, date));
             }
             try {
-                List<Lending> dbLendings = lendingController.createEntities(lendings);
+                List<Lending> dbLendings = lendingService.createEntities(lendings);
                 JOptionPane.showMessageDialog(lendingForm, "Iznajmljivanje knjiga je uspesno zabelezeno.", "Knjige su iznajmljene", JOptionPane.INFORMATION_MESSAGE);
                 
                 /*
