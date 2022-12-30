@@ -216,7 +216,6 @@ public final class MemberForm extends javax.swing.JDialog {
         int difference = monthLength - cmbxSize;
         if(difference > 0){
             for (int i = 1; i <= difference; i++) {
-                System.out.println(cmbxSize + i);
                 cmbxDay.addItem(cmbxSize + i);
             }
         } else if(difference < 0){
