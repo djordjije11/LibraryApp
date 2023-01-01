@@ -146,7 +146,7 @@ public class BookFormsController {
                 hasChanges = true;
             }
             if(hasChanges == false){
-                    JOptionPane.showMessageDialog(bookForm, "Podaci o clanu nisu promenjeni.", "Podaci nisu promenjeni", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(bookForm, "Podaci o knjizi nisu promenjeni.", "Podaci nisu promenjeni", JOptionPane.INFORMATION_MESSAGE);
                     return;
             }
             bookDto.setTitle(title);

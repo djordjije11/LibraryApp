@@ -243,5 +243,6 @@ public final class BookForm extends javax.swing.JDialog {
         if(currentAmount == null)
             txtCurrentAmount.setText("0");
         else txtCurrentAmount.setText(String.valueOf(currentAmount));
+        txtAddingAmount.setText("0");
     }
 }
