@@ -64,6 +64,7 @@ public class ReturnLendingForm extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Vracanje iznajmljenih knjiga");
 
         tblLendings.setBackground(new java.awt.Color(197, 201, 255));
         tblLendings.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 255), new java.awt.Color(153, 153, 255)));

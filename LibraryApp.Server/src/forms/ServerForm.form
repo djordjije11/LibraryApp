@@ -26,13 +26,13 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblMessage" min="-2" pref="390" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="lblMessage" pref="781" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="btnStart" min="-2" pref="189" max="-2" attributes="0"/>
+                      <Component id="btnStart" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnStop" min="-2" pref="189" max="-2" attributes="0"/>
+                      <Component id="btnStop" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -42,14 +42,14 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblMessage" min="-2" pref="48" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace pref="125" max="32767" attributes="0"/>
+              <Component id="lblMessage" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="125" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnStart" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="btnStop" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="btnStart" alignment="3" min="-2" pref="70" max="-2" attributes="0"/>
+                  <Component id="btnStop" alignment="3" min="-2" pref="70" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,7 +61,7 @@
           <Color blue="ff" green="ee" red="d9" type="rgb"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Cascadia Code" size="14" style="0"/>
+          <Font name="Cascadia Code" size="24" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="POKRENI SERVER"/>
         <Property name="focusable" type="boolean" value="false"/>
@@ -76,7 +76,7 @@
           <Color blue="ff" green="ee" red="d9" type="rgb"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Cascadia Code" size="14" style="0"/>
+          <Font name="Cascadia Code" size="24" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="UGASI SERVER"/>
         <Property name="focusable" type="boolean" value="false"/>
@@ -88,7 +88,7 @@
     <Component class="javax.swing.JLabel" name="lblMessage">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Cascadia Code" size="18" style="0"/>
+          <Font name="Cascadia Code" size="54" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Server nije pokrenut."/>

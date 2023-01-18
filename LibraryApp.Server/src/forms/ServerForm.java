@@ -3,6 +3,7 @@ package forms;
 import java.awt.Color;
 import java.io.IOException;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import main.Server;
 
 /**
@@ -20,6 +21,7 @@ public class ServerForm extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(150,194,215));
         setLocationRelativeTo(null);
         setUpButtons();
+        setExtendedState(JFrame.MAXIMIZED_BOTH); 
     }
 
     /**
@@ -40,7 +42,7 @@ public class ServerForm extends javax.swing.JFrame {
         setResizable(false);
 
         btnStart.setBackground(new java.awt.Color(217, 238, 255));
-        btnStart.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
+        btnStart.setFont(new java.awt.Font("Cascadia Code", 0, 24)); // NOI18N
         btnStart.setText("POKRENI SERVER");
         btnStart.setFocusable(false);
         btnStart.addActionListener(new java.awt.event.ActionListener() {
@@ -50,7 +52,7 @@ public class ServerForm extends javax.swing.JFrame {
         });
 
         btnStop.setBackground(new java.awt.Color(217, 238, 255));
-        btnStop.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
+        btnStop.setFont(new java.awt.Font("Cascadia Code", 0, 24)); // NOI18N
         btnStop.setText("UGASI SERVER");
         btnStop.setFocusable(false);
         btnStop.addActionListener(new java.awt.event.ActionListener() {
@@ -59,7 +61,7 @@ public class ServerForm extends javax.swing.JFrame {
             }
         });
 
-        lblMessage.setFont(new java.awt.Font("Cascadia Code", 0, 18)); // NOI18N
+        lblMessage.setFont(new java.awt.Font("Cascadia Code", 0, 54)); // NOI18N
         lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMessage.setText("Server nije pokrenut.");
 
@@ -68,25 +70,25 @@ public class ServerForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnStop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addContainerGap(125, Short.MAX_VALUE)
+                .addComponent(lblMessage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
         );
 
         pack();
