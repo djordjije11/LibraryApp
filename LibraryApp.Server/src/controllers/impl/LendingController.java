@@ -27,19 +27,19 @@ public class LendingController implements IController {
         Object dbObject = null;
         try{
             switch (request.getMethod()) {
-            case CREATELIST:
+            case CREATELIST:    //SAVE ALL LENDINGS
             {
                 List<Lending> lendings = (List<Lending>)request.getObject();
                 dbObject = lendingLogic.createLendings(lendings);
                 break;
             }
-            case UPDATELIST:
+            case UPDATELIST:    //SAVE ALL RETURNINGS OF LENDINGS
             {
                 List<Lending> lendings = (List<Lending>)request.getObject();
                 dbObject = lendingLogic.returnLendings(lendings);
                 break;
             }
-            case FINDWHERE:
+            case FINDWHERE: //GET ALL UNRETURNED LENDINGS BY MEMBER
                 Lending lending = (Lending)request.getObject();
                 dbObject = lendingLogic.findUnreturnedLendingsByMember(lending);
                 break;

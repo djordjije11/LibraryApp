@@ -16,7 +16,7 @@ import tcp.TcpClient;
  *
  * @author Djordjije
  */
-public class LoginFormsController {
+public class LoginFormsController implements IClosable {
     private final TcpClient tcpClient;
     private LoginForm loginForm;
     
@@ -46,11 +46,7 @@ public class LoginFormsController {
             }
             try {
                 if(isLoggedIn() == true){
-                    loginForm.dispose();
-                    loginForm = null;
-                    synchronized(tcpClient){
-                        tcpClient.notify();
-                    }
+                    closeForms();
                 } else{
                     JOptionPane.showMessageDialog(loginForm, "Neuspesno prijavljivanje u sistem.", "GRESKA", JOptionPane.ERROR_MESSAGE);
                 }
@@ -72,5 +68,14 @@ public class LoginFormsController {
             Session.setBuilding(employee.getBuilding());
             return true;
         } else return false;
+    }
+
+    @Override
+    public void closeForms() {
+        loginForm.dispose();
+        loginForm = null;
+        synchronized(tcpClient){
+            tcpClient.notify(); //informs the main thread that the login window is closed
+        }
     }
 }

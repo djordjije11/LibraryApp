@@ -27,22 +27,22 @@ public class MemberController implements IController {
         Object dbObject = null;
         try{
             switch (request.getMethod()) {
-            case CREATE:
+            case CREATE:    //SAVE THE MEMBER
                 dbObject = memberLogic.createMember(member);
                 break;
-            case READALL:
+            case READALL:   //GET ALL MEMBERS
                 dbObject = memberLogic.readAllMembers();
                 break;
-            case FINDWHERE:
+            case FINDWHERE: //GET MEMBERS WITH SIMILAR FIRSTNAME AND LASTNAME AS THE SEARCHED TEXT
                 dbObject = memberLogic.findMembers(member);
                 break;
-            case GET:
+            case GET:   //GET THE MEMBER BY ID
                 dbObject = memberLogic.findMember(member);
                 break;
-            case UPDATE:
+            case UPDATE:    //UPDATE THE MEMBER
                 dbObject = memberLogic.updateMember(member);
                 break;
-            case DELETE:
+            case DELETE:    //DELETE THE MEMBER BY ID
                 dbObject = memberLogic.deleteMember(member);
                 break;
             default:

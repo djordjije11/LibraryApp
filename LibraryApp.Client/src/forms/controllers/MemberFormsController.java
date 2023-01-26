@@ -17,11 +17,10 @@ import validations.exceptions.ValidationException;
  *
  * @author Djordjije
  */
-public class MemberFormsController {
-    
+public class MemberFormsController implements IClosable {
+    private final MainForm parentForm;
     private final ViewMembersForm viewMembersForm;
     private MemberForm memberForm;
-    private final MainForm parentForm;
     private final MemberValidator validator;
     private final MemberService memberService;
     
@@ -34,6 +33,7 @@ public class MemberFormsController {
         setViewMembersFormListeners();
         viewMembersForm.setVisible(true);
     }
+    @Override
     public void closeForms(){
         if(viewMembersForm != null)
             viewMembersForm.dispose();
@@ -76,7 +76,11 @@ public class MemberFormsController {
                 memberForm.dispose();
                 memberForm = null;
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(memberForm, "Clan nije uspesno obrisan.", "GRESKA", JOptionPane.ERROR_MESSAGE);
+                String message = "Clan nije uspesno obrisan.";
+                if(ex.getMessage().startsWith("A member can't be deleted")){
+                    message = "Nije dozvoljeno brisanje clana biblioteke koji nije vratio sve pozajmljene knjige.";
+                }
+                JOptionPane.showMessageDialog(memberForm, message, "GRESKA", JOptionPane.ERROR_MESSAGE);
             }
         });
     }

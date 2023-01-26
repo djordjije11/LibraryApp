@@ -11,13 +11,13 @@ import tcp.TcpClient;
  *
  * @author Djordjije
  */
-public class MainFormsController {
+public class MainFormsController implements IClosable {
     private final MainForm form;
     private final TcpClient tcpClient;
-    private MemberFormsController memberController;
-    private BookFormsController bookController;
-    private LendingFormsController lendingController;
-    private ReturnLendingFormsController returnLendingController;
+    private IClosable memberController;
+    private IClosable bookController;
+    private IClosable lendingController;
+    private IClosable returnLendingController;
     
     public MainFormsController(TcpClient tcpClient) throws IOException{
         this.tcpClient = tcpClient;
@@ -40,7 +40,6 @@ public class MainFormsController {
             try {
                 memberController = new MemberFormsController(tcpClient, form);
             } catch (Exception ex) {
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(form, "Greska prilikom otvaranja forme za clanove.", "GRESKA", JOptionPane.ERROR_MESSAGE);
                 if(memberController != null){
                     memberController.closeForms();
@@ -91,17 +90,19 @@ public class MainFormsController {
     private void setLogoutMenuListeners(){
         form.getLogoutAndLoginMenu().addActionListener((ActionEvent e) -> {
             Session.restartSession();
-            closeMainForm();
+            closeForms();
         });
         form.getLogoutAndExitMenu().addActionListener((ActionEvent e) -> {
             Session.exitSession();
-            closeMainForm();
+            closeForms();
         });
     }
-    private void closeMainForm(){
+
+    @Override
+    public void closeForms() {
         form.dispose();
         synchronized (tcpClient) {
-            tcpClient.notify();
+            tcpClient.notify(); //informs the main thread that the main form is closed
         }
     }
 }

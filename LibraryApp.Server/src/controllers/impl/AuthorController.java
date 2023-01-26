@@ -27,14 +27,14 @@ public class AuthorController implements IController {
         Object dbObject = null;
         try{
             switch (request.getMethod()) {
-            case READALL:
+            case READALL:   //READ ALL AUTHORS
                 dbObject = authorLogic.readAllAuthors();
                 break;
-            case GET:
+            case GET:   //GET THE AUTHOR BY ID
                 dbObject = authorLogic.findAuthor(author);
                 break;
             default:
-                throw new ExecutionControl.NotImplementedException("The request method is not able for a Author object.");
+                throw new ExecutionControl.NotImplementedException("The request method is not able for an Author object.");
             }
             response.setObject(dbObject);
             response.setConfirmed(true);

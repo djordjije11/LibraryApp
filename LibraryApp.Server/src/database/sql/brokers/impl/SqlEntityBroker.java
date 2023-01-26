@@ -5,9 +5,9 @@ import database.sql.sqlmodels.SqlEntity;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.LinkedList;
 import java.util.List;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 /**
  *
@@ -30,14 +30,14 @@ public abstract class SqlEntityBroker<T extends IEntity> {
     protected synchronized List<T> createList(SqlEntity<T> sqlEntity, Connection connection) throws Exception{
         List<T> listOfEntities = sqlEntity.getListOfEntities();
         PreparedStatement preparedStatement = connection.prepareStatement(sqlEntity.getPreparedStatementInsertQuery(), Statement.RETURN_GENERATED_KEYS);
-        for (T listOfEntity : listOfEntities) {
-            sqlEntity.setEntity(listOfEntity);
+        for (T entity : listOfEntities) {
+            sqlEntity.setEntity(entity);
             sqlEntity.setUpPreparedStatementInsert(preparedStatement);
             preparedStatement.executeUpdate();
             ResultSet result = preparedStatement.getGeneratedKeys();
             //check if this works or you have to try with for(int i = 0...)
             if(result.next())
-                listOfEntity.setId(result.getLong(1));
+                entity.setId(result.getLong(1));
             result.close();
         }
         preparedStatement.close();
@@ -46,14 +46,16 @@ public abstract class SqlEntityBroker<T extends IEntity> {
     protected synchronized T find(SqlEntity<T> sqlEntity, Connection connection) throws Exception{
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sqlEntity.getStatementSelectByIdQuery());
-        resultSet.next();
-        T instance = sqlEntity.getEntityFromResultSet(resultSet);
+        T instance = null;
+        if(resultSet.next()){
+            instance = sqlEntity.getEntityFromResultSet(resultSet);
+        }
         resultSet.close();
         statement.close();
         return instance;
     }
     protected synchronized List<T> findEntities(SqlEntity<T> sqlEntity, Connection connection) throws Exception{
-        List<T> entities = new LinkedList<>();
+        List<T> entities = new ArrayList<>();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sqlEntity.getStatementSelectWithConditionQuery());
         while(resultSet.next()){
@@ -64,7 +66,7 @@ public abstract class SqlEntityBroker<T extends IEntity> {
         return entities;
     }
     protected synchronized List<T> findEntitiesWithCondition(SqlEntity<T> sqlEntity, Connection connection, List<String> conditions) throws Exception{
-        List<T> entities = new LinkedList<>();
+        List<T> entities = new ArrayList<>();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sqlEntity.constructSelectWithConditionsQuery(conditions));
         while(resultSet.next()){
@@ -75,7 +77,7 @@ public abstract class SqlEntityBroker<T extends IEntity> {
         return entities;
     }
     protected synchronized List<T> readAll(SqlEntity<T> sqlEntity, Connection connection) throws Exception{
-        List<T> entities = new LinkedList<>();
+        List<T> entities = new ArrayList<>();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sqlEntity.getStatementSelectAllQuery());
         while(resultSet.next()){

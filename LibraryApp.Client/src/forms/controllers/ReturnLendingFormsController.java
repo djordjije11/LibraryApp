@@ -17,7 +17,7 @@ import tcp.TcpClient;
  *
  * @author Djordjije
  */
-public class ReturnLendingFormsController {
+public class ReturnLendingFormsController implements IClosable {
     private MainForm parentForm;
     private ReturnLendingForm returnLendingForm;
     private LendingService lendingService;
@@ -33,7 +33,6 @@ public class ReturnLendingFormsController {
         setApproveListener();
         returnLendingForm.setVisible(true);
     }
-    
     private void setFindMemberListener(){
         returnLendingForm.getFindMemberButton().addActionListener((ActionEvent e) -> {
             String firstname = returnLendingForm.getMemberFirstnameTextField().getText().trim();
@@ -46,13 +45,14 @@ public class ReturnLendingFormsController {
             member.setLastname(lastname);
             try{
                 List<Member> dbMembers = memberService.findEntities(member);
-                returnLendingForm.setUpMembers(dbMembers);
+                if(dbMembers != null && dbMembers.isEmpty() == false){
+                    returnLendingForm.setUpMembers(dbMembers);
+                }
             } catch(Exception ex){
                 JOptionPane.showMessageDialog(returnLendingForm, "Pretraga clanova nije uspesno izvresna.", "GRESKA", JOptionPane.WARNING_MESSAGE);
             }
         });
     }
-    
     private void setFindLendingsForSelectedMemberListener(){
         returnLendingForm.getMembersComboBox().addActionListener((ActionEvent e) -> {
            Object member = returnLendingForm.getMembersComboBox().getSelectedItem();
@@ -64,13 +64,14 @@ public class ReturnLendingFormsController {
             lending.setMember((Member) member);
             try {
                 List<Lending> dbLendings = lendingService.findEntities(lending);
-                returnLendingForm.setLendingsTableData(dbLendings);
+                if(dbLendings != null && dbLendings.isEmpty() == false){
+                    returnLendingForm.setLendingsTableData(dbLendings);
+                }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(returnLendingForm, "Pretraga iznajmljivanja knjiga trazenog clana nije uspesno izvresna.", "GRESKA", JOptionPane.WARNING_MESSAGE);
             }
         });
     }
-    
     private void setApproveListener() {
         returnLendingForm.getApproveButton().addActionListener((ActionEvent e) -> {
             Member member = returnLendingForm.getSelectedMemberToReturnLendings();

@@ -36,44 +36,44 @@ public class BookController implements IController {
         Object dbObject = null;
         try{
             switch (request.getMethod()) {
-            case CREATE:
-                if(addingAmount > 0){
+            case CREATE:    //SAVE NEW BOOK
+                if(addingAmount > 0){   //PLUS ADD NEW COPIES OF BOOK
                     Book dbBook = bookLogic.createBook(book, addingAmount, buildingID);
                     Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook, buildingID));
                     dbObject = new BookDto(dbBook, buildingID, newCurrentAmount);
-                } else {
+                } else {    //WITHOUT ADDING COPIES OF BOOK
                     dbObject = new BookDto(bookLogic.createBook(book));
                 }
                 break;
-            case READALL:
+            case READALL:   //READ ALL BOOKS
                 dbObject = EntitiesConverter.convertBookListToBookDtoList(bookLogic.readAllBooks());
                 break;
-            case FINDWHERE:
+            case FINDWHERE: //FIND ALL BOOKS THAT HAVE A SIMILAR TITLE TO THE SEARCHED TEXT
                 dbObject = EntitiesConverter.convertBookListToBookDtoList(bookLogic.findBooks(book));
                 break;
-            case GET:{
+            case GET: { //GET THE BOOK BY ID WITH THE NUMBER OF COPIES OF BOOK IN THE BUILDING
                 Book dbBook = bookLogic.findBook(book);
                 Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook, buildingID));
                 dbObject = new BookDto(dbBook, buildingID, newCurrentAmount);
                 break;
             }
-            case UPDATE:
-                if(bookDto.getIsUpdated() == false && addingAmount > 0){
+            case UPDATE:    //UPDATE THE BOOK
+                if(bookDto.getIsUpdated() == false && addingAmount > 0){    //BY JUST ADDING NEW COPIES OF BOOK
                     List<CopyOfBook> copiesOfBook = bookLogic.addCopiesOfBookInBuilding(new CopyOfBook(book, buildingID), addingAmount);
                     Long newCurrentAmount = (long)copiesOfBook.size() + currentAmount;
                     dbObject = new BookDto(book, buildingID, newCurrentAmount);
-                } else if(bookDto.getIsUpdated() == true && addingAmount == 0){
+                } else if(bookDto.getIsUpdated() == true && addingAmount == 0){ //BY JUST CHANGING INFORMATIONS ABOUT BOOK
                     dbObject = new BookDto(bookLogic.updateBook(book), buildingID, currentAmount);
-                } else if(bookDto.getIsUpdated() == true && addingAmount > 0) {
+                } else if(bookDto.getIsUpdated() == true && addingAmount > 0) { //BY BOTH CHANGING INFORMATIONS ABOUT BOOK AND ADDING NEW COPIES OF BOOK
                     Book dbBook = bookLogic.updateBook(book, addingAmount, buildingID);
                     Long newCurrentAmount = bookLogic.getCountOfCopiesOfBookInBuilding(new CopyOfBook(dbBook, buildingID));
                     dbObject = new BookDto(dbBook, buildingID, newCurrentAmount);
-                } else{
+                } else{ //BAD REQUEST
                     response.setConfirmed(false);
                     return response;
                 }
                 break;
-            case DELETE:
+            case DELETE:    //DELETE THE BOOK BY ID
                 dbObject = new BookDto(bookLogic.deleteBook(book));
                 break;
             default:

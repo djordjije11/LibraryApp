@@ -33,11 +33,11 @@ public class CopyOfBookController implements IController {
         Object dbObject = null;
         try{
             switch (request.getMethod()) {
-            case FINDWHERE:
+            case FINDWHERE: //FIND ALL COPIES OF BOOK IN THE BUILDING
                 List<CopyOfBook> dbCopiesOfBooks = new ArrayList<>();
                 List<Book> dbBooks = bookLogic.findBooks(book);
                 for (Book dbBook : dbBooks) {
-                    List<CopyOfBook> dbCopiesOfBook = bookLogic.findCopiesOfBookInBuilding(new CopyOfBook(dbBook, buildingID));
+                    List<CopyOfBook> dbCopiesOfBook = bookLogic.readAllCopiesOfBookInBuilding(new CopyOfBook(dbBook, buildingID));
                     if(dbCopiesOfBook == null || dbCopiesOfBook.isEmpty()){
                         continue;
                     }
@@ -45,7 +45,7 @@ public class CopyOfBookController implements IController {
                 }
                 dbObject = dbCopiesOfBooks;
                 break;
-            case GET:
+            case GET: //GET THE COPYOFBOOK BY ID IN THE BUILDING
                 dbObject = bookLogic.findCopyOfBookInBuilding(copyOfBook);
                 break;
             default:
@@ -60,5 +60,4 @@ public class CopyOfBookController implements IController {
             return response;
         }
     }
-    
 }

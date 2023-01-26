@@ -8,6 +8,7 @@ import forms.ServerForm;
 import helper.RandomID;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import tcp.TcpServer;
@@ -25,7 +26,8 @@ public class Server implements Runnable {
     public boolean isServerUp(){
         return serverUp;
     }
-    public void openServer() throws IOException{
+    public void openServer() throws Exception{
+        initializeSqlConnectionFactory();
         try {
             socket = new ServerSocket(PORT_NUMBER);
             serverUp = true;
@@ -35,13 +37,14 @@ public class Server implements Runnable {
             throw ex;
         }
     }
-    public void closeServer() throws IOException{
+    public void closeServer() throws Exception{
         serverUp = false;
         if(socket.isClosed() == false){
             socket.close();
             socket = null;
         }
         removeAllTcpServers();
+        shutdownSqlConnectionFactory();
     }
     private void acceptClients() throws IOException{
         while(serverUp){
@@ -61,16 +64,24 @@ public class Server implements Runnable {
         tcpServersList.clear();
     }
     
-    public static void main(String[] args) throws Exception {
+    private void initializeSqlConnectionFactory() throws Exception{
         IConfigurationManager configManager = new JsonFileConfigurationManager();
         configManager.initialize(ConfigFilePaths.SQL_JSON);
         SqlConnectionFactory.initialize(configManager);
+    }
+    
+    private void shutdownSqlConnectionFactory() throws SQLException{
+        SqlConnectionFactory.shutdown();
+    }
+    
+    public static void main(String[] args) throws Exception {
         new ServerForm(new Server()).setVisible(true);
     }        
 
     @Override
     public void run() {
         try {
+            System.out.println("Pokrenuto prihvatanje klijenata");
             acceptClients();
         } catch (IOException ex) {
             System.out.println("Prekinuto prihvatanje klijenata");

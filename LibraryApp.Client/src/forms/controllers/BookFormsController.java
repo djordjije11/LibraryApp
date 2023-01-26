@@ -19,10 +19,10 @@ import validations.exceptions.ValidationException;
  *
  * @author Djordjije
  */
-public class BookFormsController {
+public class BookFormsController implements IClosable {
+    private MainForm parentForm;
     private ViewBooksForm viewBooksForm;
     private BookForm bookForm;
-    private MainForm parentForm;
     private BookDtoValidator validator;
     private BookService bookService;
     private AuthorService authorService;
@@ -38,6 +38,7 @@ public class BookFormsController {
         viewBooksForm.setVisible(true);
     }
 
+    @Override
     public void closeForms(){
         if(viewBooksForm != null)
             viewBooksForm.dispose();
@@ -180,14 +181,14 @@ public class BookFormsController {
         setBookFormSaveListener();
     }
     private void refreshViewBooksForm() throws Exception{
-        if(viewBooksForm == null)
-            return;
-        viewBooksForm.emptyTitleTextField();
-        viewBooksForm.setBooksTableData(bookService.readAllEntities(new BookDto()));
+        if(viewBooksForm != null){
+            viewBooksForm.emptyTitleTextField();
+            viewBooksForm.setBooksTableData(bookService.readAllEntities(new BookDto()));
+        }
     }
     private void setUpAuthorsData() throws Exception{
-        if(bookForm == null)
-            return;
-        bookForm.setUpAuthors(authorService.readAllEntities(new Author()));
+        if(bookForm != null){
+            bookForm.setUpAuthors(authorService.readAllEntities(new Author()));
+        }
     }
 }

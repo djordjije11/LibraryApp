@@ -81,7 +81,7 @@ public class BookLogic implements IBookLogic {
     public Book deleteBook(Book book) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
-            if(copyOfBookBroker.getCountOfAllCopiesOfBook(new CopyOfBook(book.getId()), connection) > 0)
+            if(copyOfBookBroker.getCountOfAllCopiesOfBook(new CopyOfBook(book), connection) > 0)
                 throw new Exception("Book can't be deleted if it is already have been copied.");
             Book deletedBook = bookBroker.deleteBook(book, connection);
             connection.commit();
@@ -116,7 +116,7 @@ public class BookLogic implements IBookLogic {
     }
 
     @Override
-    public List<CopyOfBook> findCopiesOfBookInBuilding(CopyOfBook copyOfBook) throws Exception {
+    public List<CopyOfBook> readAllCopiesOfBookInBuilding(CopyOfBook copyOfBook) throws Exception {
         Connection connection = SqlConnectionFactory.getConnection();
         try{
             return copyOfBookBroker.readAllCopiesOfBookInBuilding(copyOfBook, connection);

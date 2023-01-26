@@ -1,12 +1,10 @@
 package database.sql.brokers.impl;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import database.sql.brokers.interfaces.ICopyOfBookBroker;
 import database.sql.sqlmodels.SqlCopyOfBook;
-import java.util.ArrayList;
 import java.util.List;
 import models.CopyOfBook;
 
@@ -23,16 +21,7 @@ public class SqlCopyOfBookBroker extends SqlEntityBroker<CopyOfBook> implements 
     }
     @Override
     public List<CopyOfBook> readAllCopiesOfBookInBuilding(CopyOfBook copyOfBook, Connection connection) throws Exception {
-        List<CopyOfBook> copiesOfBook = new ArrayList<>();
-        SqlCopyOfBook sqlCopyOfBook = new SqlCopyOfBook(copyOfBook);
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sqlCopyOfBook.getStatementSelectWithConditionQuery());
-        while(resultSet.next()){
-            copiesOfBook.add((CopyOfBook)sqlCopyOfBook.getEntityFromResultSet(resultSet));
-        }
-        resultSet.close();
-        statement.close();
-        return copiesOfBook;
+        return findEntities(new SqlCopyOfBook(copyOfBook), connection);
     }
     @Override
     public Long getCountOfCopiesOfBookInBuilding(CopyOfBook copyOfBook, Connection connection) throws Exception {
@@ -47,7 +36,7 @@ public class SqlCopyOfBookBroker extends SqlEntityBroker<CopyOfBook> implements 
     @Override
     public Long getCountOfAllCopiesOfBook(CopyOfBook copyOfBook, Connection connection) throws Exception {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM copyofbook WHERE bookID = " + copyOfBook.getBook().getId());
+        ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS amount FROM " + new SqlCopyOfBook().getTableName() + " WHERE bookID = " + copyOfBook.getBook().getId());
         resultSet.next();
         Long amount = resultSet.getLong("amount");
         resultSet.close();

@@ -25,11 +25,8 @@ public class Request implements Serializable {
     public Method getMethod(){
         return method;
     }
-
     @Override
     public String toString() {
         return "ModelElement: " + modelElement + "\nMethod: " + method + "\nObjekat: " + object;
     }
-    
-    
 }

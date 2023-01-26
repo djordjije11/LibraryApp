@@ -4,6 +4,7 @@ import controllers.interfaces.IController;
 import database.sql.brokers.impl.SqlEmployeeBroker;
 import jdk.jshell.spi.ExecutionControl;
 import logics.impl.EmployeeLogic;
+import logics.interfaces.IEmployeeLogic;
 import message.Request;
 import message.Response;
 import models.Employee;
@@ -13,7 +14,7 @@ import models.Employee;
  * @author Djordjije
  */
 public class EmployeeController implements IController {
-    private EmployeeLogic employeeLogic;
+    private IEmployeeLogic employeeLogic;
     
     public EmployeeController(){
         employeeLogic = new EmployeeLogic(new SqlEmployeeBroker());
@@ -26,7 +27,7 @@ public class EmployeeController implements IController {
         Object dbObject = null;
         try{
             switch (request.getMethod()) {
-            case LOGIN:
+            case LOGIN: //GET THE EMPLOYEE BY LOGIN INFORMATIONS INCLUDING THE buildingID OF THE BUILDING WHERE THE LOGGED IN EMPLOYEE WORKS
                 dbObject = employeeLogic.loginEmployee(employee);
                 break;
             default:

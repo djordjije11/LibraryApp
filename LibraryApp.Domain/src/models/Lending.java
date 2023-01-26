@@ -2,6 +2,7 @@ package models;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import message.ModelElement;
 
 /**
@@ -79,4 +80,19 @@ public class Lending implements IEntity, Serializable {
     public String toString() {
         return "ID: " + id + "; " + lendingDate + "; " + copyOfBook.getId() + " - " + copyOfBook.getBook().getTitle() + "; " + member.getFirstname() + " " + member.getLastname();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Lending lending){
+            return Objects.equals(this.id, lending.getId());
+        } else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+    
 }

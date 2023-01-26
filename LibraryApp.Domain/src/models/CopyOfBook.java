@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Objects;
 import message.ModelElement;
 
 /**
@@ -24,6 +25,9 @@ public class CopyOfBook implements IEntity, Serializable {
         this(id);
         this.book = book;
     }
+    public CopyOfBook(Book book){
+        this.book = book;
+    }
     public CopyOfBook(Book book, Long buildingId){
         this.book = book;
         this.buildingId = buildingId;
@@ -32,7 +36,6 @@ public class CopyOfBook implements IEntity, Serializable {
         this(id, buildingId);
         this.book = book;
     }
-    
     @Override
     public ModelElement getModelElement() {
         return ModelElement.COPYOFBOOK;
@@ -60,5 +63,19 @@ public class CopyOfBook implements IEntity, Serializable {
     @Override
     public String toString() {
         return "ID: " + id + ", " + book;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof CopyOfBook copyOfBook){
+            return Objects.equals(this.id, copyOfBook.getId());
+        } else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 }

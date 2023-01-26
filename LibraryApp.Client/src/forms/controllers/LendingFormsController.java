@@ -21,7 +21,7 @@ import tcp.TcpClient;
  *
  * @author Djordjije
  */
-public class LendingFormsController {
+public class LendingFormsController implements IClosable {
     private MainForm parentForm;
     private LendingForm lendingForm;
     private LendingService lendingService;
@@ -61,6 +61,10 @@ public class LendingFormsController {
                 if(oneCopy == true){
                     copyOfBook.setId(copyOfBookID);
                     CopyOfBook dbCopyOfBook = copyOfBookService.getEntity(copyOfBook);
+                    if(dbCopyOfBook == null){
+                        JOptionPane.showMessageDialog(lendingForm, "U sistemu ne postoji primerak trazene knjige.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                    }
                     dbCopiesOfBook = new ArrayList();
                     dbCopiesOfBook.add(dbCopyOfBook);
                     lendingForm.setBooksTableData(dbCopiesOfBook);
@@ -71,6 +75,10 @@ public class LendingFormsController {
                         book.setTitle(title);
                         copyOfBook.setBook(book);
                         dbCopiesOfBook = copyOfBookService.findEntities(copyOfBook);
+                        if(dbCopiesOfBook == null || dbCopiesOfBook.isEmpty()){
+                            JOptionPane.showMessageDialog(lendingForm, "U sistemu ne postoji primerak trazene knjige.", "Info", JOptionPane.INFORMATION_MESSAGE);
+                            return;
+                        }
                         lendingForm.setBooksTableData(dbCopiesOfBook);
                     }
                 }
@@ -91,7 +99,9 @@ public class LendingFormsController {
             member.setLastname(lastname);
             try{
                 List<Member> dbMembers = memberService.findEntities(member);
-                lendingForm.setUpMembers(dbMembers);
+                if(dbMembers != null && dbMembers.isEmpty() == false){
+                    lendingForm.setUpMembers(dbMembers);
+                }
             } catch(Exception ex){
                 JOptionPane.showMessageDialog(lendingForm, "Pretraga clanova nije uspesno izvresna.", "GRESKA", JOptionPane.WARNING_MESSAGE);
             }
@@ -131,6 +141,7 @@ public class LendingFormsController {
             }
         });
     }
+    @Override
     public void closeForms(){
         if(lendingForm != null){
             lendingForm.dispose();

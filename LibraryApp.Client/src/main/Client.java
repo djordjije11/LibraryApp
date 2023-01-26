@@ -23,11 +23,11 @@ public class Client {
             while(Session.doesClientWantToLogin() == true){
                 new LoginFormsController(tcpClient);
                 synchronized(tcpClient){
-                    tcpClient.wait();
+                    tcpClient.wait();   //waits until the login window is closed
                 }
                 new MainFormsController(tcpClient);
                 synchronized(tcpClient){
-                    tcpClient.wait();
+                    tcpClient.wait();   //waits until the main form is closed
                 }
             }
             tcpClient.sendObject(new Request(null, ModelElement.EXIT_MESSAGE, null));
