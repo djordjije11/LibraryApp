@@ -20,11 +20,6 @@ public class SqlConnectionFactory {
     private static final int MAX_TIMEOUT = 10000;
     private static IConfigurationManager configManager;
     
-    /*
-    public static void setConfigurationManager(IConfigurationManager configManager){
-        SqlConnectionFactory.configManager = configManager;
-    }
-    */
     public static void initialize(IConfigurationManager configManager) throws Exception{
         SqlConnectionFactory.configManager = configManager;
         connectionPool = new ArrayList<>(INITIAL_POOL_SIZE);
@@ -74,5 +69,6 @@ public class SqlConnectionFactory {
             }
         }
         connectionPool.clear();
+        configManager = null;
     }
 }

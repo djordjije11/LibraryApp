@@ -1,7 +1,6 @@
 package forms;
 
 import java.awt.Color;
-import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import main.Server;
@@ -95,25 +94,31 @@ public class ServerForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
+        startServer();
+    }//GEN-LAST:event_btnStartActionPerformed
+
+    private void btnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopActionPerformed
+        stopServer();
+    }//GEN-LAST:event_btnStopActionPerformed
+
+    private void startServer(){
         try {
             server.openServer();
             setUpButtons();
             lblMessage.setText("Server je pokrenut.");
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             lblMessage.setText("Desila se greska prilikom pokretanja servera!");
         }
-    }//GEN-LAST:event_btnStartActionPerformed
-
-    private void btnStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopActionPerformed
+    }
+    private void stopServer(){
         try {
             server.closeServer();
             lblMessage.setText("Server je ugasen.");
             setUpButtons();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             lblMessage.setText("Desila se greska prilikom gasenja servera!");
         }
-    }//GEN-LAST:event_btnStopActionPerformed
-
+    }
     public JButton getStartButton(){
         return btnStart;
     }

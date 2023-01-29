@@ -1,8 +1,7 @@
 package main;
 
 import database.configurations.ConfigFilePaths;
-import database.configurations.IConfigurationManager;
-import database.configurations.JsonFileConfigurationManager;
+import database.configurations.SqlJsonFileConfigurationManager;
 import database.sql.connection.SqlConnectionFactory;
 import forms.ServerForm;
 import helper.RandomID;
@@ -18,10 +17,11 @@ import tcp.TcpServer;
  * @author Djordjije
  */
 public class Server implements Runnable {
-    ServerSocket socket;
+    private ServerSocket socket;
     private final int PORT_NUMBER = 9001;
     private boolean serverUp = false;
     private final List<TcpServer> tcpServersList = new ArrayList<>();
+    private SqlJsonFileConfigurationManager configManager;
     
     public boolean isServerUp(){
         return serverUp;
@@ -65,8 +65,7 @@ public class Server implements Runnable {
     }
     
     private void initializeSqlConnectionFactory() throws Exception{
-        IConfigurationManager configManager = new JsonFileConfigurationManager();
-        configManager.initialize(ConfigFilePaths.SQL_JSON);
+        configManager = new SqlJsonFileConfigurationManager(ConfigFilePaths.SQL_JSON);
         SqlConnectionFactory.initialize(configManager);
     }
     
