@@ -3,6 +3,8 @@ package forms.controllers;
 import forms.LoginForm;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import message.Method;
 import message.ModelElement;
@@ -11,6 +13,9 @@ import message.Response;
 import models.Employee;
 import session.Session;
 import tcp.TcpClient;
+import validations.EmployeeValidator;
+import validations.Validator;
+import validations.exceptions.ValidationException;
 
 /**
  *
@@ -19,10 +24,12 @@ import tcp.TcpClient;
 public class LoginFormsController implements IClosable {
     private final TcpClient tcpClient;
     private LoginForm loginForm;
+    private final Validator employeeValidator;
     
     public LoginFormsController(TcpClient tcpClient){
         this.tcpClient = tcpClient;
         loginForm = new LoginForm();
+        employeeValidator = new EmployeeValidator();
         setLoginListener();
         loginForm.setVisible(true);
     }
@@ -38,6 +45,12 @@ public class LoginFormsController implements IClosable {
             }
             String password = loginForm.getPassword();
             Employee employee = new Employee(employeeID, password);
+            try {
+                employeeValidator.isValid(employee);
+            } catch (ValidationException ex) {
+                JOptionPane.showMessageDialog(loginForm,  ex.getMessage(), "Pogresno uneti podaci", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             try {
                 sendLogin(employee);
             } catch (IOException ex) {

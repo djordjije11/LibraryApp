@@ -6,6 +6,6 @@ package validations.exceptions;
  */
 public class ValidationException extends Exception {
     public ValidationException(String message){
-        super("ValidationError: " + message);
+        super("Nevalidni podaci:\n" + message);
     }
 }

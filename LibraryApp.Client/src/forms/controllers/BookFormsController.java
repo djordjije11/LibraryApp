@@ -13,6 +13,7 @@ import models.dto.BookDto;
 import session.Session;
 import tcp.TcpClient;
 import validations.BookDtoValidator;
+import validations.Validator;
 import validations.exceptions.ValidationException;
 
 /**
@@ -23,7 +24,7 @@ public class BookFormsController implements IClosable {
     private MainForm parentForm;
     private ViewBooksForm viewBooksForm;
     private BookForm bookForm;
-    private BookDtoValidator validator;
+    private Validator bookDtoValidator;
     private BookService bookService;
     private AuthorService authorService;
     
@@ -31,7 +32,7 @@ public class BookFormsController implements IClosable {
         bookService = new BookService(tcpClient);
         authorService = new AuthorService(tcpClient);
         this.parentForm = parentForm;
-        validator = new BookDtoValidator();
+        bookDtoValidator = new BookDtoValidator();
         viewBooksForm = new ViewBooksForm(parentForm, true);
         refreshViewBooksForm();
         setViewBooksFormListeners();
@@ -156,7 +157,7 @@ public class BookFormsController implements IClosable {
             bookDto.setAddingAmount(addingAmount);
             bookDto.setBuildingId(Session.getBuilding().getId());
             try {
-                validator.isValid(bookDto);
+                bookDtoValidator.isValid(bookDto);
             } catch (ValidationException ex) {
                 JOptionPane.showMessageDialog(bookForm, ex.getMessage(), "Knjiga nije sacuvana", JOptionPane.INFORMATION_MESSAGE);
                 return;

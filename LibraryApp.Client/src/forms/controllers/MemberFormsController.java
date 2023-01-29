@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import models.Member;
 import tcp.TcpClient;
 import validations.MemberValidator;
+import validations.Validator;
 import validations.exceptions.ValidationException;
 
 /**
@@ -21,13 +22,13 @@ public class MemberFormsController implements IClosable {
     private final MainForm parentForm;
     private final ViewMembersForm viewMembersForm;
     private MemberForm memberForm;
-    private final MemberValidator validator;
+    private final Validator memberValidator;
     private final MemberService memberService;
     
     public MemberFormsController(TcpClient tcpClient, MainForm parentForm) throws Exception{
         memberService = new MemberService(tcpClient);
         this.parentForm = parentForm;
-        validator = new MemberValidator();
+        memberValidator = new MemberValidator();
         viewMembersForm = new ViewMembersForm(parentForm, true);
         refreshViewMembersForm();
         setViewMembersFormListeners();
@@ -111,7 +112,7 @@ public class MemberFormsController implements IClosable {
                 member.setBirthday(birthday);
                 member.setEmail(email);
                 try{
-                    validator.isValid(member);
+                    memberValidator.isValid(member);
                 } catch(ValidationException ex){
                     JOptionPane.showMessageDialog(memberForm, ex.getMessage(), "Clan nije sacuvan", JOptionPane.INFORMATION_MESSAGE);
                     return;

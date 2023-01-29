@@ -9,7 +9,7 @@ import validations.exceptions.ValidationException;
  * @author Djordjije
  */
 public abstract class Validator<T> {
-    protected List<String> errors;
+    private List<String> errors;
     public void isValid(T entity) throws ValidationException{
         validate(entity);
         if(errors != null && errors.isEmpty() == false)

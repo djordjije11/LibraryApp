@@ -52,7 +52,6 @@ public class LendingFormsController implements IClosable {
                 oneCopy = true;
             } catch(NumberFormatException ex){            
                 oneCopy = false;
-                //JOptionPane.showMessageDialog(lendingForm, "Pogresno uneti podaci.", "ID primerka knjige mora biti poztivan celi broj.", JOptionPane.WARNING_MESSAGE);
             }
             try{
                 List<CopyOfBook> dbCopiesOfBook;
@@ -127,14 +126,6 @@ public class LendingFormsController implements IClosable {
             try {
                 List<Lending> dbLendings = lendingService.createEntities(lendings);
                 JOptionPane.showMessageDialog(lendingForm, "Iznajmljivanje knjiga je uspesno zabelezeno.", "Knjige su iznajmljene", JOptionPane.INFORMATION_MESSAGE);
-                
-                /*
-                StringBuilder sb = new StringBuilder();
-                for (Lending dbLending : dbLendings) {
-                    sb.append(dbLending).append("\n\n");
-                }
-                */
-                
                 lendingForm.refreshForm();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(lendingForm, "Iznajmljivanje knjiga nije uspesno zabelezeno.", "GRESKA", JOptionPane.WARNING_MESSAGE);
