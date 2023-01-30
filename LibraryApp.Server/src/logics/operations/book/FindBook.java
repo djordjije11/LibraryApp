@@ -1,5 +1,6 @@
 package logics.operations.book;
 
+import database.sql.brokers.impl.SqlBookBroker;
 import database.sql.brokers.interfaces.IBookBroker;
 import java.sql.Connection;
 import logics.operations.Operation;
@@ -13,8 +14,8 @@ public class FindBook extends Operation<Book> {
     protected Book book;
     private final IBookBroker bookBroker;
     
-    public FindBook(IBookBroker bookBroker){
-        this.bookBroker = bookBroker;
+    public FindBook(){
+        bookBroker = new SqlBookBroker();
     }
     public void setBook(Book book){
         this.book = book;

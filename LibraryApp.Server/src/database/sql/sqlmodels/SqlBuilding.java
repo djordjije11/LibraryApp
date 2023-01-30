@@ -47,6 +47,6 @@ public class SqlBuilding extends SqlEntity<Building> {
 
     @Override
     public Building getEntityFromResultSet(ResultSet resultSet) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new Building(resultSet.getLong("ID"), resultSet.getString("name"));
     }
 }

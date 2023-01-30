@@ -1,9 +1,6 @@
 package controllers.impl;
 
 import controllers.interfaces.IController;
-import database.sql.brokers.impl.SqlAuthorBroker;
-import database.sql.brokers.impl.SqlBookBroker;
-import database.sql.brokers.impl.SqlCopyOfBookBroker;
 import java.util.ArrayList;
 import java.util.List;
 import jdk.jshell.spi.ExecutionControl;
@@ -19,10 +16,10 @@ import models.CopyOfBook;
  * @author Djordjije
  */
 public class CopyOfBookController implements IController {
-    private IBookLogic bookLogic;
+    private final IBookLogic bookLogic;
     
     public CopyOfBookController(){
-        bookLogic = new BookLogic(new SqlBookBroker(), new SqlCopyOfBookBroker(), new SqlAuthorBroker());
+        bookLogic = new BookLogic();
     }
     
     @Override

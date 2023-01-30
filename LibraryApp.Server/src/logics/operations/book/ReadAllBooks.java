@@ -1,5 +1,6 @@
 package logics.operations.book;
 
+import database.sql.brokers.impl.SqlBookBroker;
 import database.sql.brokers.interfaces.IBookBroker;
 import java.sql.Connection;
 import java.util.List;
@@ -13,8 +14,8 @@ import models.Book;
 public class ReadAllBooks extends Operation<List<Book>> {
     private final IBookBroker bookBroker;
     
-    public ReadAllBooks(IBookBroker bookBroker){
-        this.bookBroker = bookBroker;
+    public ReadAllBooks(){
+        bookBroker = new SqlBookBroker();
     }
     
     @Override

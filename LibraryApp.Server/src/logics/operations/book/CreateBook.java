@@ -1,5 +1,7 @@
 package logics.operations.book;
 
+import database.sql.brokers.impl.SqlAuthorBroker;
+import database.sql.brokers.impl.SqlBookBroker;
 import database.sql.brokers.interfaces.IAuthorBroker;
 import database.sql.brokers.interfaces.IBookBroker;
 import java.sql.Connection;
@@ -16,9 +18,9 @@ public class CreateBook extends Operation<Book> {
     protected final IBookBroker bookBroker;
     protected final IAuthorBroker authorBroker;
     
-    public CreateBook(IBookBroker bookBroker, IAuthorBroker authorBroker){
-        this.bookBroker = bookBroker;
-        this.authorBroker = authorBroker;
+    public CreateBook(){
+        bookBroker = new SqlBookBroker();
+        authorBroker = new SqlAuthorBroker();
     }
     public void setBook(Book book){
         this.book = book;

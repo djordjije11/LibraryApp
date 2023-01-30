@@ -12,8 +12,11 @@ public class Building implements IEntity, Serializable {
     private String name;
 
     public Building(Long id, String name) {
-        this.id = id;
+        this(id);
         this.name = name;
+    }
+    public Building(Long id){
+        this.id = id;
     }
     public Building() {
     }

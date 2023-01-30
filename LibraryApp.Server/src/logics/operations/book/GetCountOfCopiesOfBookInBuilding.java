@@ -5,7 +5,6 @@ import database.sql.brokers.impl.SqlCopyOfBookBroker;
 import database.sql.brokers.interfaces.IBookBroker;
 import database.sql.brokers.interfaces.ICopyOfBookBroker;
 import java.sql.Connection;
-import java.util.List;
 import logics.operations.Operation;
 import models.CopyOfBook;
 
@@ -13,14 +12,14 @@ import models.CopyOfBook;
  *
  * @author Djordjije
  */
-public class ReadAllCopiesOfBookInBuilding extends Operation<List<CopyOfBook>> {
-    protected CopyOfBook copyOfBook;
-    protected final IBookBroker bookBroker;
+public class GetCountOfCopiesOfBookInBuilding extends Operation<Long>{
     protected final ICopyOfBookBroker copyOfBookBroker;
+    protected final IBookBroker bookBroker;
+    protected CopyOfBook copyOfBook;
     
-    public ReadAllCopiesOfBookInBuilding(){
-        bookBroker = new SqlBookBroker();
+    public GetCountOfCopiesOfBookInBuilding(){
         copyOfBookBroker = new SqlCopyOfBookBroker();
+        bookBroker = new SqlBookBroker();
     }
     public void setCopyOfBook(CopyOfBook copyOfBook){
         this.copyOfBook = copyOfBook;
@@ -28,11 +27,11 @@ public class ReadAllCopiesOfBookInBuilding extends Operation<List<CopyOfBook>> {
     @Override
     protected void checkPrecondition(Connection connection) throws Exception {
         if(copyOfBook.getBook() == null)
-            throw new Exception("The book is null.");
+            throw new NullPointerException("The book is null.");
     }
     @Override
-    protected List<CopyOfBook> executeOperation(Connection connection) throws Exception {
-        return copyOfBookBroker.readAllCopiesOfBookInBuilding(copyOfBook, connection);
+    protected Long executeOperation(Connection connection) throws Exception {
+        return copyOfBookBroker.getCountOfCopiesOfBookInBuilding(copyOfBook, connection);
     }
     @Override
     protected boolean isTransaction() {

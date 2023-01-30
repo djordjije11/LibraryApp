@@ -1,5 +1,6 @@
 package logics.operations.book;
 
+import database.sql.brokers.impl.SqlBookBroker;
 import database.sql.brokers.interfaces.IBookBroker;
 import java.sql.Connection;
 import java.util.List;
@@ -14,8 +15,8 @@ public class FindBooks extends Operation<List<Book>> {
     protected Book book;
     private final IBookBroker bookBroker;
     
-    public FindBooks(IBookBroker bookBroker){
-        this.bookBroker = bookBroker;
+    public FindBooks(){
+        bookBroker = new SqlBookBroker();
     }
     public void setBook(Book book){
         this.book = book;
