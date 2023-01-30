@@ -17,7 +17,7 @@ public class AuthorController implements IController {
     private IAuthorLogic authorLogic;
         
     public AuthorController() {
-        authorLogic = new AuthorLogic(new SqlAuthorBroker());
+        authorLogic = new AuthorLogic();
     }
     
     @Override
