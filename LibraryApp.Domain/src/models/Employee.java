@@ -39,13 +39,18 @@ public class Employee implements IEntity, Serializable {
     public Long getId() {
         return id;
     }
+    public String getFirstname(){
+        return firstname;
+    }
+    public String getLastname(){
+        return lastname;
+    }
     public String getPassword(){
         return password;
     }
     public Building getBuilding(){
         return building;
     }
-
     @Override
     public String toString() {
         return firstname + " " + lastname;

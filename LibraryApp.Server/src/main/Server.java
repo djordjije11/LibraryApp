@@ -3,6 +3,7 @@ package main;
 import database.configurations.ConfigFilePaths;
 import database.configurations.SqlJsonFileConfigurationManager;
 import database.sql.connection.SqlConnectionFactory;
+import forms.ServerEmployeesForm;
 import forms.ServerForm;
 import helper.RandomID;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.net.ServerSocket;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.simple.parser.ParseException;
 import tcp.TcpServer;
 
 /**
@@ -21,8 +23,21 @@ public class Server implements Runnable {
     private final int PORT_NUMBER = 9001;
     private boolean serverUp = false;
     private final List<TcpServer> tcpServersList = new ArrayList<>();
+    private ServerEmployeesForm employeesForm;
     private SqlJsonFileConfigurationManager configManager;
-    
+
+    public Server() throws ParseException, IOException {
+        configManager = new SqlJsonFileConfigurationManager(ConfigFilePaths.SQL_JSON);
+    }
+    public SqlJsonFileConfigurationManager getSqlConfigurationManager(){
+        return configManager;
+    }
+    public List<TcpServer> getConnectedUsers(){
+        return tcpServersList;
+    }
+    public void setServerEmployeesForm(ServerEmployeesForm form){
+        employeesForm = form;
+    }
     public boolean isServerUp(){
         return serverUp;
     }
@@ -49,34 +64,40 @@ public class Server implements Runnable {
     private void acceptClients() throws IOException{
         while(serverUp){
             TcpServer tcpServer = new TcpServer(socket.accept());
-            tcpServersList.add(tcpServer);
+            addTcpServer(tcpServer);
             new ClientHandler(this, tcpServer, RandomID.getRandomID()).start();
         }
+    }
+    private synchronized void addTcpServer(TcpServer tcpServer){
+        tcpServersList.add(tcpServer);
+        refreshEmployeesTableData();
     }
     public synchronized void removeTcpServer(TcpServer tcpServer) throws IOException{
         tcpServer.closeConnection();
         tcpServersList.remove(tcpServer);
+        refreshEmployeesTableData();
     }
     private synchronized void removeAllTcpServers() throws IOException{
         for (TcpServer tcpServer : tcpServersList) {
             tcpServer.closeConnection();
         }
         tcpServersList.clear();
+        refreshEmployeesTableData();
     }
-    
-    private void initializeSqlConnectionFactory() throws Exception{
-        configManager = new SqlJsonFileConfigurationManager(ConfigFilePaths.SQL_JSON);
+    private void refreshEmployeesTableData(){
+        if(employeesForm != null){
+            employeesForm.fireTableChange();
+        }
+    }
+    private void initializeSqlConnectionFactory() throws Exception {
         SqlConnectionFactory.initialize(configManager);
     }
-    
     private void shutdownSqlConnectionFactory() throws SQLException{
         SqlConnectionFactory.shutdown();
     }
-    
     public static void main(String[] args) throws Exception {
         new ServerForm(new Server()).setVisible(true);
     }        
-
     @Override
     public void run() {
         try {

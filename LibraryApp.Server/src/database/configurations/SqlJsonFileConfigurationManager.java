@@ -22,6 +22,10 @@ public class SqlJsonFileConfigurationManager implements IConfigurationManager {
     
     public SqlJsonFileConfigurationManager(String filePath) throws ParseException, IOException{
         this.filePath = filePath;
+        refresh();
+    }
+    
+    public final void refresh() throws ParseException, IOException{
         JSONObject jsonObject = parseJSONFile(filePath);
         String url = jsonObject.get(ConfigParamKeys.URL).toString();
         String user = jsonObject.get(ConfigParamKeys.USER).toString();

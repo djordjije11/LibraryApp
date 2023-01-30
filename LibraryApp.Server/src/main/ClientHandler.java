@@ -10,6 +10,7 @@ import java.io.IOException;
 import jdk.jshell.spi.ExecutionControl;
 import message.Request;
 import message.Response;
+import models.Employee;
 import tcp.TcpServer;
 
 /**
@@ -41,6 +42,7 @@ public class ClientHandler extends Thread {
                         return;
                     case EMPLOYEE:
                         response = new EmployeeController().handle(request);
+                        tcpServer.setEmployee((Employee)response.getObject());
                         break;
                     case MEMBER:
                         response = new MemberController().handle(request);

@@ -3,6 +3,7 @@ package forms;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import main.Server;
 
 /**
@@ -35,6 +36,9 @@ public class ServerForm extends javax.swing.JFrame {
         btnStart = new javax.swing.JButton();
         btnStop = new javax.swing.JButton();
         lblMessage = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        configMenu = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server biblioteke");
@@ -64,6 +68,30 @@ public class ServerForm extends javax.swing.JFrame {
         lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMessage.setText("Server nije pokrenut.");
 
+        jMenuBar1.setBackground(new java.awt.Color(217, 238, 255));
+
+        configMenu.setBackground(new java.awt.Color(217, 238, 255));
+        configMenu.setText("Konfiguracija");
+        configMenu.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
+        configMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                configMenuMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(configMenu);
+
+        jMenu1.setBackground(new java.awt.Color(217, 238, 255));
+        jMenu1.setText("Lista prijavljenih korisnika");
+        jMenu1.setFont(new java.awt.Font("Cascadia Code", 0, 14)); // NOI18N
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,9 +109,9 @@ public class ServerForm extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(125, Short.MAX_VALUE)
+                .addContainerGap(113, Short.MAX_VALUE)
                 .addComponent(lblMessage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -101,7 +129,23 @@ public class ServerForm extends javax.swing.JFrame {
         stopServer();
     }//GEN-LAST:event_btnStopActionPerformed
 
-    private void startServer(){
+    private void configMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_configMenuMouseClicked
+        try {
+            new ServerSettingsForm(this, true, server.getSqlConfigurationManager()).setVisible(true);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Greska prilikom otvaranja konfiguracije!", "GRESKA", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_configMenuMouseClicked
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        ServerEmployeesForm employeesForm = new ServerEmployeesForm(this, true, server.getConnectedUsers());
+        server.setServerEmployeesForm(employeesForm);
+        employeesForm.setVisible(true);
+    }//GEN-LAST:event_jMenu1MouseClicked
+
+    public void startServer(){
+        if(server.isServerUp() == true)
+            return;
         try {
             server.openServer();
             setUpButtons();
@@ -110,7 +154,9 @@ public class ServerForm extends javax.swing.JFrame {
             lblMessage.setText("Desila se greska prilikom pokretanja servera!");
         }
     }
-    private void stopServer(){
+    public void stopServer(){
+        if(server.isServerUp() == false)
+            return;
         try {
             server.closeServer();
             lblMessage.setText("Server je ugasen.");
@@ -134,6 +180,9 @@ public class ServerForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStart;
     private javax.swing.JButton btnStop;
+    private javax.swing.JMenu configMenu;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lblMessage;
     // End of variables declaration//GEN-END:variables
 }
