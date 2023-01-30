@@ -1,6 +1,7 @@
 package controllers.impl;
 
 import controllers.interfaces.IController;
+import database.sql.brokers.impl.SqlAuthorBroker;
 import database.sql.brokers.impl.SqlBookBroker;
 import database.sql.brokers.impl.SqlCopyOfBookBroker;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class CopyOfBookController implements IController {
     private IBookLogic bookLogic;
     
     public CopyOfBookController(){
-        bookLogic = new BookLogic(new SqlBookBroker(), new SqlCopyOfBookBroker());
+        bookLogic = new BookLogic(new SqlBookBroker(), new SqlCopyOfBookBroker(), new SqlAuthorBroker());
     }
     
     @Override

@@ -1,6 +1,7 @@
 package controllers.impl;
 
 import controllers.interfaces.IController;
+import database.sql.brokers.impl.SqlAuthorBroker;
 import database.sql.brokers.impl.SqlBookBroker;
 import database.sql.brokers.impl.SqlCopyOfBookBroker;
 import helper.EntitiesConverter;
@@ -22,7 +23,7 @@ public class BookController implements IController {
     private IBookLogic bookLogic;
     
     public BookController(){
-        bookLogic = new BookLogic(new SqlBookBroker(), new SqlCopyOfBookBroker());
+        bookLogic = new BookLogic(new SqlBookBroker(), new SqlCopyOfBookBroker(), new SqlAuthorBroker());
     }
     
     @Override
