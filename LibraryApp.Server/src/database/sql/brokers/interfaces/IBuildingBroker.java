@@ -9,4 +9,5 @@ import java.sql.Connection;
  */
 public interface IBuildingBroker {
     Building findBuilding(Building building, Connection connection) throws Exception;
+    boolean checkIfBuildingExists(Building building, Connection connection) throws Exception;
 }

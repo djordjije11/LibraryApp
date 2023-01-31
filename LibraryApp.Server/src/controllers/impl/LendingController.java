@@ -1,8 +1,6 @@
 package controllers.impl;
 
 import controllers.interfaces.IController;
-import database.sql.brokers.impl.SqlCopyOfBookBroker;
-import database.sql.brokers.impl.SqlLendingBroker;
 import java.util.List;
 import jdk.jshell.spi.ExecutionControl;
 import logics.impl.LendingLogic;
@@ -16,9 +14,9 @@ import models.Lending;
  * @author Djordjije
  */
 public class LendingController implements IController {
-    private ILendingLogic lendingLogic;
+    private final ILendingLogic lendingLogic;
     public LendingController(){
-        lendingLogic = new LendingLogic(new SqlLendingBroker(), new SqlCopyOfBookBroker());
+        lendingLogic = new LendingLogic();
     }
     
     @Override

@@ -112,4 +112,15 @@ public abstract class SqlEntityBroker<T extends IEntity> {
         preparedStatement.close();
         return sqlEntity.getEntity();
     }
+    protected synchronized boolean checkIfExists(SqlEntity<T> sqlEntity, Connection connection) throws Exception{
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT COUNT(1) FROM " + sqlEntity.getTableName() + " WHERE ID = " + sqlEntity.getEntity().getId());
+        int numberOfEntities = 0;
+        if(resultSet.next()){
+            numberOfEntities = resultSet.getInt("COUNT(1)");
+        }
+        resultSet.close();
+        statement.close();
+        return numberOfEntities == 1;
+    }
 }

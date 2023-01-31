@@ -14,7 +14,7 @@ import models.CopyOfBook;
  * @author Djordjije
  */
 public class DeleteBook extends Operation<Book> {
-    protected Book book;
+    private Book book;
     private final IBookBroker bookBroker;
     private final ICopyOfBookBroker copyOfBookBroker;
     
@@ -27,11 +27,12 @@ public class DeleteBook extends Operation<Book> {
     }
     @Override
     protected void checkPrecondition(Connection connection) throws Exception {
-        Book dbBook = bookBroker.findBook(book, connection);
-        if(dbBook == null)
+        if(bookBroker.checkIfBookExists(book, connection) == false){
             throw new Exception("The book doesn't exist in the database.");
-        if(copyOfBookBroker.getCountOfAllCopiesOfBook(new CopyOfBook(dbBook), connection) > 0)
+        }
+        if(copyOfBookBroker.getCountOfAllCopiesOfBook(new CopyOfBook(book), connection) > 0){
             throw new Exception("A book cannot be deleted if it has already been copied.");
+        }
     }
     @Override
     protected Book executeOperation(Connection connection) throws Exception {

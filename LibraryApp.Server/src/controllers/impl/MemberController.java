@@ -1,7 +1,6 @@
 package controllers.impl;
 
 import controllers.interfaces.IController;
-import database.sql.brokers.impl.SqlMemberBroker;
 import jdk.jshell.spi.ExecutionControl;
 import logics.impl.MemberLogic;
 import logics.interfaces.IMemberLogic;
@@ -14,10 +13,10 @@ import models.Member;
  * @author Djordjije
  */
 public class MemberController implements IController {
-    private IMemberLogic memberLogic;
+    private final IMemberLogic memberLogic;
     
     public MemberController(){
-        memberLogic = new MemberLogic(new SqlMemberBroker());
+        memberLogic = new MemberLogic();
     }
     
     @Override

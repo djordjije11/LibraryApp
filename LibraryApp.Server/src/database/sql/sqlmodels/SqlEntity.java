@@ -49,8 +49,7 @@ public abstract class SqlEntity<T extends IEntity> {
         return "SELECT * FROM " + getTableName();
     }
     public abstract T getEntityFromResultSet(ResultSet resultSet) throws SQLException;
-    public String constructSelectWithConditionsQuery(List<String> conditions){
-        String query = getStatementSelectAllQuery();
+    public String constructQueryWithConditions(String query, List<String> conditions){
         if(conditions == null || conditions.isEmpty()){
             return query;
         }
@@ -64,5 +63,8 @@ public abstract class SqlEntity<T extends IEntity> {
             query += " AND ";
         }
         return query;
+    }
+    public String constructSelectWithConditionsQuery(List<String> conditions){
+        return constructQueryWithConditions(getStatementSelectAllQuery(), conditions);
     }
 }

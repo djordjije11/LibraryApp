@@ -30,5 +30,4 @@ public class SqlLendingBroker extends SqlEntityBroker<Lending> implements ILendi
         conditions.add("return_date IS NULL");
         return findEntitiesWithCondition(new SqlLending(lending), connection, conditions);
     }
-    
 }

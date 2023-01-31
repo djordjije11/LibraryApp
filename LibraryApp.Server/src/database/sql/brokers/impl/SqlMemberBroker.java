@@ -14,7 +14,6 @@ import models.Member;
  * @author Djordjije
  */
 public class SqlMemberBroker extends SqlEntityBroker<Member> implements IMemberBroker {
-    
     @Override
     public Member createMember(Member member, Connection connection) throws Exception {
         return create(new SqlMember(member), connection);
@@ -39,7 +38,6 @@ public class SqlMemberBroker extends SqlEntityBroker<Member> implements IMemberB
     public Member deleteMember(Member member, Connection connection) throws Exception {
         return delete(new SqlMember(member), connection);
     }
-
     @Override
     public Long getCountOfAllLendingsByMember(Member member, Connection connection) throws Exception {
         Statement statement = connection.createStatement();
@@ -49,5 +47,9 @@ public class SqlMemberBroker extends SqlEntityBroker<Member> implements IMemberB
         resultSet.close();
         statement.close();
         return amount;
+    }
+    @Override
+    public boolean checkIfMemberExists(Member member, Connection connection) throws Exception{
+        return checkIfExists(new SqlMember(member), connection);
     }
 }

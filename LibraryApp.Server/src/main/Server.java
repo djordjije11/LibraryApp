@@ -70,7 +70,6 @@ public class Server implements Runnable {
     }
     private synchronized void addTcpServer(TcpServer tcpServer){
         tcpServersList.add(tcpServer);
-        refreshEmployeesTableData();
     }
     public synchronized void removeTcpServer(TcpServer tcpServer) throws IOException{
         tcpServer.closeConnection();
@@ -84,7 +83,7 @@ public class Server implements Runnable {
         tcpServersList.clear();
         refreshEmployeesTableData();
     }
-    private void refreshEmployeesTableData(){
+    public void refreshEmployeesTableData(){
         if(employeesForm != null){
             employeesForm.fireTableChange();
         }

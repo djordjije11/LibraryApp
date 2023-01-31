@@ -42,7 +42,6 @@ public class ServerEmployeesForm extends javax.swing.JDialog {
         designTableColumns();
     }
     
-    
     public void fireTableChange(){
         ((EmployeesTableModel)tblEmployees.getModel()).fireTableDataChanged();
     }

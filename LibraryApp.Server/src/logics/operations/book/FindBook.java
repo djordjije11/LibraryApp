@@ -11,7 +11,7 @@ import models.Book;
  * @author Djordjije
  */
 public class FindBook extends Operation<Book> {
-    protected Book book;
+    private Book book;
     private final IBookBroker bookBroker;
     
     public FindBook(){

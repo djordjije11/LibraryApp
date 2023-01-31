@@ -11,8 +11,8 @@ import models.CopyOfBook;
  * @author Djordjije
  */
 public class FindCopyOfBookInBuilding extends Operation<CopyOfBook> {
-    protected ICopyOfBookBroker copyOfBookBroker;
-    protected CopyOfBook copyOfBook;
+    private final ICopyOfBookBroker copyOfBookBroker;
+    private CopyOfBook copyOfBook;
     
     public FindCopyOfBookInBuilding(){
         copyOfBookBroker = new SqlCopyOfBookBroker();

@@ -12,22 +12,23 @@ import models.Book;
  * @author Djordjije
  */
 public class FindBooks extends Operation<List<Book>> {
-    protected Book book;
     private final IBookBroker bookBroker;
+    private Book book;
     
     public FindBooks(){
-        bookBroker = new SqlBookBroker();
+        this.bookBroker = new SqlBookBroker();
     }
+    
     public void setBook(Book book){
         this.book = book;
     }
     @Override
-    protected void checkPrecondition(Connection connection) throws Exception {
-        //NO PRECONDITION
-    }
-    @Override
     protected List<Book> executeOperation(Connection connection) throws Exception {
         return bookBroker.findBooks(book, connection);
+    }
+    @Override
+    protected void checkPrecondition(Connection connection) throws Exception {
+        //NO PRECONDITION
     }
     @Override
     protected boolean isTransaction() {

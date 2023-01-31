@@ -15,4 +15,5 @@ public interface IBookBroker {
     List<Book> readAllBooks(Book book, Connection connection) throws Exception;
     Book updateBook(Book book, Connection connection) throws Exception;
     Book deleteBook(Book book, Connection connection) throws Exception;
+    boolean checkIfBookExists(Book book, Connection connection) throws Exception;
 }

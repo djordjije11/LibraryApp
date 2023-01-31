@@ -19,11 +19,11 @@ import models.CopyOfBook;
  * @author Djordjije
  */
 public class AddCopiesOfBookInBuilding extends Operation<List<CopyOfBook>> {
-    protected final IBookBroker bookBroker;
-    protected final ICopyOfBookBroker copyOfBookBroker;
-    protected final IBuildingBroker buildingBroker;
-    protected CopyOfBook copyOfBook;
-    protected Long amount;
+    private final IBookBroker bookBroker;
+    private final ICopyOfBookBroker copyOfBookBroker;
+    private final IBuildingBroker buildingBroker;
+    private CopyOfBook copyOfBook;
+    private Long amount;
     
     public AddCopiesOfBookInBuilding(){
         bookBroker = new SqlBookBroker();
@@ -44,16 +44,18 @@ public class AddCopiesOfBookInBuilding extends Operation<List<CopyOfBook>> {
         }
         return copyOfBookBroker.createCopiesOfBook(copiesOfBook, connection);
     }
-
     @Override
     protected void checkPrecondition(Connection connection) throws Exception {
-        if(amount < 0)
+        if(amount < 0){
             throw new Exception("The amount of copies of book to be added must be positive.");
-        if(buildingBroker.findBuilding(new Building(copyOfBook.getBuildingId()), connection) == null)
+        }
+        if(buildingBroker.checkIfBuildingExists(new Building(copyOfBook.getBuildingId()), connection) == false){
             throw new Exception("The building is not in the database.");
+        }
         Book book = copyOfBook.getBook();
-        if(book == null || bookBroker.findBook(book, connection) == null)
+        if(book == null || bookBroker.checkIfBookExists(book, connection) == false){
             throw new Exception("The book is not in the database.");
+        }
     }
     @Override
     protected boolean isTransaction() {

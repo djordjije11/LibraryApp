@@ -293,7 +293,7 @@ public class LendingForm extends javax.swing.JDialog {
         Object member = cmbxMembers.getSelectedItem();
         if(member != null){
             txtSelectedMember.setText(member.toString());
-        }
+        } else txtSelectedMember.setText("");
     }//GEN-LAST:event_cmbxMembersActionPerformed
 
     private void btnAddSelectedCopyOfBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSelectedCopyOfBookActionPerformed

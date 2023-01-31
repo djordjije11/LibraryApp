@@ -3,8 +3,6 @@ package forms.controllers;
 import forms.LoginForm;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import message.Method;
 import message.ModelElement;

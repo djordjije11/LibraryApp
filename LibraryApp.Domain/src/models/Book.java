@@ -55,10 +55,10 @@ public class Book implements IEntity, Serializable {
         this.author = author;
     }
     public String singlePrint(){
-        return "ID: " + id + ",\n" + title + ",\nAutor: " + author;
+        return "ID: " + id + ",\n" + title + ",\nAutor: " + (author == null ? "" : author);
     }
     @Override
     public String toString() {
-        return title + " - " + author;
+        return title + (author == null ? "" : " - " + author);
     }
 }

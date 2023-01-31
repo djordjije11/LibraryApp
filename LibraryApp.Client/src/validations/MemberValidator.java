@@ -30,7 +30,7 @@ public class MemberValidator extends Validator<Member> {
             if(firstLetter.toString().equals(firstLetter.toString().toLowerCase()))
                 addError("Prezime mora poceti prvim velikim slovom.");
         }
-        if(email == null || email.contains(" ") == true || email.contains("@") == false){
+        if(email != null && email.isBlank() == false && (email.contains(" ") == true || email.contains("@") == false)){
             addError("E-mail nije pravilno unet.");
         }
     }

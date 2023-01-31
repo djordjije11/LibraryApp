@@ -11,4 +11,5 @@ import models.Author;
 public interface IAuthorBroker {
     Author findAuthor(Author author, Connection connection) throws Exception;
     List<Author> readAllAuthors(Author author, Connection connection) throws Exception;
+    boolean checkIfAuthorExists(Author author, Connection connection) throws Exception;
 }

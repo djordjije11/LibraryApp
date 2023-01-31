@@ -5,8 +5,6 @@ import database.configurations.SqlJsonFileConfigurationManager;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.json.simple.parser.ParseException;
 

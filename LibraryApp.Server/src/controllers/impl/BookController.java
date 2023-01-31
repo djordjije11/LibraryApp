@@ -17,7 +17,7 @@ import models.dto.BookDto;
  * @author Djordjije
  */
 public class BookController implements IController {
-    private IBookLogic bookLogic;
+    private final IBookLogic bookLogic;
     
     public BookController(){
         bookLogic = new BookLogic();
@@ -81,6 +81,7 @@ public class BookController implements IController {
             response.setConfirmed(true);
             return response;
         } catch(Exception ex){
+            ex.printStackTrace();
             response.setConfirmed(false);
             response.setException(ex);
             return response;

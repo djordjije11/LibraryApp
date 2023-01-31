@@ -10,7 +10,6 @@ import java.io.IOException;
 import jdk.jshell.spi.ExecutionControl;
 import message.Request;
 import message.Response;
-import models.Employee;
 import tcp.TcpServer;
 
 /**
@@ -41,8 +40,7 @@ public class ClientHandler extends Thread {
                         System.out.println("Connection closed - thread ID: " + threadID );
                         return;
                     case EMPLOYEE:
-                        response = new EmployeeController().handle(request);
-                        tcpServer.setEmployee((Employee)response.getObject());
+                        response = new EmployeeController(server, tcpServer).handle(request);
                         break;
                     case MEMBER:
                         response = new MemberController().handle(request);
