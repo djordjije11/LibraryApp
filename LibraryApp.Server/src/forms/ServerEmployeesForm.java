@@ -59,6 +59,7 @@ public class ServerEmployeesForm extends javax.swing.JDialog {
         tblEmployees = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Lista prijavljenih korisnika");
 
         tblEmployees.setBackground(new java.awt.Color(217, 238, 255));
         tblEmployees.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 255), new java.awt.Color(204, 204, 255)));

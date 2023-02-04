@@ -132,11 +132,11 @@ public class BookFormsController implements IClosable {
             try{
                 addingAmount = Long.parseLong(bookForm.getAddingAmount().getText());
             } catch(NumberFormatException ex){            
-                JOptionPane.showMessageDialog(bookForm, "Pogresno uneti podaci.", "Za broj dodatih primeraka knjige mora biti unet poztivan celi broj.", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(bookForm, "Za broj dodatih primeraka knjige mora biti unet poztivan celi broj.", "Pogresno uneti podaci.", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if(addingAmount < 0){
-                JOptionPane.showMessageDialog(bookForm, "Pogresno uneti podaci.", "Za broj dodatih primeraka knjige mora biti unet poztivan celi broj.", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(bookForm, "Za broj dodatih primeraka knjige mora biti unet poztivan celi broj.", "Pogresno uneti podaci.", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if(hasChanges == false && (bookDto.getTitle().equals(title) == false || bookDto.getDescription().equals(description) == false
