@@ -101,7 +101,8 @@ public class BookFormsController implements IClosable {
         bookForm.getDeleteButton().addActionListener((ActionEvent e) -> {
             try {
                 BookDto bookDto = bookForm.getBook();
-                if(bookDto.getCurrentAmount() > 0){
+                Long currentAmount = bookDto.getCurrentAmount();
+                if(currentAmount != null && currentAmount > 0){
                     JOptionPane.showMessageDialog(bookForm, "Nije dozvoljeno brisanje knjiga ciji primerci su cuvani u bazi.", "Nedozvoljena operacija", JOptionPane.WARNING_MESSAGE);
                     return;
                 }

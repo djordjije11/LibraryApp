@@ -63,7 +63,12 @@ public class MemberFormsController implements IClosable {
     }
     private void setViewMembersFormOpenMemberFormListener(){
         viewMembersForm.getOpenMemberFormButton().addActionListener((ActionEvent e) -> {
-            memberForm = new MemberForm(parentForm, true, viewMembersForm.getSelectedMember());
+            Member member = viewMembersForm.getSelectedMember();
+            if(member == null){
+                JOptionPane.showMessageDialog(viewMembersForm, "Nije odabran nijedan clan.", "Odaberite clana", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            memberForm = new MemberForm(parentForm, true, member);
             setMemberFormListeners();
             memberForm.setVisible(true);
         });
