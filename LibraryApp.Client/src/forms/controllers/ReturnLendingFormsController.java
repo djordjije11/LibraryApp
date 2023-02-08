@@ -60,11 +60,12 @@ public class ReturnLendingFormsController implements IClosable {
                 return;
             }
             returnLendingForm.getSelectedMemberTextField().setText(member.toString());
+            returnLendingForm.emptyListOfSelectedLendingsToReturn();
             Lending lending = new Lending();
             lending.setMember((Member) member);
             try {
                 List<Lending> dbLendings = lendingService.findEntities(lending);
-                if(dbLendings != null && dbLendings.isEmpty() == false){
+                if(dbLendings != null){
                     returnLendingForm.setLendingsTableData(dbLendings);
                 }
             } catch (Exception ex) {
@@ -95,6 +96,7 @@ public class ReturnLendingFormsController implements IClosable {
             }
         });
     }
+    @Override
     public void closeForms(){
         if(returnLendingForm != null){
             returnLendingForm.dispose();

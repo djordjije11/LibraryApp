@@ -65,6 +65,7 @@ public class ReturnLendingForm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Vracanje iznajmljenih knjiga");
+        setResizable(false);
 
         tblLendings.setBackground(new java.awt.Color(197, 201, 255));
         tblLendings.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 255), new java.awt.Color(153, 153, 255)));
@@ -285,7 +286,6 @@ public class ReturnLendingForm extends javax.swing.JDialog {
         columnModel.getColumn(2).setPreferredWidth(80);
         columnModel.getColumn(3).setPreferredWidth(140);
     }
-    
     private void designTable(){
         tblLendings.getTableHeader().setOpaque(false);
         tblLendings.getTableHeader().setBackground(new Color(107,158,183));
@@ -293,7 +293,6 @@ public class ReturnLendingForm extends javax.swing.JDialog {
         tblLendings.getTableHeader().setFont(new Font("Bahnschrift", Font.PLAIN, 14));
         designTableColumns();
     }
-    
     public void setLendingsTableData(List<Lending> lendings) throws Exception{
         tblLendings.setModel(new LendingsTableModel(lendings));
         designTableColumns();
@@ -312,6 +311,9 @@ public class ReturnLendingForm extends javax.swing.JDialog {
             lendings.add((Lending)listModel.getElementAt(i));
         }
         return lendings;
+    }
+    public void emptyListOfSelectedLendingsToReturn(){
+        listModel.clear();
     }
     public Member getSelectedMemberToReturnLendings(){
         return (Member)cmbxMembers.getSelectedItem();
@@ -334,7 +336,6 @@ public class ReturnLendingForm extends javax.swing.JDialog {
     public JTextField getSelectedMemberTextField(){
         return txtSelectedMember;
     }
-    
     public void refreshForm(){
         txtMemberFirstname.setText("");
         txtMemberLastname.setText("");

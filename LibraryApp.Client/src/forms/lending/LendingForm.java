@@ -69,6 +69,7 @@ public class LendingForm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Iznajmljivanje knjiga");
+        setResizable(false);
 
         txtMemberFirstname.setBackground(new java.awt.Color(236, 250, 255));
         txtMemberFirstname.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
