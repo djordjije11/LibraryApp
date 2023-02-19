@@ -71,7 +71,6 @@ public class BookLogic implements IBookLogic {
         operation.setCopyOfBook(copyOfBook);
         return operation.execute();
     }
-
     @Override
     public Book updateBook(Book book, Long amount, Long buildingID) throws Exception {
         UpdateBook operation1 = new UpdateBook();
@@ -83,7 +82,6 @@ public class BookLogic implements IBookLogic {
         operation2.execute();
         return dbBook;
     }
-
     @Override
     public List<CopyOfBook> addCopiesOfBookInBuilding(CopyOfBook copyOfBook, Long amount) throws Exception {
         AddCopiesOfBookInBuilding operation = new AddCopiesOfBookInBuilding();
@@ -91,14 +89,12 @@ public class BookLogic implements IBookLogic {
         operation.setAmount(amount);
         return operation.execute();
     }
-
     @Override
     public Long getCountOfCopiesOfBookInBuilding(CopyOfBook copyOfBook) throws Exception {
         GetCountOfCopiesOfBookInBuilding operation = new GetCountOfCopiesOfBookInBuilding();
         operation.setCopyOfBook(copyOfBook);
         return operation.execute();
     }
-
     @Override
     public CopyOfBook findCopyOfBookInBuilding(CopyOfBook copyOfBook) throws Exception {
         FindCopyOfBookInBuilding operation = new FindCopyOfBookInBuilding();

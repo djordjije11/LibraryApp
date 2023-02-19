@@ -12,8 +12,9 @@ public abstract class Operation<ReturnType>{
          try {
             checkPrecondition(connection);
             ReturnType dbObject = executeOperation(connection);
-            if(isTransaction() == true)
+            if(isTransaction() == true){
                 connection.commit();
+            }
             return dbObject;
         } catch(Exception ex){
             if(isTransaction() == true){

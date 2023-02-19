@@ -81,7 +81,6 @@ public class BookController implements IController {
             response.setConfirmed(true);
             return response;
         } catch(Exception ex){
-            ex.printStackTrace();
             response.setConfirmed(false);
             response.setException(ex);
             return response;

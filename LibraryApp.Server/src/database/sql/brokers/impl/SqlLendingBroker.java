@@ -12,17 +12,14 @@ import models.Lending;
  * @author Djordjije
  */
 public class SqlLendingBroker extends SqlEntityBroker<Lending> implements ILendingBroker {
-
     @Override
     public List<Lending> createLendings(List<Lending> lendings, Connection connection) throws Exception {
         return createList(new SqlLending(lendings), connection);
     }
-
     @Override
     public List<Lending> updateLendings(List<Lending> lendings, Connection connection) throws Exception {
         return updateList(new SqlLending(lendings), connection);
     }
-
     @Override
     public List<Lending> findUnreturnedLendingsByMember(Lending lending, Connection connection) throws Exception {
         List<String> conditions = new ArrayList<>();

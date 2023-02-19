@@ -8,7 +8,6 @@ import forms.ServerForm;
 import helper.RandomID;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.simple.parser.ParseException;
@@ -42,7 +41,7 @@ public class Server implements Runnable {
         return serverUp;
     }
     public void openServer() throws Exception{
-        initializeSqlConnectionFactory();
+        SqlConnectionFactory.initialize(configManager);
         try {
             socket = new ServerSocket(PORT_NUMBER);
             serverUp = true;
@@ -59,7 +58,7 @@ public class Server implements Runnable {
             socket = null;
         }
         removeAllTcpServers();
-        shutdownSqlConnectionFactory();
+        SqlConnectionFactory.shutdown();
     }
     private void acceptClients() throws IOException{
         while(serverUp){
@@ -87,12 +86,6 @@ public class Server implements Runnable {
         if(employeesForm != null){
             employeesForm.fireTableChange();
         }
-    }
-    private void initializeSqlConnectionFactory() throws Exception {
-        SqlConnectionFactory.initialize(configManager);
-    }
-    private void shutdownSqlConnectionFactory() throws SQLException{
-        SqlConnectionFactory.shutdown();
     }
     public static void main(String[] args) throws Exception {
         new ServerForm(new Server()).setVisible(true);

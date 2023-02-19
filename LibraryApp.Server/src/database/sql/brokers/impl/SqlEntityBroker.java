@@ -14,16 +14,16 @@ import java.util.ArrayList;
  * @author Djordjije
  */
 public abstract class SqlEntityBroker<T extends IEntity> {
-    
     protected synchronized T create(SqlEntity<T> sqlEntity, Connection connection) throws Exception{
         T entity = sqlEntity.getEntity();
         PreparedStatement preparedStatement = connection.prepareStatement(sqlEntity.getPreparedStatementInsertQuery(), Statement.RETURN_GENERATED_KEYS);
         sqlEntity.setUpPreparedStatementInsert(preparedStatement);
         preparedStatement.executeUpdate();
-        ResultSet result = preparedStatement.getGeneratedKeys();
-        if(result.next())
-            entity.setId(result.getLong(1));
-        result.close();
+        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+        if(resultSet.next()){
+            entity.setId(resultSet.getLong(1));
+        }
+        resultSet.close();
         preparedStatement.close();
         return entity;
     }
@@ -34,11 +34,11 @@ public abstract class SqlEntityBroker<T extends IEntity> {
             sqlEntity.setEntity(entity);
             sqlEntity.setUpPreparedStatementInsert(preparedStatement);
             preparedStatement.executeUpdate();
-            ResultSet result = preparedStatement.getGeneratedKeys();
-            //check if this works or you have to try with for(int i = 0...)
-            if(result.next())
-                entity.setId(result.getLong(1));
-            result.close();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if(resultSet.next()){
+                entity.setId(resultSet.getLong(1));
+            }
+            resultSet.close();
         }
         preparedStatement.close();
         return listOfEntities;

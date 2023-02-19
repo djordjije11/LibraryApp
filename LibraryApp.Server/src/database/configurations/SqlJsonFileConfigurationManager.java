@@ -24,7 +24,6 @@ public class SqlJsonFileConfigurationManager implements IConfigurationManager {
         this.filePath = filePath;
         refresh();
     }
-    
     public final void refresh() throws ParseException, IOException{
         JSONObject jsonObject = parseJSONFile(filePath);
         String url = jsonObject.get(ConfigParamKeys.URL).toString();
@@ -34,7 +33,6 @@ public class SqlJsonFileConfigurationManager implements IConfigurationManager {
         config.put(ConfigParamKeys.USER, user);
         config.put(ConfigParamKeys.PASSWORD, password);
     }
-    
     @Override
     public String getConfigParam(String key) throws Exception {
         if(config.containsKey(key) == false)
@@ -60,7 +58,6 @@ public class SqlJsonFileConfigurationManager implements IConfigurationManager {
     private JSONObject parseJSONFile(String filePath) throws ParseException, FileNotFoundException, IOException {
         return (JSONObject) (new JSONParser().parse(new FileReader(new File(filePath))));
     }
-    
     public void test(){
         for (Map.Entry<String, String> entry : config.entrySet()) {
             String key = entry.getKey();

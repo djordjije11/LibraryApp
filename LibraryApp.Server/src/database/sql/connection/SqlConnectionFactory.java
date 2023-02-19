@@ -27,13 +27,11 @@ public class SqlConnectionFactory {
             connectionPool.add(createConnection());
         }
     }
-    
     private static Connection createConnection() throws Exception{
         if(configManager == null) 
             throw new Exception("Missing ConfigurationManager!");
         return DriverManager.getConnection(configManager.getConfigParam(ConfigParamKeys.URL), configManager.getConfigParam(ConfigParamKeys.USER), configManager.getConfigParam(ConfigParamKeys.PASSWORD));
     }
-    
     public static Connection getConnection() throws Exception {
         if (connectionPool.isEmpty()) {
             if (usedConnections.size() < MAX_POOL_SIZE) {
@@ -50,7 +48,6 @@ public class SqlConnectionFactory {
         connection.setAutoCommit(false);
         return connection;
     }
-    
     public static boolean releaseConnection(Connection connection) throws SQLException {
         if(connection == null || connection.isValid(MAX_TIMEOUT) == false)
             return false;

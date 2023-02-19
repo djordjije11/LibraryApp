@@ -14,7 +14,6 @@ import models.CopyOfBook;
  * @author Djordjije
  */
 public class SqlCopyOfBookBroker extends SqlEntityBroker<CopyOfBook> implements ICopyOfBookBroker {
-    
     @Override
     public List<CopyOfBook> createCopiesOfBook(List<CopyOfBook> copiesOfBook, Connection connection) throws Exception {
         return createList(new SqlCopyOfBook(copiesOfBook), connection);

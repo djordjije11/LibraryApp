@@ -11,7 +11,6 @@ import java.sql.Connection;
  * @author Djordjije
  */
 public class SqlAuthorBroker extends SqlEntityBroker<Author> implements IAuthorBroker  {
-
     public SqlAuthorBroker() {
         super();
     }
@@ -23,7 +22,6 @@ public class SqlAuthorBroker extends SqlEntityBroker<Author> implements IAuthorB
     public synchronized List<Author> readAllAuthors(Author author, Connection connection) throws Exception {
         return readAll(new SqlAuthor(author), connection);
     }
-
     @Override
     public boolean checkIfAuthorExists(Author author, Connection connection) throws Exception {
         return checkIfExists(new SqlAuthor(author), connection);
