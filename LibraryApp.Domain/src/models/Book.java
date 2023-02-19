@@ -59,6 +59,6 @@ public class Book implements IEntity, Serializable {
     }
     @Override
     public String toString() {
-        return title + (author == null ? "" : " - " + author);
+        return title + (author == null || author.toString().trim().equals("") ? "" : " - " + author);
     }
 }
