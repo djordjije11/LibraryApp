@@ -19,7 +19,14 @@ The software system is built on a three-level architecture, comprising the follo
 
 The user interface is located on the client-side, while the application logic and data storage components are on the server-side of the application.
 
+![Software architecture](https://github.com/djordjije11/LibraryApp/blob/main/images/Software%20architecture.png?raw=true "Software architecture")
+
 ## How to start an app
 
 To start the server side, you need to run the Server class, which will display the user interface. From this interface, you can start the application server, view a list of currently logged-in users, and make any necessary configuration changes.
 On the client side, start the application by running the Client class. This will open a login screen, where users can enter their ID and password to access the system. Once logged in, users can execute any of the existing system functionalities as needed.
+
+![client-screen](https://github.com/djordjije11/LibraryApp/blob/main/images/client-screen.png?raw=true "client-screen")
+
+### Detailed documentation in Serbian language
+[Link ka dokumentaciji](https://github.com/djordjije11/LibraryApp/blob/main/dokumentacija/2019-0162-%D0%82%D0%BE%D1%80%D1%92%D0%B8%D1%98%D0%B5-%D0%A0%D0%B0%D0%B4%D0%BE%D0%B2%D0%B8%D1%9B.pdf)
