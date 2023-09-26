@@ -15,7 +15,7 @@ The software system is built on a three-level architecture, comprising the follo
   - Application logic controller
   - Business logic (structure and behavior)
   - Database broker
-- Data warehouse
+- Database
 
 The user interface is located on the client-side, while the application logic and data storage components are on the server-side of the application.
 
